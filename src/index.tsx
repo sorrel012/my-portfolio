@@ -20,7 +20,7 @@ export const GlobalStyle = createGlobalStyle`
     font-weight: 400;
     font-style: normal;
   }
-  
+
   html, body, div, span, applet, object, iframe,
   h1, h2, h3, h4, h5, h6, p, blockquote, pre,
   a, abbr, acronym, address, big, cite, code,
@@ -84,13 +84,14 @@ export const GlobalStyle = createGlobalStyle`
     line-height: 1.2;
     width: 100vw;
     height: 100vh;
+    color: #1c1c1c;
   }
 
   a {
     text-decoration: none;
     color: inherit;
   }
-  
+
 `;
 
 const client = new QueryClient();
