@@ -38,12 +38,14 @@ time, mark, audio, video {
   font: inherit;
   vertical-align: baseline;
   user-select: none;
+  font-family: 'Pretendard-Regular', sans-serif;
 }
 
 /* HTML5 display-role reset for older browsers */
 article, aside, details, figcaption, figure,
 footer, header, hgroup, main, menu, nav, section {
   display: block;
+  font-family: 'Pretendard-Regular', sans-serif;
 }
 
 /* HTML5 hidden-attribute fix for newer browsers */
@@ -91,9 +93,6 @@ a {
   color: inherit;
 }
 
-input, button {
-  font-family: 'Pretendard-Regular', sans-serif;
-}
 
 .align{
   &-center {
