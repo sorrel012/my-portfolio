@@ -1,7 +1,7 @@
 import { createBrowserRouter } from 'react-router-dom';
 import App from '../App';
 import Home from '../pages/Home';
-import Profile from '../pages/Profile';
+import Profile from '../pages/profile/Profile.tsx';
 import Skills from '../pages/Skills';
 import Projects from '../pages/Projects';
 import Contact from '../pages/Contact';
