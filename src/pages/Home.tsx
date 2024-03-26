@@ -9,6 +9,7 @@ import flower4 from '../assets/images/home/flower4.png';
 import flower5 from '../assets/images/home/flower5.png';
 import { useState } from 'react';
 import { motion } from 'framer-motion';
+import { useNavigate } from 'react-router-dom';
 
 const GRASS = '/src/assets/images/home/grass.png';
 const BUTTERFLY_RIGHT = '/src/assets/images/home/butterfly1.png';
@@ -137,7 +138,7 @@ interface IMushroomState {
 enum CategoryText {
   PROFILE = 'profile',
   SKILLS = 'skills',
-  PROJECT = 'project',
+  PROJECT = 'projects',
   CONTACT = 'contact',
 }
 
@@ -164,21 +165,26 @@ function Home() {
     [CategoryText.PROJECT]: mushroom,
     [CategoryText.CONTACT]: mushroom,
   });
+  const navigate = useNavigate();
 
-  const onMushroomHover = (category) =>
+  const onMushroomHover = (category: string) =>
     setMushroomImg((prev) => {
       return {
         ...prev,
         [category]: mushroomHover,
       };
     });
-  const onMushroomInitial = (category) =>
+  const onMushroomInitial = (category: string) =>
     setMushroomImg((prev) => {
       return {
         ...prev,
         [category]: mushroom,
       };
     });
+
+  const onMushroomClick = (category: string) => {
+    navigate(`/${category}`);
+  };
 
   return (
     <Wrapper className="align-center">
@@ -210,6 +216,7 @@ function Home() {
             src={mushroomImg[CategoryText.PROFILE]}
             onMouseEnter={() => onMushroomHover(CategoryText.PROFILE)}
             onMouseLeave={() => onMushroomInitial(CategoryText.PROFILE)}
+            onClick={() => onMushroomClick(CategoryText.PROFILE)}
           ></Mushroom>
           <PageLabel
             onMouseEnter={() => onMushroomHover(CategoryText.PROFILE)}
@@ -223,6 +230,7 @@ function Home() {
             src={mushroomImg[CategoryText.SKILLS]}
             onMouseEnter={() => onMushroomHover(CategoryText.SKILLS)}
             onMouseLeave={() => onMushroomInitial(CategoryText.SKILLS)}
+            onClick={() => onMushroomClick(CategoryText.SKILLS)}
           />
           <PageLabel
             onMouseEnter={() => onMushroomHover(CategoryText.SKILLS)}
@@ -236,6 +244,7 @@ function Home() {
             src={mushroomImg[CategoryText.PROJECT]}
             onMouseEnter={() => onMushroomHover(CategoryText.PROJECT)}
             onMouseLeave={() => onMushroomInitial(CategoryText.PROJECT)}
+            onClick={() => onMushroomClick(CategoryText.PROJECT)}
           />
           <PageLabel
             onMouseEnter={() => onMushroomHover(CategoryText.PROJECT)}
@@ -253,6 +262,7 @@ function Home() {
             src={mushroomImg[CategoryText.CONTACT]}
             onMouseEnter={() => onMushroomHover(CategoryText.CONTACT)}
             onMouseLeave={() => onMushroomInitial(CategoryText.CONTACT)}
+            onClick={() => onMushroomClick(CategoryText.CONTACT)}
           />
           <PageLabel
             onMouseEnter={() => onMushroomHover(CategoryText.CONTACT)}
