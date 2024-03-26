@@ -1,10 +1,12 @@
-.text .align-center {
+.align-center {
   text-align: center;
 }
-.text .align-left {
+
+.align-left {
   text-align: left;
 }
-.text .align-right {
+
+.align-right {
   text-align: right;
 }
 
