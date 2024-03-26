@@ -5,6 +5,7 @@ import { router } from './router/router';
 import { createGlobalStyle, ThemeProvider } from 'styled-components';
 import { theme } from './assets/css/theme.ts';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
+import './assets/css/common.css';
 
 export const GlobalStyle = createGlobalStyle`
   @font-face {
