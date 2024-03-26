@@ -152,7 +152,7 @@ const butterflyVariants = {
     transition: { repeat: Infinity, duration: 15 },
   },
   right: {
-    x: [0, window.innerWidth - 30],
+    x: [0, window.innerWidth],
     transition: { repeat: Infinity, duration: 13 },
   },
 };
