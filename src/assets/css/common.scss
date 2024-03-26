@@ -6,8 +6,8 @@
 }
 
 @font-face {
-  font-family: 'Pretendard-Regular';
-  src: url('https://cdn.jsdelivr.net/gh/Project-Noonnu/noonfonts_2107@1.1/Pretendard-Regular.woff') format('woff');
+  font-family: 'SUITE-Regular';
+  src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2304-2@1.0/SUITE-Regular.woff2') format('woff2');
   font-weight: 400;
   font-style: normal;
 }
@@ -38,14 +38,12 @@ time, mark, audio, video {
   font: inherit;
   vertical-align: baseline;
   user-select: none;
-  font-family: 'Pretendard-Regular', sans-serif;
 }
 
 /* HTML5 display-role reset for older browsers */
 article, aside, details, figcaption, figure,
 footer, header, hgroup, main, menu, nav, section {
   display: block;
-  font-family: 'Pretendard-Regular', sans-serif;
 }
 
 /* HTML5 hidden-attribute fix for newer browsers */
@@ -81,7 +79,7 @@ table {
 }
 
 body {
-  font-family: 'Pretendard-Regular', sans-serif;
+  font-family: 'SUITE-Regular', sans-serif;
   line-height: 1.2;
   width: 100vw;
   height: 100vh;
@@ -108,7 +106,7 @@ a {
 
 .font{
   &-default {
-    font-family: "Pretendard-Regular", sans-serif;
+    font-family: "SUITE-Regular", sans-serif;
   }
   &-fairy-tail {
     font-family: "Fairytale_ddobak", sans-serif;
