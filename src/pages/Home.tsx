@@ -165,10 +165,6 @@ function Home() {
     [CategoryText.CONTACT]: mushroom,
   });
 
-  const getButterflyVariant = (src) => {
-    return src === BUTTERFLY_LEFT ? 'left' : 'right';
-  };
-
   const onMushroomHover = (category) =>
     setMushroomImg((prev) => {
       return {
