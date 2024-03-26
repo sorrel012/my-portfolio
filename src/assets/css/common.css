@@ -111,4 +111,11 @@ input, button {
   font-family: "LeeSeoyun", sans-serif;
 }
 
+.transform-center-left {
+  transform-origin: center left;
+}
+.transform-center-right {
+  transform-origin: center right;
+}
+
 /*# sourceMappingURL=common.css.map */
