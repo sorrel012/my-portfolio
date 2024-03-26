@@ -91,4 +91,11 @@ a {
   text-align: right;
 }
 
+.font-default {
+  font-family: "Pretendard-Regular", sans-serif;
+}
+.font-fairy-tail {
+  font-family: "Fairytale_ddobak", sans-serif;
+}
+
 /*# sourceMappingURL=common.css.map */
