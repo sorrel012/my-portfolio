@@ -71,10 +71,11 @@ const BackgroundWrapper = styled.div`
   width: 100vw;
 `;
 
-const Butterfly = styled.img`
+const Butterfly = styled(motion.img)`
   position: absolute;
   width: 7%;
   top: ${(props) => props.top};
+  left: ${(props) => props.left};
 
   @media (max-width: 1100px) {
     top: ${(props) => (props.top === '24%' ? '10%' : props.top)};
@@ -145,6 +146,17 @@ const mushroomVariants = {
   hover: { scale: 1.1, transition: { duration: 0.3 } },
 };
 
+const butterflyVariants = {
+  left: {
+    x: [0, -window.innerWidth],
+    transition: { repeat: Infinity, duration: 15 },
+  },
+  right: {
+    x: [0, window.innerWidth - 30],
+    transition: { repeat: Infinity, duration: 13 },
+  },
+};
+
 function Home() {
   const [mushroomImg, setMushroomImg] = useState<IMushroomState>({
     [CategoryText.PROFILE]: mushroom,
@@ -152,6 +164,10 @@ function Home() {
     [CategoryText.PROJECT]: mushroom,
     [CategoryText.CONTACT]: mushroom,
   });
+
+  const getButterflyVariant = (src) => {
+    return src === BUTTERFLY_LEFT ? 'left' : 'right';
+  };
 
   const onMushroomHover = (category) =>
     setMushroomImg((prev) => {
@@ -173,9 +189,21 @@ function Home() {
       <div className="align-right">
         <Login src={rabbit} alt="rabbit" />
       </div>
-      <Butterfly src={BUTTERFLY_LEFT} top="0" />
+      <Butterfly
+        src={BUTTERFLY_LEFT}
+        top="0"
+        left="90%"
+        variants={butterflyVariants}
+        animate="left"
+      />
       <Title className="font-fairy-tail">Hyowon's Portfolio</Title>
-      <Butterfly src={BUTTERFLY_RIGHT} top="24%" />
+      <Butterfly
+        src={BUTTERFLY_RIGHT}
+        top="24%"
+        left="0"
+        variants={butterflyVariants}
+        animate="right"
+      />
       <CategoryWrapper>
         <Category
           variants={mushroomVariants}
