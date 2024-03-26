@@ -118,4 +118,14 @@ input, button {
   transform-origin: center right;
 }
 
+.pd-b-10 {
+  padding-bottom: 10px;
+}
+.pd-b-30 {
+  padding-bottom: 30px;
+}
+.pd-b-50 {
+  padding-bottom: 50px;
+}
+
 /*# sourceMappingURL=common.css.map */
