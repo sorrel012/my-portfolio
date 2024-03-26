@@ -1,4 +1,3 @@
-import Header from './components/Header.tsx';
 import { Outlet, useMatch } from 'react-router-dom';
 
 function App() {
@@ -6,7 +5,7 @@ function App() {
 
   return (
     <>
-      {!mainMatch && <Header />}
+      {/*{!mainMatch && <Header />}*/}
       <Outlet />
     </>
   );
