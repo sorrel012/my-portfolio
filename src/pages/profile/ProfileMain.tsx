@@ -4,9 +4,9 @@ import seashell from '../../assets/images/profile/seashell.png';
 import seashell2 from '../../assets/images/profile/seashell2.png';
 import seaweed from '../../assets/images/profile/seaweed1.png';
 import seaweed2 from '../../assets/images/profile/seaweed2.png';
-import Bubbles from './Bubbles.tsx';
+import Bubbles from '../../components/profile/Bubbles.tsx';
 
-const Wrapper = styled.main`
+export const Wrapper = styled.main`
   background: ${(props) => props.theme.profile.bgColor};
   height: 100vh;
   width: 100vw;
@@ -45,12 +45,12 @@ const LabelWrapper = styled.div`
   justify-content: space-evenly;
 `;
 
-const Label = styled.span`
+export const Label = styled.span`
   display: flex;
   align-items: center;
 `;
 
-const Logo = styled.img`
+export const Logo = styled.img`
   width: 2.5vw;
   margin-right: 10px;
 `;
@@ -63,7 +63,7 @@ const Information = styled.div`
   font-size: 1.8vw;
 `;
 
-const Text = styled.div<{ custom: string }>`
+export const Text = styled.div<{ custom: string }>`
   color: ${(props) =>
     props.custom === 'black'
       ? props.theme.profile.textColor
@@ -72,7 +72,7 @@ const Text = styled.div<{ custom: string }>`
   font-weight: bold;
 `;
 
-const Row = styled.div`
+export const Row = styled.div`
   margin-bottom: 10px;
 `;
 
@@ -93,11 +93,11 @@ const Content = styled.div`
   font-size: 1.8vw;
 `;
 
-const Education = styled.section`
+export const Education = styled.section`
   margin-top: 30px;
 `;
 
-const EduContent = styled.div`
+export const EduContent = styled.div`
   padding-left: 5%;
   font-weight: bold;
   font-size: 1.8vw;
@@ -105,7 +105,7 @@ const EduContent = styled.div`
   justify-content: space-between;
 `;
 
-const PeriodWrapper = styled.div`
+export const PeriodWrapper = styled.div`
   display: flex;
   flex-direction: column;
   margin-right: 4vw;
@@ -116,7 +116,7 @@ const SchoolWrapper = styled.div`
   flex-direction: column;
 `;
 
-const Period = styled.time`
+export const Period = styled.time`
   margin-bottom: 10px;
 `;
 
@@ -124,7 +124,7 @@ const School = styled.span`
   margin-bottom: 10px;
 `;
 
-const SeaweedWrapper = styled.div`
+export const SeaweedWrapper = styled.div`
   width: 100vw;
   position: absolute;
   bottom: 0;
@@ -132,7 +132,7 @@ const SeaweedWrapper = styled.div`
   justify-content: space-between;
 `;
 
-const Seaweed = styled.img`
+export const Seaweed = styled.img`
   width: 15vw;
 `;
 
