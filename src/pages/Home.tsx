@@ -72,7 +72,7 @@ const BackgroundWrapper = styled.div`
   width: 100vw;
 `;
 
-const Butterfly = styled(motion.img)`
+const Butterfly = styled(motion.img)<{ top: string; left: string }>`
   position: absolute;
   width: 7%;
   top: ${(props) => props.top};
@@ -87,7 +87,7 @@ const Butterfly = styled(motion.img)`
   }
 `;
 
-const Grass = styled.div`
+const Grass = styled.div<{ src: string }>`
   max-height: 200px;
   width: 100%;
   aspect-ratio: 1/ 3;
@@ -122,7 +122,7 @@ const FlowerSecondRow = styled.div`
   margin-bottom: 1.5%;
 `;
 
-const Flower = styled.img`
+const Flower = styled.img<{ transform: string }>`
   width: 8%;
   max-width: 120px;
   transform: ${(props) => props.transform};
@@ -131,7 +131,7 @@ const Flower = styled.img`
 interface IMushroomState {
   profile: string;
   skills: string;
-  project: string;
+  projects: string;
   contact: string;
 }
 
