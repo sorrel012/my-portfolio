@@ -5,7 +5,7 @@ import seashell2 from '../../assets/images/profile/seashell2.png';
 import Bubbles from '../../components/profile/Bubbles.tsx';
 import Seaweeds from '../../components/profile/Seaweeds.tsx';
 
-export const Wrapper = styled.main`
+const Wrapper = styled.main`
   background: ${(props) => props.theme.profile.bgColor};
   height: 100vh;
   width: 100vw;
