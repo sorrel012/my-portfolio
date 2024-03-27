@@ -51,26 +51,39 @@ const Career = styled.section`
   margin-bottom: 5vh;
 `;
 
-const CareerContent = styled.div``;
+const CareerContent = styled.div`
+  padding-left: 5%;
+`;
 
 const Company = styled.div`
   font-weight: bold;
   font-size: 1.8vw;
-  padding-left: 5%;
   display: flex;
   justify-content: space-between;
 `;
 
 const CompanyName = styled.div`
   flex: 10;
-  margin-left: 5vw;
+  margin-left: 8.5vw;
 `;
 
-const Project = styled.div``;
+const Project = styled.div`
+  padding-left: 3%;
+`;
 
-const ProjectName = styled.h2``;
+const ProjectName = styled.h2`
+  font-size: 1.5vw;
+  margin-bottom: 10px;
+  font-weight: bold;
+`;
 
-const ProjectContent = styled.li``;
+const ProjectContent = styled.li`
+  padding-left: 2%;
+  width: 100%;
+  font-size: 1.2vw;
+  margin-bottom: 7px;
+  font-weight: bold;
+`;
 
 function ProfileHistory() {
   return (
@@ -109,22 +122,22 @@ function ProfileHistory() {
           </Company>
           <Project>
             <ProjectName>
-              ◽신세계포인트 2차 고도화 프로젝트(Vue.js, Spring boot)
+              ◽ 신세계포인트 2차 고도화 프로젝트(Vue.js, Spring boot)
             </ProjectName>
             <ul>
               <ProjectContent>
-                - `신세계포인트 앱 다국어 버전 Admin 화면 이관
+                - 신세계포인트 앱 다국어 버전 Admin 화면 이관
               </ProjectContent>
-              <ProjectContent>관계사 이벤트 배너 표시 추가</ProjectContent>
+              <ProjectContent>- 관계사 이벤트 배너 표시 추가</ProjectContent>
               <ProjectContent>
-                - `신세계포인트 앱 다국어 버전 Admin 화면 이관
+                - 신세계포인트 앱 다국어 버전 Admin 화면 이관
               </ProjectContent>
-              <ProjectContent>비밀번호 변경 주기 적용</ProjectContent>
+              <ProjectContent>- 비밀번호 변경 주기 적용</ProjectContent>
               <ProjectContent>
-                - `포인트 비밀번호 변경 본인인증 및 비회원 기능 추가
+                - 포인트 비밀번호 변경 본인인증 및 비회원 기능 추가
               </ProjectContent>
               <ProjectContent>
-                - `차량정보 수집 필수 동의 및 혜택 제공 동의 분리
+                - 차량정보 수집 필수 동의 및 혜택 제공 동의 분리
               </ProjectContent>
             </ul>
           </Project>
