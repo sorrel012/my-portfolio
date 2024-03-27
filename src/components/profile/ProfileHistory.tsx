@@ -51,10 +51,12 @@ const Logo = styled.img`
   margin-right: 10px;
 `;
 
-const Content = styled.div`
+const Information = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: space-evenly;
+  font-weight: bold;
+  font-size: 1.8vw;
 `;
 
 const Text = styled.div<{ custom: string }>`
@@ -66,17 +68,57 @@ const Text = styled.div<{ custom: string }>`
   font-weight: bold;
 `;
 
-const Row = styled.div``;
+const Row = styled.div`
+  margin-bottom: 10px;
+`;
 
-const Certificate = styled.section``;
+const Certificate = styled.section`
+  margin-top: 10px;
+`;
 
-const CertContent = styled.div``;
+const CertContent = styled.div`
+  padding-left: 5%;
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 10px;
+  color: ${(props) => props.theme.profile.textColor};
+`;
 
-const Education = styled.section``;
+const Content = styled.div`
+  font-weight: bold;
+  font-size: 1.8vw;
+`;
 
-const Period = styled.time``;
+const Education = styled.section`
+  margin-top: 30px;
+`;
 
-const School = styled.span``;
+const EduContent = styled.div`
+  padding-left: 5%;
+  font-weight: bold;
+  font-size: 1.8vw;
+  display: flex;
+  justify-content: space-between;
+`;
+
+const PeriodWrapper = styled.div`
+  display: flex;
+  flex-direction: column;
+  margin-right: 4vw;
+`;
+
+const SchoolWrapper = styled.div`
+  display: flex;
+  flex-direction: column;
+`;
+
+const Period = styled.time`
+  margin-bottom: 10px;
+`;
+
+const School = styled.span`
+  margin-bottom: 10px;
+`;
 
 const Bubbles = styled.div``;
 
@@ -121,12 +163,12 @@ function ProfileHistory() {
                 <Text custom="red">주소</Text>
               </Label>
             </LabelWrapper>
-            <Content>
+            <Information>
               <Text custom="black">한효원</Text>
               <Text custom="black">1998.01.17</Text>
               <Text custom="black">sorrel012@gmail.com</Text>
               <Text custom="black">서울특별시 송파구</Text>
-            </Content>
+            </Information>
           </Info>
         </PersonalInfo>
         <Certificate>
@@ -137,9 +179,9 @@ function ProfileHistory() {
             </Label>
           </Row>
           <CertContent>
-            <Content>정보처리기사(2023.06)</Content>
-            <Content>TOEIC(2022.06)</Content>
-            <Content>SQLD(2023.07)</Content>
+            <Content>◾ TOEIC(2022.06) - 880</Content>
+            <Content>◾ 정보처리기사(2023.06)</Content>
+            <Content>◾ SQLD(2023.07)</Content>
           </CertContent>
         </Certificate>
         <Education>
@@ -149,14 +191,16 @@ function ProfileHistory() {
               <Text custom="red">학력</Text>
             </Label>
           </Row>
-          <Row>
-            <Period>2017.02-2021-02</Period>
-            <School>청주교육대학교 / 초등교육과 (심화: 영어교육)</School>
-          </Row>
-          <Row>
-            <Period>2022.09-2024.08(예정)</Period>
-            <School>한국방송통신대학교 / 컴퓨터과학과 </School>
-          </Row>
+          <EduContent>
+            <PeriodWrapper>
+              <Period>◾ 2017.02-2021-02</Period>
+              <Period>◾ 2022.09-2024.08(예정)</Period>
+            </PeriodWrapper>
+            <SchoolWrapper>
+              <School>청주교육대학교 / 초등교육과 (심화: 영어교육)</School>
+              <School>한국방송통신대학교 / 컴퓨터과학과 </School>
+            </SchoolWrapper>
+          </EduContent>
         </Education>
       </Box>
       <Bubbles>
