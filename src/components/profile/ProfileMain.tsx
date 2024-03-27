@@ -145,19 +145,19 @@ function ProfileMain() {
           <Info>
             <LabelWrapper>
               <Label>
-                <Logo src={seashell} />
+                <Logo src={seashell} alt="seashell" />
                 <Text custom="red">이름</Text>
               </Label>
               <Label>
-                <Logo src={seashell} />
+                <Logo src={seashell} alt="seashell" />
                 <Text custom="red">생년월일</Text>
               </Label>
               <Label>
-                <Logo src={seashell} />
+                <Logo src={seashell} alt="seashell" />
                 <Text custom="red">이메일</Text>
               </Label>
               <Label>
-                <Logo src={seashell} />
+                <Logo src={seashell} alt="seashell" />
                 <Text custom="red">주소</Text>
               </Label>
             </LabelWrapper>
@@ -172,7 +172,7 @@ function ProfileMain() {
         <Certificate>
           <Row>
             <Label>
-              <Logo src={seashell2} />
+              <Logo src={seashell2} alt="seashell" />
               <Text custom="red">자격증 및 어학</Text>
             </Label>
           </Row>
@@ -185,7 +185,7 @@ function ProfileMain() {
         <Education>
           <Row>
             <Label>
-              <Logo src={seashell2} />
+              <Logo src={seashell2} alt="seashell" />
               <Text custom="red">학력</Text>
             </Label>
           </Row>
@@ -203,8 +203,8 @@ function ProfileMain() {
       </Box>
       <Bubbles />
       <SeaweedWrapper>
-        <Seaweed src={seaweed} />
-        <Seaweed src={seaweed2} />
+        <Seaweed src={seaweed} alt="seaweed" />
+        <Seaweed src={seaweed2} alt="seaweed" />
       </SeaweedWrapper>
     </Wrapper>
   );
