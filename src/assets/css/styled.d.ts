@@ -15,6 +15,7 @@ declare module 'styled-components' {
     };
     profile: {
       bgColor: string;
+      boxColor: string;
       titleColor: string;
       labelColor: string;
     };

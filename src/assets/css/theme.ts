@@ -14,6 +14,7 @@ export const theme: DefaultTheme = {
   },
   profile: {
     bgColor: `linear-gradient(180deg, #B0E0E6 0%, #87CEEB 17%, #1E90FF 70.5%, #0077BE 99%)`,
+    boxColor: 'rgba(255, 255, 255, 0.5)',
     titleColor: '#FFFFFF',
     labelColor: '#880000',
   },
