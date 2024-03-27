@@ -18,6 +18,7 @@ declare module 'styled-components' {
       boxColor: string;
       titleColor: string;
       labelColor: string;
+      textColor: string;
     };
     skills: {
       bgColor: string;

@@ -17,6 +17,7 @@ export const theme: DefaultTheme = {
     boxColor: 'rgba(255, 255, 255, 0.5)',
     titleColor: '#FFFFFF',
     labelColor: '#880000',
+    textColor: '#2a2a2a',
   },
   skills: {
     bgColor: `linear-gradient(180deg, #E9F9FD 0%, #D4F9FC 71%, #FFDAAE 100%)`,
