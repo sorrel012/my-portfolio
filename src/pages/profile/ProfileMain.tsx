@@ -92,7 +92,7 @@ const Content = styled.div`
   font-size: 1.8vw;
 `;
 
-export const Education = styled.section`
+const Education = styled.section`
   margin-top: 30px;
 `;
 
