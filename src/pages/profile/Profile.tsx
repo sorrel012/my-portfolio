@@ -1,11 +1,10 @@
-import ProfileHistory from '../../components/profile/ProfileHistory';
-import ProfileMain from '../../components/profile/ProfileMain.tsx';
+import ProfileHistory from './ProfileHistory.tsx';
 
 function Profile() {
   return (
     <>
       {/*<ProfileIntro />*/}
-      <ProfileMain />
+      {/*<ProfileMain />*/}
       <ProfileHistory />
     </>
   );
