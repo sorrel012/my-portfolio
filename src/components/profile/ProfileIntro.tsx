@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 import mushroom from '../../assets/images/home/mushroom.png';
 
-const Wrapper = styled.div`
+const Wrapper = styled.main`
   background: ${(props) => props.theme.profile.bgColor};
   height: 100vh;
   width: 100vw;
@@ -10,7 +10,7 @@ const Wrapper = styled.div`
   align-items: center;
 `;
 
-const Introduction = styled.div`
+const Introduction = styled.section`
   height: 50vh;
   padding: 0 5%;
   display: flex;
@@ -23,7 +23,7 @@ const Picture = styled.img`
   aspect-ratio: 2 / 2.5;
 `;
 
-const Overview = styled.article`
+const Overview = styled.section`
   padding-left: 20px;
   display: flex;
   flex-direction: column;
