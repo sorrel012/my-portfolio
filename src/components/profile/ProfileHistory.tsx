@@ -2,6 +2,9 @@ import styled from 'styled-components';
 import mushroom from '../../assets/images/home/mushroom.png';
 import seashell from '../../assets/images/profile/seashell.png';
 import seashell2 from '../../assets/images/profile/seashell2.png';
+import seaweed from '../../assets/images/profile/seaweed1.png';
+import seaweed2 from '../../assets/images/profile/seaweed2.png';
+import Bubbles from './Bubbles.tsx';
 
 const Wrapper = styled.main`
   background: ${(props) => props.theme.profile.bgColor};
@@ -18,6 +21,7 @@ const Box = styled.section`
   background-color: ${(props) => props.theme.profile.boxColor};
   border-radius: 20px;
   padding: 30px;
+  z-index: 99;
 `;
 
 const PersonalInfo = styled.section`
@@ -120,23 +124,17 @@ const School = styled.span`
   margin-bottom: 10px;
 `;
 
-const Bubbles = styled.div``;
+const SeaweedWrapper = styled.div`
+  width: 100vw;
+  position: absolute;
+  bottom: 0;
+  display: flex;
+  justify-content: space-between;
+`;
 
-const BubbleLeft = styled.div``;
-
-const BubbleRight = styled.div``;
-
-const BubbleFirst = styled.div``;
-
-const BubbleSecond = styled.div``;
-
-const BubbleThird = styled.div``;
-
-const BubbleLast = styled.div``;
-
-const SeaweedWrapper = styled.div``;
-
-const Seaweed = styled.img``;
+const Seaweed = styled.img`
+  width: 15vw;
+`;
 
 function ProfileHistory() {
   return (
@@ -203,19 +201,10 @@ function ProfileHistory() {
           </EduContent>
         </Education>
       </Box>
-      <Bubbles>
-        <BubbleLeft>
-          <BubbleFirst />
-          <BubbleSecond />
-        </BubbleLeft>
-        <BubbleRight>
-          <BubbleThird />
-          <BubbleLast />
-        </BubbleRight>
-      </Bubbles>
+      <Bubbles />
       <SeaweedWrapper>
-        <Seaweed />
-        <Seaweed />
+        <Seaweed src={seaweed} />
+        <Seaweed src={seaweed2} />
       </SeaweedWrapper>
     </Wrapper>
   );
