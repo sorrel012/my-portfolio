@@ -125,4 +125,8 @@ a {
   padding-bottom: 50px;
 }
 
+#fp-nav ul li a span, .fp-slidesNav ul li a span {
+  background: white;
+}
+
 /*# sourceMappingURL=common.css.map */
