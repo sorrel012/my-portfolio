@@ -46,7 +46,7 @@ const LabelWrapper = styled.div`
 
 export const Label = styled.span`
   display: flex;
-  align-items: center;
+  align-items: flex-end;
 `;
 
 export const Logo = styled.img`
