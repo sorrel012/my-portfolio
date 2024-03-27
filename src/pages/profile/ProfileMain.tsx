@@ -2,9 +2,8 @@ import styled from 'styled-components';
 import mushroom from '../../assets/images/home/mushroom.png';
 import seashell from '../../assets/images/profile/seashell.png';
 import seashell2 from '../../assets/images/profile/seashell2.png';
-import seaweed from '../../assets/images/profile/seaweed1.png';
-import seaweed2 from '../../assets/images/profile/seaweed2.png';
 import Bubbles from '../../components/profile/Bubbles.tsx';
+import Seaweeds from '../../components/profile/Seaweeds.tsx';
 
 export const Wrapper = styled.main`
   background: ${(props) => props.theme.profile.bgColor};
@@ -124,18 +123,6 @@ const School = styled.span`
   margin-bottom: 10px;
 `;
 
-export const SeaweedWrapper = styled.div`
-  width: 100vw;
-  position: absolute;
-  bottom: 0;
-  display: flex;
-  justify-content: space-between;
-`;
-
-export const Seaweed = styled.img`
-  width: 15vw;
-`;
-
 function ProfileMain() {
   return (
     <Wrapper>
@@ -202,10 +189,7 @@ function ProfileMain() {
         </Education>
       </Box>
       <Bubbles />
-      <SeaweedWrapper>
-        <Seaweed src={seaweed} alt="seaweed" />
-        <Seaweed src={seaweed2} alt="seaweed" />
-      </SeaweedWrapper>
+      <Seaweeds />
     </Wrapper>
   );
 }
