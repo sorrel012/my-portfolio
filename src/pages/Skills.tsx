@@ -1,11 +1,28 @@
 import styled from 'styled-components';
+import { AnimatePresence, motion } from 'framer-motion';
 
 import sun from '../assets/images/skills/sun.png';
 import tree from '../assets/images/skills/tree.png';
 import apple from '../assets/images/skills/apple.png';
 import peach from '../assets/images/skills/peach.png';
 import orange from '../assets/images/skills/orange.png';
-import { motion } from 'framer-motion';
+import java from '../assets/images/tmp/back/java.png';
+import spring from '../assets/images/tmp/back/spring.png';
+import springboot from '../assets/images/tmp/back/spring boot.png';
+import oracle from '../assets/images/tmp/back/oracle.png';
+import postgresql from '../assets/images/tmp/back/postgre.png';
+import html from '../assets/images/tmp/front/html.png';
+import css from '../assets/images/tmp/front/css.png';
+import javascript from '../assets/images/tmp/front/js.png';
+import typescript from '../assets/images/tmp/front/ts.png';
+import vue from '../assets/images/tmp/front/vue.png';
+import react from '../assets/images/tmp/front/react.png';
+import next from '../assets/images/tmp/front/next.png';
+import webstorm from '../assets/images/tmp/tool/webstorm.png';
+import intellij from '../assets/images/tmp/tool/intellij.png';
+import git from '../assets/images/tmp/tool/git.png';
+import figma from '../assets/images/tmp/tool/figma.png';
+import { useState } from 'react';
 
 const Wrapper = styled.main`
   height: 100vh;
@@ -33,7 +50,7 @@ const Tree = styled.img`
   width: 40vw;
 `;
 
-const Apple = styled.div`
+const Apple = styled(motion.div)`
   position: absolute;
   top: 32%;
   left: 2%;
@@ -45,7 +62,7 @@ const AppleImg = styled(motion.img)`
   cursor: pointer;
 `;
 
-const Peach = styled.div`
+const Peach = styled(motion.div)`
   position: absolute;
   top: 45%;
   left: 60%;
@@ -57,7 +74,7 @@ const PeachImg = styled(motion.img)`
   cursor: pointer;
 `;
 
-const Orange = styled.div`
+const Orange = styled(motion.div)`
   position: absolute;
   top: 8%;
   left: 47%;
@@ -69,26 +86,27 @@ const OrangeImg = styled(motion.img)`
   cursor: pointer;
 `;
 
-const AppleOpen = styled.div`
+const AppleOpen = styled(motion.div)`
   position: absolute;
-  width: 25%;
-  left: 5%;
+  width: 30%;
+  left: 2%;
   bottom: 5%;
   background-color: rgba(204, 47, 52, 0.5);
   border: none;
   border-radius: 50%;
-  padding: 50px;
+  padding: 30px;
   box-shadow: 8px 6px 15px rgba(119, 26, 29, 0.25);
+  text-align: center;
 `;
 
-const BackLogo = styled.svg`
-  width: 30%;
-  padding: 0 10px;
+const BackLogo = styled.img`
+  width: 50%;
+  padding: 10px;
 `;
 
-const PeachOpen = styled.div`
+const PeachOpen = styled(motion.div)`
   position: absolute;
-  width: 25%;
+  width: 30%;
   right: 5%;
   bottom: 5%;
   background-color: rgba(252, 132, 117, 0.38);
@@ -96,11 +114,15 @@ const PeachOpen = styled.div`
   border-radius: 50%;
   padding: 50px;
   box-shadow: 8px 6px 15px rgba(117, 10, 58, 0.38);
+  text-align: center;
 `;
 
-const FrontLogo = styled.img``;
+const FrontLogo = styled.img`
+  width: 30%;
+  padding: 0 10px;
+`;
 
-const OrangeOpen = styled.div`
+const OrangeOpen = styled(motion.div)`
   position: absolute;
   width: 25%;
   top: 5%;
@@ -112,7 +134,10 @@ const OrangeOpen = styled.div`
   box-shadow: 8px 6px 15px rgba(129, 87, 19, 0.25);
 `;
 
-const ToolLogo = styled.img``;
+const ToolLogo = styled.img`
+  width: 50%;
+  padding: 0 10px;
+`;
 
 const fruitVariants = (degree: string) => ({
   initial: { scale: 1, rotate: `${degree}deg` },
@@ -128,46 +153,69 @@ const fruitVariants = (degree: string) => ({
 });
 
 const Skills = function Skills() {
+  const [isAppleClicked, setIsAppleClicked] = useState(false);
+  const [isPeachClicked, setIsPeachClicked] = useState(false);
+  const [isOrangeClicked, setIsOrangeClicked] = useState(false);
+
   return (
     <Wrapper>
       <Sun>
-        <Image src={sun} />
+        <Image src={sun} alt="skills label" />
       </Sun>
-      <TreeWrapper>
-        <Tree src={tree} />
-        <Apple>
-          <AppleImg
-            src={apple}
-            variants={fruitVariants('-20')}
-            initial="initial"
-            whileHover="hover"
-          />
-        </Apple>
-        <Peach>
-          <PeachImg
-            src={peach}
-            variants={fruitVariants('15')}
-            initial="initial"
-            whileHover="hover"
-          />
-        </Peach>
-        <Orange>
-          <OrangeImg
-            src={orange}
-            variants={fruitVariants('-3')}
-            initial="initial"
-            whileHover="hover"
-          />
-        </Orange>
-      </TreeWrapper>
-      <AppleOpen>
-      </AppleOpen>
-      <PeachOpen>
-        <FrontLogo />
-      </PeachOpen>
-      <OrangeOpen>
-        <ToolLogo />
-      </OrangeOpen>
+      <AnimatePresence>
+        <TreeWrapper>
+          <Tree src={tree} alt="skills" />
+          <Apple layoutId="apple">
+            <AppleImg
+              src={apple}
+              alt="back-end"
+              variants={fruitVariants('-20')}
+              initial="initial"
+              whileHover="hover"
+            />
+          </Apple>
+          <Peach layoutId="peach">
+            <PeachImg
+              src={peach}
+              alt="front-end"
+              variants={fruitVariants('15')}
+              initial="initial"
+              whileHover="hover"
+            />
+          </Peach>
+          <Orange layoutId="orange">
+            <OrangeImg
+              src={orange}
+              alt="tool"
+              variants={fruitVariants('-3')}
+              initial="initial"
+              whileHover="hover"
+            />
+          </Orange>
+        </TreeWrapper>
+        <AppleOpen layoutId="apple">
+          <BackLogo src={java} alt="java" />
+          <BackLogo src={spring} alt="spring" />
+          <BackLogo src={springboot} alt="spring-boot" />
+          <BackLogo src={oracle} alt="oracle" />
+          <BackLogo src={postgresql} alt="postgresql" />
+        </AppleOpen>
+        <PeachOpen layoutId="peach">
+          <FrontLogo src={html} alt="html" />
+          <FrontLogo src={css} alt="css" />
+          <FrontLogo src={javascript} alt="javascript" />
+          <FrontLogo src={typescript} alt="typescript" />
+          <FrontLogo src={vue} alt="vue" />
+          <FrontLogo src={react} alt="react" />
+          <FrontLogo src={next} alt="next" />
+        </PeachOpen>
+        <OrangeOpen layoutId="orange">
+          <ToolLogo src={webstorm} alt="webstorm" />
+          <ToolLogo src={intellij} alt="intellij" />
+          <ToolLogo src={git} alt="git" />
+          <ToolLogo src={figma} alt="figma" />
+        </OrangeOpen>
+      </AnimatePresence>
     </Wrapper>
   );
 };
