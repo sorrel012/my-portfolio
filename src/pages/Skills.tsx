@@ -22,7 +22,7 @@ import webstorm from '../assets/images/tmp/tool/webstorm.png';
 import intellij from '../assets/images/tmp/tool/intellij.png';
 import git from '../assets/images/tmp/tool/git.png';
 import figma from '../assets/images/tmp/tool/figma.png';
-import { useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 
 const Wrapper = styled.main`
   height: 100vh;
@@ -100,7 +100,7 @@ const AppleOpen = styled(motion.div)`
 `;
 
 const BackLogo = styled.img`
-  width: 50%;
+  width: 40%;
   padding: 10px;
 `;
 
@@ -119,7 +119,7 @@ const PeachOpen = styled(motion.div)`
 
 const FrontLogo = styled.img`
   width: 30%;
-  padding: 0 10px;
+  padding: 20px;
 `;
 
 const OrangeOpen = styled(motion.div)`
@@ -132,10 +132,11 @@ const OrangeOpen = styled(motion.div)`
   border-radius: 50%;
   padding: 50px;
   box-shadow: 8px 6px 15px rgba(129, 87, 19, 0.25);
+  text-align: center;
 `;
 
 const ToolLogo = styled.img`
-  width: 50%;
+  width: 35%;
   padding: 0 10px;
 `;
 
@@ -157,11 +158,61 @@ const Skills = function Skills() {
   const [isPeachClicked, setIsPeachClicked] = useState(false);
   const [isOrangeClicked, setIsOrangeClicked] = useState(false);
 
+  const appleRef = useRef<HTMLDivElement>(null);
+  const peachRef = useRef<HTMLDivElement>(null);
+  const orangeRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      if (
+        appleRef.current &&
+        !appleRef.current.contains(event.target as Node)
+      ) {
+        setIsAppleClicked(false);
+      }
+      if (
+        peachRef.current &&
+        !peachRef.current.contains(event.target as Node)
+      ) {
+        setIsPeachClicked(false);
+      }
+      if (
+        orangeRef.current &&
+        !orangeRef.current.contains(event.target as Node)
+      ) {
+        setIsOrangeClicked(false);
+      }
+    };
+    document.addEventListener('mousedown', handleClickOutside);
+
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside);
+    };
+  }, []);
+
+  const onAppleClick = () => {
+    setIsAppleClicked(true);
+    setIsPeachClicked(false);
+    setIsOrangeClicked(false);
+  };
+  const onPeachClick = () => {
+    setIsPeachClicked(true);
+    setIsAppleClicked(false);
+    setIsOrangeClicked(false);
+  };
+  const onOrangeClick = () => {
+    setIsOrangeClicked(true);
+    setIsAppleClicked(false);
+    setIsPeachClicked(false);
+  };
+
   return (
     <Wrapper>
-      <Sun>
-        <Image src={sun} alt="skills label" />
-      </Sun>
+      {!isAppleClicked && (
+        <Sun>
+          <Image src={sun} alt="skills label" />
+        </Sun>
+      )}
       <AnimatePresence>
         <TreeWrapper>
           <Tree src={tree} alt="skills" />
@@ -172,6 +223,7 @@ const Skills = function Skills() {
               variants={fruitVariants('-20')}
               initial="initial"
               whileHover="hover"
+              onClick={onAppleClick}
             />
           </Apple>
           <Peach layoutId="peach">
@@ -181,6 +233,7 @@ const Skills = function Skills() {
               variants={fruitVariants('15')}
               initial="initial"
               whileHover="hover"
+              onClick={onPeachClick}
             />
           </Peach>
           <Orange layoutId="orange">
@@ -190,31 +243,38 @@ const Skills = function Skills() {
               variants={fruitVariants('-3')}
               initial="initial"
               whileHover="hover"
+              onClick={onOrangeClick}
             />
           </Orange>
         </TreeWrapper>
-        <AppleOpen layoutId="apple">
-          <BackLogo src={java} alt="java" />
-          <BackLogo src={spring} alt="spring" />
-          <BackLogo src={springboot} alt="spring-boot" />
-          <BackLogo src={oracle} alt="oracle" />
-          <BackLogo src={postgresql} alt="postgresql" />
-        </AppleOpen>
-        <PeachOpen layoutId="peach">
-          <FrontLogo src={html} alt="html" />
-          <FrontLogo src={css} alt="css" />
-          <FrontLogo src={javascript} alt="javascript" />
-          <FrontLogo src={typescript} alt="typescript" />
-          <FrontLogo src={vue} alt="vue" />
-          <FrontLogo src={react} alt="react" />
-          <FrontLogo src={next} alt="next" />
-        </PeachOpen>
-        <OrangeOpen layoutId="orange">
-          <ToolLogo src={webstorm} alt="webstorm" />
-          <ToolLogo src={intellij} alt="intellij" />
-          <ToolLogo src={git} alt="git" />
-          <ToolLogo src={figma} alt="figma" />
-        </OrangeOpen>
+        {isAppleClicked && (
+          <AppleOpen layoutId="apple" ref={appleRef}>
+            <BackLogo src={java} alt="java" />
+            <BackLogo src={spring} alt="spring" />
+            <BackLogo src={springboot} alt="spring-boot" />
+            <BackLogo src={oracle} alt="oracle" />
+            <BackLogo src={postgresql} alt="postgresql" />
+          </AppleOpen>
+        )}
+        {isPeachClicked && (
+          <PeachOpen layoutId="peach" ref={peachRef}>
+            <FrontLogo src={html} alt="html" />
+            <FrontLogo src={css} alt="css" />
+            <FrontLogo src={javascript} alt="javascript" />
+            <FrontLogo src={typescript} alt="typescript" />
+            <FrontLogo src={vue} alt="vue" />
+            <FrontLogo src={react} alt="react" />
+            <FrontLogo src={next} alt="next" />
+          </PeachOpen>
+        )}
+        {isOrangeClicked && (
+          <OrangeOpen layoutId="orange" ref={orangeRef}>
+            <ToolLogo src={webstorm} alt="webstorm" />
+            <ToolLogo src={intellij} alt="intellij" />
+            <ToolLogo src={git} alt="git" />
+            <ToolLogo src={figma} alt="figma" />
+          </OrangeOpen>
+        )}
       </AnimatePresence>
     </Wrapper>
   );
