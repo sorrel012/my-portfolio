@@ -33,11 +33,11 @@ function Projects() {
   return (
     <Wrapper>
       <Turtle>
-        <TurtleImg src={turtle} />
+        <TurtleImg src={turtle} alt="turtle" />
       </Turtle>
       <Project />
       <Rabbit>
-        <RabbitImg src={rabbit} />
+        <RabbitImg src={rabbit} alt="rabbit" />
       </Rabbit>
     </Wrapper>
   );
