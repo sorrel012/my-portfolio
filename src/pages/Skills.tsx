@@ -86,7 +86,7 @@ const OrangeImg = styled(motion.img)`
   cursor: pointer;
 `;
 
-const AppleOpen = styled(motion.div)`
+const AppleOpen = styled(motion.section)`
   position: absolute;
   width: 30%;
   left: 2%;
@@ -104,7 +104,7 @@ const BackLogo = styled.img`
   padding: 10px;
 `;
 
-const PeachOpen = styled(motion.div)`
+const PeachOpen = styled(motion.section)`
   position: absolute;
   width: 30%;
   right: 5%;
@@ -122,7 +122,7 @@ const FrontLogo = styled.img`
   padding: 20px;
 `;
 
-const OrangeOpen = styled(motion.div)`
+const OrangeOpen = styled(motion.section)`
   position: absolute;
   width: 25%;
   top: 5%;
