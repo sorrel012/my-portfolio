@@ -94,7 +94,7 @@ const LogoImg = styled.img`
   width: 8%;
   margin-right: 5px;
   background-color: #79422f;
-  padding: 20px;
+  padding: 10px;
   border-radius: 50%;
 `;
 
