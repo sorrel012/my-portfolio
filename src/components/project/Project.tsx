@@ -2,9 +2,11 @@ import styled from 'styled-components';
 import ProjectItem from './ProjectItem.tsx';
 
 import line from '../../assets/images/projects/line.png';
+import finish from '../../assets/images/projects/finish.png';
 
 const Wrapper = styled.div`
   width: 60%;
+  margin: 0 auto;
 `;
 
 const Title = styled.div`
@@ -14,6 +16,7 @@ const Title = styled.div`
 
 const RaceImg = styled.img`
   width: 100%;
+  display: block;
 `;
 
 const TitleHeader = styled.h2`
@@ -32,27 +35,32 @@ const TitleHeader = styled.h2`
 const Content = styled.div`
   background: ${(props) => props.theme.projects.wrapperBgColor};
   padding: 50px 20px;
+  position: relative;
 
   @media (max-width: 768px) {
     padding: 30px 20px;
   }
 `;
 
-const Finish = styled.div`
-  margin-bottom: -30px;
+const Flag = styled.img`
+  position: absolute;
+  bottom: 0;
+  right: -1%;
+  width: 10%;
 `;
 
 function Project() {
   return (
     <Wrapper>
       <Title>
-        <RaceImg src={line} />
+        <RaceImg src={line} alt="line" />
         <TitleHeader>PROJECTS</TitleHeader>
       </Title>
       <Content>
         <ProjectItem />
+        <Flag src={finish} alt="finish" />
       </Content>
-      <RaceImg src={line} />
+      <RaceImg src={line} alt="line" />
     </Wrapper>
   );
 }

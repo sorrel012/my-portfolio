@@ -8,14 +8,15 @@ const Wrapper = styled.main`
   height: 100vh;
   width: 100vw;
   background: ${(props) => props.theme.projects.bgColor};
-  display: flex;
-  justify-content: space-around;
-  padding-top: 15%;
   overflow-y: scroll;
+  padding: 10% 0 8%;
+  position: relative;
 `;
 
 const Turtle = styled.div`
   width: 10%;
+  position: absolute;
+  top: 0;
 `;
 
 const TurtleImg = styled.img`
@@ -24,6 +25,8 @@ const TurtleImg = styled.img`
 
 const Rabbit = styled.div`
   width: 10%;
+  position: absolute;
+  top: 0;
 `;
 
 const RabbitImg = styled.img`
