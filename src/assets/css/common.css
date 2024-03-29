@@ -128,6 +128,19 @@ a {
   padding-bottom: 50px;
 }
 
+.mg-b-5 {
+  margin-bottom: 5px;
+}
+.mg-b-10 {
+  margin-bottom: 10px;
+}
+.mg-b-30 {
+  margin-bottom: 30px;
+}
+.mg-b-50 {
+  margin-bottom: 50px;
+}
+
 #fp-nav ul li a span, .fp-slidesNav ul li a span {
   background: white;
 }
