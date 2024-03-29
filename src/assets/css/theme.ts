@@ -27,7 +27,7 @@ export const theme: DefaultTheme = {
     headerBgColor: '#FFFFFF',
     headerTextColor: '#AE0000',
     bgColor: '#E9EDC9',
-    wrapperBgColor: '#D4A373',
+    wrapperBgColor: 'rgba(212,163,115,0.6)',
     contentBgColor: '#FAEDCD',
   },
   contact: {
