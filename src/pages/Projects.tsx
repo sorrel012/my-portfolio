@@ -11,6 +11,7 @@ const Wrapper = styled.main`
   display: flex;
   justify-content: space-around;
   padding-top: 15%;
+  overflow-y: scroll;
 `;
 
 const Turtle = styled.div`
