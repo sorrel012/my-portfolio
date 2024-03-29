@@ -38,6 +38,10 @@ const Content = styled.div`
   }
 `;
 
+const Finish = styled.div`
+  margin-bottom: -30px;
+`;
+
 function Project() {
   return (
     <Wrapper>
@@ -48,6 +52,7 @@ function Project() {
       <Content>
         <ProjectItem />
       </Content>
+      <RaceImg src={line} />
     </Wrapper>
   );
 }
