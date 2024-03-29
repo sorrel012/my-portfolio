@@ -107,6 +107,9 @@ a {
 .font-cute {
   font-family: "LeeSeoyun", sans-serif;
 }
+.font-bold {
+  font-weight: bold;
+}
 
 .transform-center-left {
   transform-origin: center left;
