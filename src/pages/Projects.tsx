@@ -1,10 +1,11 @@
+import { useEffect, useRef, useState } from 'react';
 import styled from 'styled-components';
 import { motion } from 'framer-motion';
 import Project from '../components/project/Project.tsx';
 
 import turtle from '../assets/images/projects/project-turtle.png';
 import rabbit from '../assets/images/projects/project-rabbit.png';
-import { useEffect, useRef, useState } from 'react';
+import rest from '../assets/images/projects/rest.png';
 
 const Wrapper = styled.main`
   height: 100vh;
@@ -30,10 +31,17 @@ const Rabbit = styled(motion.div)`
   position: absolute;
   right: 5%;
   top: 0;
+  z-index: 99;
 `;
 
 const RabbitImg = styled.img`
   width: 100%;
+`;
+
+const RestImg = styled.img`
+  width: 17%;
+  position: absolute;
+  right: 1%;
 `;
 
 function Projects() {
@@ -82,6 +90,7 @@ function Projects() {
       <Rabbit variants={rabbitVariants} animate="scroll">
         <RabbitImg src={rabbit} alt="rabbit" />
       </Rabbit>
+      <RestImg src={rest} alt="rest" style={{ top: moveRange / 1.4 }} />
     </Wrapper>
   );
 }
