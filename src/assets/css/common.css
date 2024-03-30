@@ -141,6 +141,16 @@ a {
   margin-bottom: 50px;
 }
 
+.h-10 {
+  height: 10vh;
+}
+.h-20 {
+  height: 20vh;
+}
+.h-30 {
+  height: 30vh;
+}
+
 #fp-nav ul li a span, .fp-slidesNav ul li a span {
   background: white;
 }
