@@ -35,6 +35,7 @@ declare module 'styled-components' {
       bgColor: string;
       headerColor: string;
       textColor: string;
+      boxColor: string;
     };
     admin: {
       loginColor: string;
