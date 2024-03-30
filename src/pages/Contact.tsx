@@ -3,6 +3,7 @@ import styled from 'styled-components';
 import wing1 from '../assets/images/contact/wing1.png';
 import wing2 from '../assets/images/contact/wing2.png';
 import star from '../assets/images/contact/star.png';
+import { motion } from 'framer-motion';
 
 const Wrapper = styled.main`
   height: 100vh;
@@ -18,7 +19,6 @@ const Category = styled.h1`
   font-size: 3vw;
   font-weight: bold;
   color: ${(props) => props.theme.contact.headerColor};
-  animation: sparkle 1s infinite alternate;
   text-shadow:
     0 0 20px #ffffff,
     0 0 20px #f1f5fc;
@@ -82,6 +82,19 @@ const Input = styled.input`
   }
 `;
 
+const TextArea = styled.textarea`
+  margin: 20px 0 30px 5px;
+  padding: 5px 15px;
+  width: 100%;
+  border: none;
+  border-radius: 15px;
+  font-size: 2vw;
+  font-family: 'SUITE-Regular', sans-serif;
+  &:focus-visible {
+    outline: none;
+  }
+`;
+
 const Email = styled.div`
   flex: 6;
 `;
@@ -92,7 +105,7 @@ const Content = styled.div``;
 
 const Stars = styled.div``;
 
-const Star = styled.img``;
+const Star = styled(motion.img)``;
 
 function Contact() {
   return (
@@ -129,24 +142,12 @@ function Contact() {
               <Logo src={star} alt="star" custom="" />
               <Text>내용</Text>
             </Label>
-            <Input className="h-30" />
+            <TextArea className="h-30" />
           </Content>
         </Box>
         <Wing src={wing2} alt="wing" />
       </ContactWrapper>
       <Stars>
-        <Star />
-        <Star />
-        <Star />
-        <Star />
-        <Star />
-        <Star />
-        <Star />
-        <Star />
-        <Star />
-        <Star />
-        <Star />
-        <Star />
         <Star />
       </Stars>
     </Wrapper>
