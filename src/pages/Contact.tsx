@@ -11,7 +11,7 @@ const Wrapper = styled.main`
   background: ${(props) => props.theme.contact.bgColor};
   text-align: center;
   padding-top: 10%;
-  padding-bottom: 10%;
+  padding-bottom: 5%;
   overflow-y: scroll;
 `;
 
