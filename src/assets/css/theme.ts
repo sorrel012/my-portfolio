@@ -7,10 +7,31 @@ export const theme: DefaultTheme = {
     textColor: '#6D422A',
   },
   header: {
-    white: '#FFFFFF',
-    blue: '#75A1CA',
-    green: '#6C8F5C',
-    pink: '#EB837F',
+    profile: {
+      bgColor: 'transparent',
+      textColor: '#FFFFFF',
+      borderColor: '#FFFFFF',
+    },
+    skills: {
+      bgColor: 'rgba(255,255,255,0.5)',
+      textColor: '#75A1CA',
+      borderColor: 'transparent',
+    },
+    project: {
+      bgColor: 'rgba(255,255,255,0.5)',
+      textColor: '#6C8F5C',
+      borderColor: 'transparent',
+    },
+    contact: {
+      bgColor: 'transparent',
+      textColor: '#FFFFFF',
+      borderColor: '#FFFFFF',
+    },
+    login: {
+      bgColor: 'rgba(255,255,255,0.5)',
+      textColor: '#EB837F',
+      borderColor: 'transparent',
+    },
   },
   profile: {
     bgColor: `linear-gradient(180deg, #B0E0E6 0%, #87CEEB 17%, #1E90FF 70.5%, #0077BE 99%)`,

@@ -8,10 +8,31 @@ declare module 'styled-components' {
       textColor: string;
     };
     header: {
-      white: string;
-      blue: string;
-      green: string;
-      pink: string;
+      profile: {
+        bgColor: string;
+        textColor: string;
+        borderColor: string;
+      };
+      skills: {
+        bgColor: string;
+        textColor: string;
+        borderColor: string;
+      };
+      project: {
+        bgColor: string;
+        textColor: string;
+        borderColor: string;
+      };
+      contact: {
+        bgColor: string;
+        textColor: string;
+        borderColor: string;
+      };
+      login: {
+        bgColor: string;
+        textColor: string;
+        borderColor: string;
+      };
     };
     profile: {
       bgColor: string;
