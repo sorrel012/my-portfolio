@@ -42,14 +42,13 @@ enum CATEGORIES {
   CONTACT = 'CONTACT',
 }
 export interface IHeaderProps {
-  category: 'profile' | 'skills' | 'projects' | 'contact' | 'login' | string;
+  category: 'profile' | 'skills' | 'projects' | 'contact' | 'login';
 }
 
 function Header({ category }: IHeaderProps) {
   const navigate = useNavigate();
 
   const onButtonClick = (category: string) => {
-    console.log(category);
     if (category === 'HOME') {
       navigate('/');
     } else {

@@ -15,6 +15,7 @@ function App() {
 
   return (
     <>
+      {/* @ts-ignore*/}
       {!homeMatch && <Header category={category} />}
       <Outlet />
     </>
