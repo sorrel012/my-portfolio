@@ -33,8 +33,8 @@ const Wrapper = styled.main`
 
 const Sun = styled.h2`
   position: absolute;
-  top: 10%;
-  left: 5%;
+  top: 5%;
+  left: 14%;
 `;
 
 const Image = styled.img`
@@ -90,8 +90,8 @@ const OrangeImg = styled(motion.img)`
 const AppleOpen = styled(motion.section)`
   position: absolute;
   width: 25%;
-  left: 2%;
-  bottom: 5%;
+  left: 1.5%;
+  bottom: 2%;
   background-color: rgba(204, 47, 52, 0.5);
   border: none;
   border-radius: 50%;
@@ -210,11 +210,9 @@ const Skills = function Skills() {
   return (
     <Wrapper>
       <Header category="skills" />
-      {!isAppleClicked && (
-        <Sun>
-          <Image src={sun} alt="skills label" />
-        </Sun>
-      )}
+      <Sun>
+        <Image src={sun} alt="skills label" />
+      </Sun>
       <AnimatePresence>
         <TreeWrapper>
           <Tree src={tree} alt="skills" />
