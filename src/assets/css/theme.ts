@@ -17,7 +17,7 @@ export const theme: DefaultTheme = {
       textColor: '#75A1CA',
       borderColor: 'transparent',
     },
-    project: {
+    projects: {
       bgColor: 'rgba(255,255,255,0.5)',
       textColor: '#6C8F5C',
       borderColor: 'transparent',

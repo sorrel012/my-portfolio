@@ -18,7 +18,7 @@ declare module 'styled-components' {
         textColor: string;
         borderColor: string;
       };
-      project: {
+      projects: {
         bgColor: string;
         textColor: string;
         borderColor: string;
