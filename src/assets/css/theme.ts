@@ -34,7 +34,7 @@ export const theme: DefaultTheme = {
     bgColor: `linear-gradient(180deg, #03255F 0%, #072B69 48%, #001231 100%)`,
     headerColor: '#FFFFFF',
     textColor: '#001663',
-    boxColor: 'rgba(255,255,255,0.7)',
+    boxColor: '#B4BDCB',
   },
   admin: {
     loginColor: '#6D422A',
