@@ -13,6 +13,7 @@ const Wrapper = styled.main`
   text-align: center;
   padding-top: 10%;
   overflow-y: scroll;
+  overflow-x: hidden;
   position: relative;
 `;
 
