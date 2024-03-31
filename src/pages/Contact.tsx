@@ -4,6 +4,7 @@ import wing1 from '../assets/images/contact/wing1.png';
 import wing2 from '../assets/images/contact/wing2.png';
 import star from '../assets/images/contact/star.png';
 import { motion } from 'framer-motion';
+import Header from '../components/Header.tsx';
 
 const Wrapper = styled.main`
   height: 100vh;
@@ -165,6 +166,7 @@ const starVariants = {
 function Contact() {
   return (
     <Wrapper>
+      <Header category="contact" />
       <Category>CONTACT</Category>
       <ContactWrapper>
         <Wing src={wing1} alt="wing" />

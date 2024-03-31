@@ -6,6 +6,7 @@ import Project from '../components/project/Project.tsx';
 import turtle from '../assets/images/projects/project-turtle.png';
 import rabbit from '../assets/images/projects/project-rabbit.png';
 import rest from '../assets/images/projects/rest.png';
+import Header from '../components/Header.tsx';
 
 const Wrapper = styled.main`
   height: 100vh;
@@ -81,6 +82,7 @@ function Projects() {
 
   return (
     <Wrapper ref={scrollRef}>
+      <Header category="projects" />
       <Turtle ref={turtleRef} variants={turtleVariants} animate="scroll">
         <TurtleImg src={turtle} alt="turtle" />
       </Turtle>

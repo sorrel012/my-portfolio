@@ -2,6 +2,7 @@ import FullPage from '@fullpage/react-fullpage';
 import ProfileHistory from './ProfileHistory.tsx';
 import ProfileIntro from './ProfileIntro.tsx';
 import ProfileMain from './ProfileMain.tsx';
+import Header from '../../components/Header.tsx';
 
 function Profile() {
   return (
@@ -20,6 +21,7 @@ function Profile() {
         return (
           <>
             <div className="section">
+              <Header category="profile" />
               <ProfileIntro />
             </div>
             <div className="section">

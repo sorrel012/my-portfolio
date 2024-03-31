@@ -23,6 +23,7 @@ import intellij from '../assets/images/tmp/tool/intellij.png';
 import git from '../assets/images/tmp/tool/git.png';
 import figma from '../assets/images/tmp/tool/figma.png';
 import { useEffect, useRef, useState } from 'react';
+import Header from '../components/Header.tsx';
 
 const Wrapper = styled.main`
   height: 100vh;
@@ -208,6 +209,7 @@ const Skills = function Skills() {
 
   return (
     <Wrapper>
+      <Header category="skills" />
       {!isAppleClicked && (
         <Sun>
           <Image src={sun} alt="skills label" />

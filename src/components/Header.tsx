@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 import { useNavigate } from 'react-router-dom';
 
-const HeaderWrapper = styled.header`
+const HeaderWrapper = styled.header<IHeaderProps>`
   position: absolute;
   top: 0;
   width: 100vw;
@@ -57,7 +57,7 @@ function Header({ category }: IHeaderProps) {
   };
 
   return (
-    <HeaderWrapper>
+    <HeaderWrapper category={category}>
       <HomeButton
         category={category}
         onClick={() => onButtonClick(CATEGORIES.HOME)}
