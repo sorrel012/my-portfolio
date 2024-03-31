@@ -41,8 +41,8 @@ enum CATEGORIES {
   PROJECTS = 'PROJECTS',
   CONTACT = 'CONTACT',
 }
-interface IHeaderProps {
-  category: 'profile' | 'skills' | 'projects' | 'contact' | 'login';
+export interface IHeaderProps {
+  category: 'profile' | 'skills' | 'projects' | 'contact' | 'login' | string;
 }
 
 function Header({ category }: IHeaderProps) {
