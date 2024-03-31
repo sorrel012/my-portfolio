@@ -89,7 +89,7 @@ const OrangeImg = styled(motion.img)`
 
 const AppleOpen = styled(motion.section)`
   position: absolute;
-  width: 30%;
+  width: 25%;
   left: 2%;
   bottom: 5%;
   background-color: rgba(204, 47, 52, 0.5);
@@ -113,21 +113,21 @@ const PeachOpen = styled(motion.section)`
   background-color: rgba(252, 132, 117, 0.38);
   border: none;
   border-radius: 50%;
-  padding: 50px;
+  padding: 3%;
   box-shadow: 8px 6px 15px rgba(117, 10, 58, 0.38);
   text-align: center;
 `;
 
 const FrontLogo = styled.img`
-  width: 30%;
-  padding: 20px;
+  width: 22%;
+  padding: 10px;
 `;
 
 const OrangeOpen = styled(motion.section)`
   position: absolute;
-  width: 25%;
-  top: 5%;
-  right: 5%;
+  width: 20%;
+  top: 15%;
+  right: 10%;
   background-color: rgba(254, 182, 66, 0.4);
   border: none;
   border-radius: 50%;
