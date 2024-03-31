@@ -33,6 +33,7 @@ function Bubbles() {
       {/* cjt 번째 */}
       {[0, 1, 2, 3, 4].map((i) => (
         <Bubble
+          key={i}
           src={BUBBLE}
           left="2vw"
           variants={bubbleVariants(i)}
@@ -42,6 +43,7 @@ function Bubbles() {
       {/* 두 번째 */}
       {[0.5, 1.5, 2.5, 3.5, 4.5].map((i) => (
         <Bubble
+          key={i * 3}
           src={BUBBLE}
           left="9vw"
           variants={bubbleVariants(i)}
@@ -51,6 +53,7 @@ function Bubbles() {
       {/* 세 번째 */}
       {[0.5, 1.5, 2.5, 3.5, 4.5].map((i) => (
         <Bubble
+          key={i * 5}
           src={BUBBLE}
           left="86vw"
           variants={bubbleVariants(i)}
@@ -60,6 +63,7 @@ function Bubbles() {
       {/* 네 번째 */}
       {[0, 1, 2, 3, 4].map((i) => (
         <Bubble
+          key={i * 10}
           src={BUBBLE}
           left="93vw"
           variants={bubbleVariants(i)}
