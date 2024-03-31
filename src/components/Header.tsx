@@ -15,7 +15,7 @@ const HomeButton = styled.button<IHeaderProps>`
   border: 1px solid ${(props) => props.theme.header[props.category].borderColor};
   border-radius: 8px;
   background-color: ${(props) => props.theme.header[props.category].bgColor};
-  font-size: 1.8vw;
+  font-size: 1.5vw;
   color: ${(props) => props.theme.header[props.category].textColor};
   padding: 8px 20px;
   cursor: pointer;
@@ -27,7 +27,7 @@ const Button = styled.button<IHeaderProps>`
   border: 1px solid ${(props) => props.theme.header[props.category].borderColor};
   border-radius: 8px;
   background-color: ${(props) => props.theme.header[props.category].bgColor};
-  font-size: 1.8vw;
+  font-size: 1.5vw;
   color: ${(props) => props.theme.header[props.category].textColor};
   margin-left: 20px;
   padding: 8px 20px;
