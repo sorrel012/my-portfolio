@@ -140,19 +140,19 @@ function ProjectItem() {
                 {'<반응형 웹 디자인 구현>'}
               </div>
               Bootstrap을 활용하여 다양한 디바이스와 화면 크기에 맞게 최적화된
-              사용자 인터페이스를 구축
+              사용자 인터페이스를 구축함.
             </Text>
             <Text>
               <div className="font-bold mg-b-5">
                 {'<통합 인증 시스템 구현>'}
-              </div>{' '}
+              </div>
               여러 소셜 로그인(Kakao, Naver, Google)을 도입하여, 사용자가 보다
               편리하게 회원가입 및 로그인할 수 있게 함.
             </Text>
             <Text>
-              <div className="font-bold mg-b-5">{'<SMS 본인인증>'}</div> 사용자
-              신원 확인을 위해 네이버 클라우드 플랫폼 기반의 SMS 본인인증 기능을
-              구현함.
+              <div className="font-bold mg-b-5">{'<SMS 본인인증>'}</div>
+              사용자 신원 확인을 위해 네이버 클라우드 플랫폼 기반의 SMS 본인인증
+              기능 구현함.
             </Text>
             <Text>
               <div className="font-bold mg-b-5">
