@@ -5,6 +5,7 @@ import Profile from '../pages/profile/Profile.tsx';
 import Skills from '../pages/Skills';
 import Projects from '../pages/Projects';
 import Contact from '../pages/Contact';
+import Login from '../pages/admin/Login.tsx';
 
 export const router = createBrowserRouter([
   {
@@ -30,6 +31,10 @@ export const router = createBrowserRouter([
       {
         path: 'contact',
         element: <Contact />,
+      },
+      {
+        path: 'admin/login',
+        element: <Login />,
       },
     ],
   },

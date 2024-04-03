@@ -167,6 +167,10 @@ function Home() {
   });
   const navigate = useNavigate();
 
+  const onLoginClick = () => {
+    navigate('/admin/login');
+  };
+
   const onMushroomHover = (category: string) =>
     setMushroomImg((prev) => {
       return {
@@ -189,7 +193,7 @@ function Home() {
   return (
     <Wrapper className="align-center">
       <div className="align-right">
-        <Login src={rabbit} alt="rabbit" />
+        <Login src={rabbit} alt="rabbit" onClick={onLoginClick} />
       </div>
       <Butterfly
         src={BUTTERFLY_LEFT}
