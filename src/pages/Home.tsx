@@ -168,7 +168,7 @@ function Home() {
   const navigate = useNavigate();
 
   const onLoginClick = () => {
-    navigate('/admin/login');
+    navigate('/login');
   };
 
   const onMushroomHover = (category: string) =>

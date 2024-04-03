@@ -33,7 +33,7 @@ export const router = createBrowserRouter([
         element: <Contact />,
       },
       {
-        path: 'admin/login',
+        path: 'login',
         element: <Login />,
       },
     ],
