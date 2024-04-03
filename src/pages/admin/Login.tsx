@@ -15,6 +15,7 @@ import {
   GRASS,
   Grass,
 } from '../Home';
+import { useNavigate } from 'react-router-dom';
 
 const Wrapper = styled.main`
   height: 100vh;
@@ -59,11 +60,18 @@ const LoginButton = styled.img`
   left: 50%;
   transform: translateX(-50%);
   margin-top: 5%;
+  cursor: pointer;
 `;
 
 const BOOK = '/src/assets/images/admin/login-book.png';
 
 function Login() {
+  const navigate = useNavigate();
+
+  const onLoginClick = () => {
+    navigate('/admin');
+  };
+
   return (
     <Wrapper>
       <Header category="login" />
@@ -99,7 +107,7 @@ function Login() {
               />
             </Col>
           </InputBox>
-          <LoginButton src={rabbit} alt="rabbit" />
+          <LoginButton src={rabbit} alt="rabbit" onClick={onLoginClick} />
         </Form>
       </MainWrapper>
       <BackgroundWrapper>
