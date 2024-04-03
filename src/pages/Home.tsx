@@ -11,7 +11,7 @@ import { useState } from 'react';
 import { motion } from 'framer-motion';
 import { useNavigate } from 'react-router-dom';
 
-const GRASS = '/src/assets/images/home/grass.png';
+export const GRASS = '/src/assets/images/home/grass.png';
 const BUTTERFLY_RIGHT = '/src/assets/images/home/butterfly1.png';
 const BUTTERFLY_LEFT = '/src/assets/images/home/butterfly2.png';
 
@@ -68,7 +68,7 @@ const PageLabel = styled.h2`
   color: ${(props) => props.theme.home.textColor};
 `;
 
-const BackgroundWrapper = styled.div`
+export const BackgroundWrapper = styled.div`
   width: 100vw;
 `;
 
@@ -87,7 +87,7 @@ const Butterfly = styled(motion.img)<{ top: string; left: string }>`
   }
 `;
 
-const Grass = styled.div<{ src: string }>`
+export const Grass = styled.div<{ src: string }>`
   max-height: 200px;
   width: 100%;
   aspect-ratio: 1/ 3;
@@ -100,7 +100,7 @@ const Grass = styled.div<{ src: string }>`
   justify-content: space-around;
 `;
 
-const Flowers = styled.div`
+export const Flowers = styled.div`
   width: 100%;
   position: absolute;
   bottom: 0;
@@ -108,21 +108,21 @@ const Flowers = styled.div`
   flex-direction: column;
 `;
 
-const FlowerFirstRow = styled.div`
+export const FlowerFirstRow = styled.div`
   width: 100%;
   margin-bottom: -2.5%;
   display: flex;
   justify-content: space-between;
 `;
 
-const FlowerSecondRow = styled.div`
+export const FlowerSecondRow = styled.div`
   width: 100%;
   display: flex;
   justify-content: space-around;
   margin-bottom: 1.5%;
 `;
 
-const Flower = styled.img<{ transform: string }>`
+export const Flower = styled.img<{ transform: string }>`
   width: 8%;
   max-width: 120px;
   transform: ${(props) => props.transform};
