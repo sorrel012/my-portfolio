@@ -33,12 +33,12 @@ const Book = styled.img<{ src: string }>`
   background-image: url(${(props) => props.src});
   background-size: contain;
   background-position: center center;
-  width: 65%;
+  width: 50%;
   position: relative;
 `;
 
 const Form = styled.form`
-  width: 55%;
+  width: 35%;
   position: absolute;
 `;
 
@@ -50,8 +50,10 @@ const InputBox = styled.div`
 const Col = styled.div`
   display: flex;
   flex-direction: column;
+  justify-content: center;
   color: ${(props) => props.theme.admin.loginColor};
-  font-size: 3vw;
+  font-size: 2vw;
+  width: 70%;
 `;
 
 const LoginButton = styled.img`
@@ -59,7 +61,7 @@ const LoginButton = styled.img`
   position: absolute;
   left: 50%;
   transform: translateX(-50%);
-  margin-top: 5%;
+  margin-top: 13%;
   cursor: pointer;
 `;
 
@@ -88,8 +90,7 @@ function Login() {
             <Col>
               <input
                 id="id"
-                className="font-size-2half font-default pd-lr-10 mg-b-30
-                 "
+                className="font-size-2 font-default pd-lr-10 mg-b-30"
                 style={{
                   border: '1px solid #6D422A',
                   borderRadius: 5,
@@ -98,7 +99,7 @@ function Login() {
               />
               <input
                 id="pw"
-                className="font-size-2half font-default pd-lr-10 "
+                className="font-size-2 font-default pd-lr-10"
                 style={{
                   border: '1px solid #6D422A',
                   borderRadius: 5,
