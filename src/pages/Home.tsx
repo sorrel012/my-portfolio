@@ -26,6 +26,8 @@ const Login = styled.img`
   aspect-ratio: 1 / 1;
   margin-top: 10px;
   margin-right: 10px;
+  position: relative;
+  z-index: 99;
 `;
 
 const Title = styled.h1`
