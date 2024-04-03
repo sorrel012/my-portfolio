@@ -1,4 +1,5 @@
 import styled from 'styled-components';
+import { useState } from 'react';
 
 const Wrapper = styled.main`
   background-color: ${(props) => props.theme.admin.bgColor};
@@ -72,6 +73,7 @@ const DnButton = styled.button`
   padding: 0.5% 2%;
   margin-left: 2%;
   width: 2.5vw;
+  height: 2.5vw;
 `;
 
 const TextArea = styled.textarea`
@@ -97,7 +99,38 @@ const Button = styled.button`
   margin-top: 3.5%;
 `;
 
+const Table = styled.table`
+  width: 100%;
+`;
+
+const Th = styled.th`
+  font-size: 2vw;
+`;
+
 function AdminProfile() {
+  const [certifications, setCertifications] = useState([]);
+
+  const addCertification = () => {
+    setCertifications([
+      ...certifications,
+      { name: '', issue: '', expiration: '', career: '' },
+    ]);
+  };
+
+  const removeCertification = (index) => {
+    setCertifications(certifications.filter((_, i) => i !== index));
+  };
+
+  const handleChange = (index, type, value) => {
+    const updatedCertifications = certifications.map((certification, i) => {
+      if (i === index) {
+        return { ...certification, [type]: value };
+      }
+      return certification;
+    });
+    setCertifications(updatedCertifications);
+  };
+
   return (
     <Wrapper>
       <Profile>
@@ -158,7 +191,62 @@ function AdminProfile() {
       </Profile>
       <Profile>
         <MainTitle>자격증 및 어학</MainTitle>
-        <Form></Form>
+        <DnButton onClick={addCertification}>+</DnButton>
+        <Table>
+          <thead>
+            <tr>
+              <Th>이름</Th>
+              <Th>발급</Th>
+              <Th>만료</Th>
+              <Th>경력</Th>
+            </tr>
+          </thead>
+          <tbody>
+            {certifications.map((certification, index) => (
+              <tr key={index}>
+                <td>
+                  <input
+                    type="text"
+                    value={certification.name}
+                    onChange={(e) =>
+                      handleChange(index, 'name', e.target.value)
+                    }
+                  />
+                </td>
+                <td>
+                  <input
+                    type="text"
+                    value={certification.issue}
+                    onChange={(e) =>
+                      handleChange(index, 'issue', e.target.value)
+                    }
+                  />
+                </td>
+                <td>
+                  <input
+                    type="text"
+                    value={certification.expiration}
+                    onChange={(e) =>
+                      handleChange(index, 'expiration', e.target.value)
+                    }
+                  />
+                </td>
+                <td>
+                  <input
+                    type="text"
+                    value={certification.career}
+                    onChange={(e) =>
+                      handleChange(index, 'career', e.target.value)
+                    }
+                  />
+                </td>
+                <td>
+                  <button onClick={() => removeCertification(index)}>-</button>
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </Table>
       </Profile>
     </Wrapper>
   );
