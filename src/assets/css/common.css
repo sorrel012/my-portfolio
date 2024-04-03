@@ -110,6 +110,12 @@ a {
 .font-bold {
   font-weight: bold;
 }
+.font-size-2half {
+  font-size: 2.5vw;
+}
+.font-size-3 {
+  font-size: 3vw;
+}
 
 .transform-center-left {
   transform-origin: center left;
@@ -118,6 +124,10 @@ a {
   transform-origin: center right;
 }
 
+.pd-lr-10 {
+  padding-left: 10px;
+  padding-right: 10px;
+}
 .pd-b-10 {
   padding-bottom: 10px;
 }
