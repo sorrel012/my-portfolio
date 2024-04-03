@@ -1,5 +1,11 @@
+import SideBar from '../../components/admin/SideBar.tsx';
+
 function Admin() {
-  return <div></div>;
+  return (
+    <>
+      <SideBar />
+    </>
+  );
 }
 
 export default Admin;
