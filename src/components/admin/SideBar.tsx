@@ -7,11 +7,12 @@ const Wrapper = styled.nav`
   background-color: ${(props) => props.theme.admin.navBgColor};
   height: 100vh;
   width: 25vw;
+  position: relative;
 `;
 
 const LoginUser = styled.section`
   border-bottom: 1px solid ${(props) => props.theme.admin.navBorderColor};
-  height: 13vw;
+  height: 15vw;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -51,8 +52,13 @@ const Categories = styled.section`
 const Logout = styled.button`
   background-color: white;
   border: none;
+  border-radius: 7px;
   color: ${(props) => props.theme.admin.navTextColor};
   font-size: 1.7vw;
+  position: absolute;
+  bottom: 2%;
+  right: 5%;
+  padding: 1.5% 4%;
 `;
 
 function SideBar() {
