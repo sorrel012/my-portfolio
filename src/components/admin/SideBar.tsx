@@ -9,13 +9,26 @@ const Wrapper = styled.nav`
   width: 25vw;
 `;
 
-const LoginUser = styled.section``;
-
-const UserImg = styled.img`
-  width: 5vw;
+const LoginUser = styled.section`
+  border-bottom: 1px solid ${(props) => props.theme.admin.navBorderColor};
+  height: 13vw;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
 `;
 
-const UserName = styled.div``;
+const UserImg = styled.img`
+  width: 7vw;
+  background-color: white;
+  border-radius: 50%;
+  margin-bottom: 5%;
+`;
+
+const UserName = styled.div`
+  color: ${(props) => props.theme.admin.navTextColor};
+  font-size: 1.5vw;
+`;
 
 const Categories = styled.section`
   text-align: center;
@@ -23,7 +36,7 @@ const Categories = styled.section`
   a {
     display: block;
     text-transform: uppercase;
-    font-size: 2.5vw;
+    font-size: 2vw;
     font-weight: bold;
     color: ${(props) => props.theme.admin.navTextColor};
     border-bottom: 1px solid ${(props) => props.theme.admin.navBorderColor};
@@ -35,7 +48,12 @@ const Categories = styled.section`
   }
 `;
 
-const Logout = styled.button``;
+const Logout = styled.button`
+  background-color: white;
+  border: none;
+  color: ${(props) => props.theme.admin.navTextColor};
+  font-size: 1.7vw;
+`;
 
 function SideBar() {
   return (
