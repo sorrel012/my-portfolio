@@ -1,6 +1,8 @@
 import styled from 'styled-components';
 import { NavLink } from 'react-router-dom';
 
+import userImg from '../../assets/images/home/mushroom.png';
+
 const Wrapper = styled.nav`
   background-color: ${(props) => props.theme.admin.navBgColor};
   height: 100vh;
@@ -8,6 +10,12 @@ const Wrapper = styled.nav`
 `;
 
 const LoginUser = styled.section``;
+
+const UserImg = styled.img`
+  width: 5vw;
+`;
+
+const UserName = styled.div``;
 
 const Categories = styled.section`
   text-align: center;
@@ -32,7 +40,10 @@ const Logout = styled.button``;
 function SideBar() {
   return (
     <Wrapper>
-      <LoginUser></LoginUser>
+      <LoginUser>
+        <UserImg src={userImg} alt="profile-pic" />
+        <UserName>Hana</UserName>
+      </LoginUser>
       <Categories>
         <NavLink
           to="/admin"
