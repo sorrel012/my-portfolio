@@ -18,22 +18,22 @@ const Profile = styled.section`
   margin-bottom: 3%;
 `;
 
-const MainTitle = styled.h2`
+export const MainTitle = styled.h2`
   font-size: 2vw;
   font-weight: bold;
   margin-bottom: 2%;
 `;
 
-const Form = styled.form`
+export const Form = styled.form`
   width: 100%;
   text-align: left;
 `;
 
-const InputRow = styled.div`
+export const InputRow = styled.div`
   display: flex;
 `;
 
-const TextAreaRow = styled.div`
+export const TextAreaRow = styled.div`
   display: flex;
 `;
 
@@ -43,7 +43,7 @@ const Label = styled.label`
   margin-bottom: 1%;
 `;
 
-const Save = styled.div`
+export const Save = styled.div`
   text-align: right;
 `;
 
@@ -93,7 +93,7 @@ const TextArea = styled.textarea`
   outline: none;
 `;
 
-const Button = styled.button`
+export const Button = styled.button`
   background-color: ${(props) => props.theme.admin.bgColor};
   border: 1px solid ${(props) => props.theme.admin.wrapperBorderColor};
   border-radius: 5px;
@@ -118,12 +118,11 @@ const Table = styled.table`
     outline: none;
     font-family: 'SUITE-Regular', sans-serif;
     margin-bottom: 1%;
-
-    width: 90%;
+    width: 95%;
   }
 `;
 
-const TableButton = styled.button`
+export const TableButton = styled.button`
   background-color: ${(props) => props.theme.admin.bgColor};
   border: 1px solid ${(props) => props.theme.admin.wrapperBorderColor};
   border-radius: 5px;
@@ -133,9 +132,8 @@ const TableButton = styled.button`
   cursor: pointer;
 `;
 
-const Th = styled.th`
+export const Th = styled.th`
   font-size: 2vw;
-  width: 30%;
 `;
 
 enum Categories {
@@ -240,7 +238,7 @@ function AdminProfile() {
     }
   };
 
-  const onCertChange = (
+  const onChange = (
     type: string,
     index: number,
     label: string,
@@ -365,6 +363,7 @@ function AdminProfile() {
               <Th>날짜</Th>
               <Th>점수</Th>
               <Th>정렬</Th>
+              <Th>🗑</Th>
             </tr>
           </thead>
           <tbody>
@@ -375,7 +374,7 @@ function AdminProfile() {
                     type="text"
                     value={certification.certName}
                     onChange={(e) =>
-                      onCertChange(
+                      onChange(
                         Categories.CERTIFICATION,
                         index,
                         'certName',
@@ -389,7 +388,7 @@ function AdminProfile() {
                     type="text"
                     value={certification.certDate}
                     onChange={(e) =>
-                      onCertChange(
+                      onChange(
                         Categories.CERTIFICATION,
                         index,
                         'certDate',
@@ -403,7 +402,7 @@ function AdminProfile() {
                     type="text"
                     value={certification.certScore}
                     onChange={(e) =>
-                      onCertChange(
+                      onChange(
                         Categories.CERTIFICATION,
                         index,
                         'certScore',
@@ -417,7 +416,7 @@ function AdminProfile() {
                     type="number"
                     value={certification.certOrder}
                     onChange={(e) =>
-                      onCertChange(
+                      onChange(
                         Categories.CERTIFICATION,
                         index,
                         'certOrder',
@@ -453,6 +452,7 @@ function AdminProfile() {
               <Th>내용</Th>
               <Th>카테고리</Th>
               <Th>정렬</Th>
+              <Th>🗑</Th>
             </tr>
           </thead>
           <tbody>
@@ -463,7 +463,7 @@ function AdminProfile() {
                     type="text"
                     value={education.eduPeriod}
                     onChange={(e) =>
-                      onCertChange(
+                      onChange(
                         Categories.EDUCATION,
                         index,
                         'eduPeriod',
@@ -477,7 +477,7 @@ function AdminProfile() {
                     type="text"
                     value={education.eduContent}
                     onChange={(e) =>
-                      onCertChange(
+                      onChange(
                         Categories.EDUCATION,
                         index,
                         'eduContent',
@@ -491,7 +491,7 @@ function AdminProfile() {
                     type="text"
                     value={education.eduCategory}
                     onChange={(e) =>
-                      onCertChange(
+                      onChange(
                         Categories.EDUCATION,
                         index,
                         'eduCategory',
@@ -505,7 +505,7 @@ function AdminProfile() {
                     type="number"
                     value={education.eduOrder}
                     onChange={(e) =>
-                      onCertChange(
+                      onChange(
                         Categories.EDUCATION,
                         index,
                         'eduOrder',
@@ -538,6 +538,7 @@ function AdminProfile() {
               <Th>회사명</Th>
               <Th>기간</Th>
               <Th>정렬</Th>
+              <Th>🗑</Th>
             </tr>
           </thead>
           <tbody>
@@ -548,7 +549,7 @@ function AdminProfile() {
                     type="text"
                     value={career.careerCompany}
                     onChange={(e) =>
-                      onCertChange(
+                      onChange(
                         Categories.CAREER,
                         index,
                         'careerCompany',
@@ -562,7 +563,7 @@ function AdminProfile() {
                     type="text"
                     value={career.careerPeriod}
                     onChange={(e) =>
-                      onCertChange(
+                      onChange(
                         Categories.CAREER,
                         index,
                         'careerPeriod',
@@ -576,7 +577,7 @@ function AdminProfile() {
                     type="number"
                     value={career.careerOrder}
                     onChange={(e) =>
-                      onCertChange(
+                      onChange(
                         Categories.CAREER,
                         index,
                         'careerOrder',
@@ -611,6 +612,7 @@ function AdminProfile() {
               <Th>회사명</Th>
               <Th>프로젝트명</Th>
               <Th>정렬</Th>
+              <Th>🗑</Th>
             </tr>
           </thead>
           <tbody>
@@ -621,7 +623,7 @@ function AdminProfile() {
                     type="text"
                     value={project.careerCompany}
                     onChange={(e) =>
-                      onCertChange(
+                      onChange(
                         Categories.CAREER_PROJECT,
                         index,
                         'careerCompany',
@@ -635,7 +637,7 @@ function AdminProfile() {
                     type="text"
                     value={project.careerProjectName}
                     onChange={(e) =>
-                      onCertChange(
+                      onChange(
                         Categories.CAREER_PROJECT,
                         index,
                         'careerProjectName',
@@ -649,7 +651,7 @@ function AdminProfile() {
                     type="number"
                     value={project.careerProjectOrder}
                     onChange={(e) =>
-                      onCertChange(
+                      onChange(
                         Categories.CAREER_PROJECT,
                         index,
                         'careerProjectOrder',
@@ -684,6 +686,7 @@ function AdminProfile() {
               <Th>프로젝트명</Th>
               <Th>업무내용</Th>
               <Th>정렬</Th>
+              <Th>🗑</Th>
             </tr>
           </thead>
           <tbody>
@@ -694,7 +697,7 @@ function AdminProfile() {
                     type="text"
                     value={work.careerProjectName}
                     onChange={(e) =>
-                      onCertChange(
+                      onChange(
                         Categories.CAREER_WORK,
                         index,
                         'careerProjectName',
@@ -708,7 +711,7 @@ function AdminProfile() {
                     type="text"
                     value={work.careerWorkContent}
                     onChange={(e) =>
-                      onCertChange(
+                      onChange(
                         Categories.CAREER_WORK,
                         index,
                         'careerWorkContent',
@@ -722,7 +725,7 @@ function AdminProfile() {
                     type="number"
                     value={work.careerWorkOrder}
                     onChange={(e) =>
-                      onCertChange(
+                      onChange(
                         Categories.CAREER_WORK,
                         index,
                         'careerWorkOrder',
