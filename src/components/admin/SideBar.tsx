@@ -100,6 +100,12 @@ function SideBar() {
         >
           contact
         </NavLink>
+        <NavLink
+          to="/"
+          className={({ isActive }) => (isActive ? 'isActive' : '')}
+        >
+          main
+        </NavLink>
       </Categories>
       <Logout>LOGOUT</Logout>
     </Wrapper>
