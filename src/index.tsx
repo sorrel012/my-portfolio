@@ -6,6 +6,8 @@ import { ThemeProvider } from 'styled-components';
 import { theme } from './assets/css/theme.ts';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import './assets/css/common.css';
+import store from './store/store.ts';
+import { Provider } from 'react-redux';
 
 const client = new QueryClient();
 
@@ -16,7 +18,9 @@ root.render(
   <React.StrictMode>
     <QueryClientProvider client={client}>
       <ThemeProvider theme={theme}>
-        <RouterProvider router={router} />
+        <Provider store={store}>
+          <RouterProvider router={router} />
+        </Provider>
       </ThemeProvider>
     </QueryClientProvider>
   </React.StrictMode>,
