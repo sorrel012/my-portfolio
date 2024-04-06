@@ -5,10 +5,7 @@ interface ApiUrlState {
 }
 
 const initialState: ApiUrlState = {
-  url:
-    import.meta.env.VITE_API_URL === 'LOCAL'
-      ? 'http://localhost:9011/'
-      : '임시',
+  url: import.meta.env.VITE_API_URL,
 };
 
 const apiUrlSlice = createSlice({
@@ -23,4 +20,5 @@ const store = configureStore({
   },
 });
 
+export type RootState = ReturnType<typeof store.getState>;
 export default store;
