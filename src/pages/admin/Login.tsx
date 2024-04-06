@@ -5,7 +5,6 @@ import flower3 from '../../assets/images/home/flower3.png';
 import flower5 from '../../assets/images/home/flower5.png';
 import flower2 from '../../assets/images/home/flower2.png';
 import flower4 from '../../assets/images/home/flower4.png';
-import rabbit from '../../assets/images/admin/login-rabbit.png';
 import {
   BackgroundWrapper,
   Flower,
@@ -16,6 +15,11 @@ import {
   Grass,
 } from '../Home';
 import { useNavigate } from 'react-router-dom';
+import { useForm } from 'react-hook-form';
+import Swal from 'sweetalert2';
+import axios from 'axios';
+import { useSelector } from 'react-redux';
+import { RootState } from '../../store/store.ts';
 
 const Wrapper = styled.main`
   height: 100vh;
@@ -56,22 +60,52 @@ const Col = styled.div`
   width: 70%;
 `;
 
-const LoginButton = styled.img`
-  width: 15%;
+const LoginButton = styled.button<{ src: string }>`
+  background: url(${(props) => props.src}) no-repeat center center;
+  background-size: contain;
+  border: none;
+  width: 100%;
+  height: 80%;
   position: absolute;
-  left: 50%;
-  transform: translateX(-50%);
-  margin-top: 13%;
+  margin-top: 8%;
   cursor: pointer;
 `;
 
 const BOOK = '/src/assets/images/admin/login-book.png';
+const RABBIT = '/src/assets/images/admin/login-rabbit.png';
+
+interface ILogin {
+  id: string;
+  pw: string;
+}
 
 function Login() {
   const navigate = useNavigate();
+  const { register, handleSubmit } = useForm<ILogin>();
+  const apiUrl = useSelector((state: RootState) => state.apiUrl.url);
 
-  const onLoginClick = () => {
-    navigate('/admin');
+  const onLoginSubmit = (data: ILogin) => {
+    if (data.id.trim().length > 0 && data.pw.trim().length > 0) {
+      // 아이디
+      const params = { id: data.id, pw: data.pw };
+      axios
+        .post(`${apiUrl}/login`, params)
+        .then((response) => {
+          console.log(response);
+        })
+        .catch(() => {
+          Swal.fire({
+            title: '❗',
+            text: '아이디 비밀번호가 일치하지 않습니다.',
+          });
+        });
+    } else {
+      Swal.fire({
+        title: '❗',
+        text: '아이디 비밀번호를 확인해 주세요.',
+      });
+    }
+    // navigate('/admin');
   };
 
   return (
@@ -79,7 +113,7 @@ function Login() {
       <Header category="login" />
       <MainWrapper>
         <Book src={BOOK}></Book>
-        <Form>
+        <Form onSubmit={handleSubmit(onLoginSubmit)}>
           <InputBox>
             <Col>
               <label htmlFor="id" className="mg-b-30">
@@ -90,7 +124,8 @@ function Login() {
             <Col>
               <input
                 id="id"
-                className="font-size-2 font-default pd-lr-10 mg-b-30"
+                {...register('id', { required: false })}
+                className="font-size-2 font-default pd-lr-10"
                 style={{
                   border: '1px solid #6D422A',
                   borderRadius: 5,
@@ -99,7 +134,9 @@ function Login() {
               />
               <input
                 id="pw"
-                className="font-size-2 font-default pd-lr-10"
+                type="password"
+                {...register('pw', { required: false })}
+                className="font-size-2 font-default pd-lr-10 mg-t-30"
                 style={{
                   border: '1px solid #6D422A',
                   borderRadius: 5,
@@ -108,7 +145,7 @@ function Login() {
               />
             </Col>
           </InputBox>
-          <LoginButton src={rabbit} alt="rabbit" onClick={onLoginClick} />
+          <LoginButton src={RABBIT} type="submit" />
         </Form>
       </MainWrapper>
       <BackgroundWrapper>
