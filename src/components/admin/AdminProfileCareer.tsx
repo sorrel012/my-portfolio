@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import {
   Button,
   MainTitle,
@@ -8,8 +8,16 @@ import {
   TableButton,
   Th,
 } from '../../pages/admin/AdminProfile.tsx';
+import { useMutation, useQuery } from '@tanstack/react-query';
+import Swal from 'sweetalert2';
+import { queryClient } from '../../index.tsx';
+import {
+  delProfileCareer,
+  getProfileCareer,
+  saveProfileCareer,
+} from '../../util/api.ts';
 
-interface ICareer {
+export interface ICareer {
   careerCompany: string;
   careerPeriod: string;
   careerOrder: number;
@@ -18,6 +26,51 @@ interface ICareer {
 function AdminProfileCareer() {
   const [career, setCareer] = useState<ICareer[]>([]);
 
+  const { data, isLoading } = useQuery({
+    queryKey: ['profileCareer'],
+    queryFn: getProfileCareer,
+  });
+
+  useEffect(() => {
+    if (!isLoading && data) {
+      setCareer(data);
+    }
+  }, [data, isLoading]);
+
+  const { mutate } = useMutation({
+    mutationFn: saveProfileCareer,
+    onSuccess: () => {
+      Swal.fire({
+        title: '✅',
+        text: '저장에 성공했습니다.',
+      });
+      queryClient.invalidateQueries({ queryKey: ['profileCareer'] });
+    },
+    onError: () => {
+      Swal.fire({
+        title: '❗',
+        text: '저장에 실패했습니다.',
+      });
+    },
+  });
+
+  const { mutate: delMutate } = useMutation({
+    mutationFn: delProfileCareer,
+    onSuccess: () => {
+      Swal.fire({
+        title: '✅',
+        text: '삭제에 성공했습니다.',
+      });
+      queryClient.invalidateQueries({ queryKey: ['profileCareer'] });
+    },
+    onError: () => {
+      Swal.fire({
+        title: '❗',
+        text: '삭제에 실패했습니다.',
+      });
+    },
+  });
+
   const addRow = () => {
     setCareer([
       ...career,
@@ -25,7 +78,15 @@ function AdminProfileCareer() {
     ]);
   };
   const removeRow = (index: number) => {
-    setCareer(career.filter((_, i) => i !== index));
+    if (!window.confirm('정말 삭제하시겠습니까?')) {
+      return;
+    }
+
+    setCareer(career.filter((career) => career.careerOrder !== index));
+
+    if (index > 0) {
+      delMutate(index);
+    }
   };
 
   const onChange = (index: number, label: string, value: string | number) => {
@@ -36,6 +97,10 @@ function AdminProfileCareer() {
       return career;
     });
     setCareer(updatedCareer);
+  };
+
+  const onCareerSave = () => {
+    mutate(career);
   };
 
   return (
@@ -82,14 +147,16 @@ function AdminProfileCareer() {
                 />
               </td>
               <td>
-                <TableButton onClick={() => removeRow(index)}>-</TableButton>
+                <TableButton onClick={() => removeRow(career.careerOrder)}>
+                  -
+                </TableButton>
               </td>
             </tr>
           ))}
         </tbody>
       </Table>
       <Save>
-        <Button>저장</Button>
+        <Button onClick={onCareerSave}>저장</Button>
       </Save>
     </Profile>
   );
