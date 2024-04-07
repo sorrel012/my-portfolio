@@ -9,7 +9,11 @@ import {
 } from '../../pages/admin/AdminProfile.tsx';
 import { useEffect, useState } from 'react';
 import { useMutation, useQuery } from '@tanstack/react-query';
-import { getProfileCert, saveProfileCert } from '../../util/api.ts';
+import {
+  delProfileCert,
+  getProfileCert,
+  saveProfileCert,
+} from '../../util/api.ts';
 import Swal from 'sweetalert2';
 import { queryClient } from '../../index.tsx';
 
@@ -50,6 +54,23 @@ function AdminProfileCert() {
     },
   });
 
+  const { mutate: delMutate } = useMutation({
+    mutationFn: delProfileCert,
+    onSuccess: () => {
+      Swal.fire({
+        title: '✅',
+        text: '삭제에 성공했습니다.',
+      });
+      queryClient.invalidateQueries({ queryKey: ['profileCert'] });
+    },
+    onError: () => {
+      Swal.fire({
+        title: '❗',
+        text: '삭제에 실패했습니다.',
+      });
+    },
+  });
+
   const addRow = () => {
     setCertifications([
       ...certifications,
@@ -58,12 +79,21 @@ function AdminProfileCert() {
   };
 
   const removeRow = (index: number) => {
-    setCertifications(certifications.filter((_, i) => i !== index));
+    if (!window.confirm('정말 삭제하시겠습니까?')) {
+      return;
+    }
+
+    setCertifications(
+      certifications.filter(
+        (certification) => certification.certOrder !== index,
+      ),
+    );
+    delMutate(index);
   };
 
   const onChange = (index: number, label: string, value: string | number) => {
-    const updatedCertifications = certifications.map((certification, i) => {
-      if (i === index) {
+    const updatedCertifications = certifications.map((certification) => {
+      if (certification.certOrder === index) {
         return { ...certification, [label]: value };
       }
       return certification;
@@ -91,14 +121,18 @@ function AdminProfileCert() {
         </thead>
         <tbody>
           {!isLoading &&
-            certifications.map((certification, index) => (
-              <tr key={index}>
+            certifications.map((certification) => (
+              <tr key={certification.certOrder}>
                 <td>
                   <input
                     type="text"
                     value={certification.certName}
                     onChange={(e) =>
-                      onChange(index, 'certName', e.target.value)
+                      onChange(
+                        certification.certOrder,
+                        'certName',
+                        e.target.value,
+                      )
                     }
                   />
                 </td>
@@ -107,7 +141,11 @@ function AdminProfileCert() {
                     type="text"
                     value={certification.certDate}
                     onChange={(e) =>
-                      onChange(index, 'certDate', e.target.value)
+                      onChange(
+                        certification.certOrder,
+                        'certDate',
+                        e.target.value,
+                      )
                     }
                   />
                 </td>
@@ -116,7 +154,11 @@ function AdminProfileCert() {
                     type="text"
                     value={certification.certScore}
                     onChange={(e) =>
-                      onChange(index, 'certScore', e.target.value)
+                      onChange(
+                        certification.certOrder,
+                        'certScore',
+                        e.target.value,
+                      )
                     }
                   />
                 </td>
@@ -125,12 +167,20 @@ function AdminProfileCert() {
                     type="number"
                     value={certification.certOrder}
                     onChange={(e) =>
-                      onChange(index, 'certOrder', e.target.value)
+                      onChange(
+                        certification.certOrder,
+                        'certOrder',
+                        e.target.value,
+                      )
                     }
                   />
                 </td>
                 <td>
-                  <TableButton onClick={() => removeRow(index)}>-</TableButton>
+                  <TableButton
+                    onClick={() => removeRow(certification.certOrder)}
+                  >
+                    -
+                  </TableButton>
                 </td>
               </tr>
             ))}

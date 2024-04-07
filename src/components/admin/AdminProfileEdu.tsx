@@ -1,5 +1,4 @@
 import {
-  Button,
   MainTitle,
   Profile,
   Save,
@@ -18,6 +17,33 @@ interface IEducation {
 
 function AdminProfileEdu() {
   const [educations, setEducations] = useState<IEducation[]>([]);
+  // const { data, isLoading } = useQuery({
+  //   queryKey: ['profileEdu'],
+  //   queryFn: getProfileEdu,
+  // });
+  //
+  // useEffect(() => {
+  //   if (!isLoading && data) {
+  //     setEducations(data);
+  //   }
+  // }, [data, isLoading]);
+  //
+  // const { mutate } = useMutation({
+  //   mutationFn: saveProfileEdu,
+  //   onSuccess: () => {
+  //     Swal.fire({
+  //       title: '✅',
+  //       text: '저장에 성공했습니다.',
+  //     });
+  //     queryClient.invalidateQueries({ queryKey: ['profileEdu'] });
+  //   },
+  //   onError: () => {
+  //     Swal.fire({
+  //       title: '❗',
+  //       text: '저장에 실패했습니다.',
+  //     });
+  //   },
+  // });
 
   const addRow = () => {
     setEducations([
@@ -38,6 +64,10 @@ function AdminProfileEdu() {
       return education;
     });
     setEducations(updatedEducations);
+  };
+
+  const onCertSave = () => {
+    mutate(educations);
   };
 
   return (
@@ -96,9 +126,7 @@ function AdminProfileEdu() {
           ))}
         </tbody>
       </Table>
-      <Save>
-        <Button>저장</Button>
-      </Save>
+      <Save>{/*<Button onClick={onEduSave}>저장</Button>*/}</Save>
     </Profile>
   );
 }

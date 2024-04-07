@@ -44,3 +44,10 @@ export async function saveProfileCert(certs: ICert[]) {
   const { data } = await axios.post(`${apiUrl}/profile/cert`, certs);
   return data;
 }
+
+export async function delProfileCert(index: number) {
+  const { data } = await axios.delete(`${apiUrl}/profile/cert`, {
+    params: { certOrder: index },
+  });
+  return data;
+}
