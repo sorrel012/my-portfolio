@@ -13,6 +13,13 @@ export interface IProfileInfo {
   address: string | undefined;
 }
 
+interface ICert {
+  certName: string;
+  certDate: string;
+  certScore: string;
+  certOrder: number;
+}
+
 export async function getProfileInfo() {
   const { data } = await axios.get(`${apiUrl}/profile/info`);
   return data.result;
@@ -25,5 +32,15 @@ export async function saveProfileInfo(profileInfo: IProfileInfo) {
 
 export async function editProfileInfo(profileInfo: IProfileInfo) {
   const { data } = await axios.put(`${apiUrl}/profile/info`, profileInfo);
+  return data;
+}
+
+export async function getProfileCert() {
+  const { data } = await axios.get(`${apiUrl}/profile/cert`);
+  return data.result;
+}
+
+export async function saveProfileCert(certs: ICert[]) {
+  const { data } = await axios.post(`${apiUrl}/profile/cert`, certs);
   return data;
 }

@@ -7,7 +7,11 @@ import {
   TableButton,
   Th,
 } from '../../pages/admin/AdminProfile.tsx';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
+import { useMutation, useQuery } from '@tanstack/react-query';
+import { getProfileCert, saveProfileCert } from '../../util/api.ts';
+import Swal from 'sweetalert2';
+import { queryClient } from '../../index.tsx';
 
 interface ICertification {
   certName: string;
@@ -18,6 +22,33 @@ interface ICertification {
 
 function AdminProfileCert() {
   const [certifications, setCertifications] = useState<ICertification[]>([]);
+  const { data, isLoading } = useQuery({
+    queryKey: ['profileCert'],
+    queryFn: getProfileCert,
+  });
+
+  useEffect(() => {
+    if (!isLoading && data) {
+      setCertifications(data);
+    }
+  }, [data, isLoading]);
+
+  const { mutate } = useMutation({
+    mutationFn: saveProfileCert,
+    onSuccess: () => {
+      Swal.fire({
+        title: '✅',
+        text: '저장에 성공했습니다.',
+      });
+      queryClient.invalidateQueries({ queryKey: ['profileCert'] });
+    },
+    onError: () => {
+      Swal.fire({
+        title: '❗',
+        text: '저장에 실패했습니다.',
+      });
+    },
+  });
 
   const addRow = () => {
     setCertifications([
@@ -40,6 +71,10 @@ function AdminProfileCert() {
     setCertifications(updatedCertifications);
   };
 
+  const onCertSave = () => {
+    mutate(certifications);
+  };
+
   return (
     <Profile>
       <MainTitle>자격증 및 어학</MainTitle>
@@ -55,45 +90,54 @@ function AdminProfileCert() {
           </tr>
         </thead>
         <tbody>
-          {certifications.map((certification, index) => (
-            <tr key={index}>
-              <td>
-                <input
-                  type="text"
-                  value={certification.certName}
-                  onChange={(e) => onChange(index, 'certName', e.target.value)}
-                />
-              </td>
-              <td>
-                <input
-                  type="text"
-                  value={certification.certDate}
-                  onChange={(e) => onChange(index, 'certDate', e.target.value)}
-                />
-              </td>
-              <td>
-                <input
-                  type="text"
-                  value={certification.certScore}
-                  onChange={(e) => onChange(index, 'certScore', e.target.value)}
-                />
-              </td>
-              <td>
-                <input
-                  type="number"
-                  value={certification.certOrder}
-                  onChange={(e) => onChange(index, 'certOrder', e.target.value)}
-                />
-              </td>
-              <td>
-                <TableButton onClick={() => removeRow(index)}>-</TableButton>
-              </td>
-            </tr>
-          ))}
+          {!isLoading &&
+            certifications.map((certification, index) => (
+              <tr key={index}>
+                <td>
+                  <input
+                    type="text"
+                    value={certification.certName}
+                    onChange={(e) =>
+                      onChange(index, 'certName', e.target.value)
+                    }
+                  />
+                </td>
+                <td>
+                  <input
+                    type="text"
+                    value={certification.certDate}
+                    onChange={(e) =>
+                      onChange(index, 'certDate', e.target.value)
+                    }
+                  />
+                </td>
+                <td>
+                  <input
+                    type="text"
+                    value={certification.certScore}
+                    onChange={(e) =>
+                      onChange(index, 'certScore', e.target.value)
+                    }
+                  />
+                </td>
+                <td>
+                  <input
+                    type="number"
+                    value={certification.certOrder}
+                    onChange={(e) =>
+                      onChange(index, 'certOrder', e.target.value)
+                    }
+                  />
+                </td>
+                <td>
+                  <TableButton onClick={() => removeRow(index)}>-</TableButton>
+                </td>
+              </tr>
+            ))}
         </tbody>
       </Table>
       <Save>
-        <Button>저장</Button>
+        <Button onClick={onCertSave}>저장</Button>
       </Save>
     </Profile>
   );
