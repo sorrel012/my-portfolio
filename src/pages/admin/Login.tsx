@@ -91,7 +91,11 @@ function Login() {
       axios
         .post(`${apiUrl}/login`, params)
         .then((response) => {
-          console.log(response);
+          Swal.fire({
+            title: '✅',
+            text: '로그인에 성공했습니다.',
+          });
+          navigate('/admin', { state: response.data.result });
         })
         .catch(() => {
           Swal.fire({
@@ -105,7 +109,6 @@ function Login() {
         text: '아이디 비밀번호를 확인해 주세요.',
       });
     }
-    // navigate('/admin');
   };
 
   return (
