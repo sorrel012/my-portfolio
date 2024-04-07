@@ -21,6 +21,7 @@ const LoginUser = styled.section`
 
 const UserImg = styled.img`
   width: 7vw;
+  height: 7.5vw;
   background-color: white;
   border-radius: 50%;
   margin-bottom: 5%;
@@ -85,7 +86,10 @@ function SideBar({ name, pic }: IAdmin) {
   return (
     <Wrapper>
       <LoginUser>
-        <UserImg src={pic} alt="profile-pic" />
+        <UserImg
+          src={`https://portfolio117.s3.ap-northeast-2.amazonaws.com/${pic}`}
+          alt="profile-pic"
+        />
         <UserName>{name}</UserName>
       </LoginUser>
       <Categories>

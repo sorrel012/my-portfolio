@@ -12,6 +12,7 @@ import AdminProfile from '../pages/admin/AdminProfile.tsx';
 import AdminSkills from '../pages/admin/AdminSkills.tsx';
 import AdminProjects from '../pages/admin/AdminProjects.tsx';
 import AdminContact from '../pages/admin/AdminContact.tsx';
+import AdminPrivate from '../pages/admin/AdminPrivate.tsx';
 
 export const router = createBrowserRouter([
   {
@@ -44,7 +45,11 @@ export const router = createBrowserRouter([
       },
       {
         path: 'admin',
-        element: <Admin />,
+        element: (
+          <AdminPrivate>
+            <Admin />
+          </AdminPrivate>
+        ),
         children: [
           { index: true, element: <AdminHome /> },
           { path: 'profile', element: <AdminProfile /> },
