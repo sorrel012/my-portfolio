@@ -170,7 +170,12 @@ function Home() {
   const navigate = useNavigate();
 
   const onLoginClick = () => {
-    navigate('/login');
+    const isLogin = sessionStorage.getItem('isLogin');
+    if (isLogin === 'Y') {
+      navigate('/admin');
+    } else {
+      navigate('/login');
+    }
   };
 
   const onMushroomHover = (category: string) =>

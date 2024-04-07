@@ -1,5 +1,7 @@
 import styled from 'styled-components';
-import { NavLink } from 'react-router-dom';
+import { NavLink, useNavigate } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
+import { adminActions } from '../../store/store.ts';
 
 const Wrapper = styled.nav`
   background-color: ${(props) => props.theme.admin.navBgColor};
@@ -57,6 +59,7 @@ const Logout = styled.button`
   bottom: 2%;
   right: 5%;
   padding: 1.5% 4%;
+  cursor: pointer;
 `;
 
 interface IAdmin {
@@ -65,6 +68,20 @@ interface IAdmin {
 }
 
 function SideBar({ name, pic }: IAdmin) {
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+
+  const handleLogout = () => {
+    dispatch(
+      adminActions.login({
+        name: '',
+        pic: '',
+      }),
+    );
+    sessionStorage.removeItem('isLogin');
+    navigate('/');
+  };
+
   return (
     <Wrapper>
       <LoginUser>
@@ -110,7 +127,7 @@ function SideBar({ name, pic }: IAdmin) {
           main
         </NavLink>
       </Categories>
-      <Logout>LOGOUT</Logout>
+      <Logout onClick={handleLogout}>LOGOUT</Logout>
     </Wrapper>
   );
 }
