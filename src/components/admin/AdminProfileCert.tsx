@@ -74,7 +74,7 @@ function AdminProfileCert() {
   const addRow = () => {
     setCertifications([
       ...certifications,
-      { certName: '', certDate: '', certScore: '', certOrder: 1 },
+      { certName: '', certDate: '', certScore: '', certOrder: -1 },
     ]);
   };
 
@@ -88,12 +88,15 @@ function AdminProfileCert() {
         (certification) => certification.certOrder !== index,
       ),
     );
-    delMutate(index);
+
+    if (index > 0) {
+      delMutate(index);
+    }
   };
 
   const onChange = (index: number, label: string, value: string | number) => {
-    const updatedCertifications = certifications.map((certification) => {
-      if (certification.certOrder === index) {
+    const updatedCertifications = certifications.map((certification, i) => {
+      if (i === index) {
         return { ...certification, [label]: value };
       }
       return certification;
@@ -121,18 +124,14 @@ function AdminProfileCert() {
         </thead>
         <tbody>
           {!isLoading &&
-            certifications.map((certification) => (
-              <tr key={certification.certOrder}>
+            certifications.map((certification, index) => (
+              <tr key={index}>
                 <td>
                   <input
                     type="text"
                     value={certification.certName}
                     onChange={(e) =>
-                      onChange(
-                        certification.certOrder,
-                        'certName',
-                        e.target.value,
-                      )
+                      onChange(index, 'certName', e.target.value)
                     }
                   />
                 </td>
@@ -141,11 +140,7 @@ function AdminProfileCert() {
                     type="text"
                     value={certification.certDate}
                     onChange={(e) =>
-                      onChange(
-                        certification.certOrder,
-                        'certDate',
-                        e.target.value,
-                      )
+                      onChange(index, 'certDate', e.target.value)
                     }
                   />
                 </td>
@@ -154,11 +149,7 @@ function AdminProfileCert() {
                     type="text"
                     value={certification.certScore}
                     onChange={(e) =>
-                      onChange(
-                        certification.certOrder,
-                        'certScore',
-                        e.target.value,
-                      )
+                      onChange(index, 'certScore', e.target.value)
                     }
                   />
                 </td>
@@ -167,11 +158,7 @@ function AdminProfileCert() {
                     type="number"
                     value={certification.certOrder}
                     onChange={(e) =>
-                      onChange(
-                        certification.certOrder,
-                        'certOrder',
-                        e.target.value,
-                      )
+                      onChange(index, 'certOrder', e.target.value)
                     }
                   />
                 </td>

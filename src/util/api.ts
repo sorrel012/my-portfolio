@@ -1,4 +1,6 @@
 import axios from 'axios';
+import { ICertification } from '../components/admin/AdminProfileCert.tsx';
+import { IEducation } from '../components/admin/AdminProfileEdu.tsx';
 
 const apiUrl = import.meta.env.VITE_API_URL;
 
@@ -11,13 +13,6 @@ export interface IProfileInfo {
   birth: string | undefined;
   email: string | undefined;
   address: string | undefined;
-}
-
-interface ICert {
-  certName: string;
-  certDate: string;
-  certScore: string;
-  certOrder: number;
 }
 
 export async function getProfileInfo() {
@@ -40,7 +35,7 @@ export async function getProfileCert() {
   return data.result;
 }
 
-export async function saveProfileCert(certs: ICert[]) {
+export async function saveProfileCert(certs: ICertification[]) {
   const { data } = await axios.post(`${apiUrl}/profile/cert`, certs);
   return data;
 }
@@ -48,6 +43,23 @@ export async function saveProfileCert(certs: ICert[]) {
 export async function delProfileCert(index: number) {
   const { data } = await axios.delete(`${apiUrl}/profile/cert`, {
     params: { certOrder: index },
+  });
+  return data;
+}
+
+export async function getProfileEdu() {
+  const { data } = await axios.get(`${apiUrl}/profile/edu`);
+  return data.result;
+}
+
+export async function saveProfileEdu(educations: IEducation[]) {
+  const { data } = await axios.post(`${apiUrl}/profile/edu`, educations);
+  return data;
+}
+
+export async function delProfileEdu(index: number) {
+  const { data } = await axios.delete(`${apiUrl}/profile/edu`, {
+    params: { eduOrder: index },
   });
   return data;
 }

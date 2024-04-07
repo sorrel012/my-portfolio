@@ -1,4 +1,5 @@
 import {
+  Button,
   MainTitle,
   Profile,
   Save,
@@ -6,9 +7,17 @@ import {
   TableButton,
   Th,
 } from '../../pages/admin/AdminProfile.tsx';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
+import { useMutation, useQuery } from '@tanstack/react-query';
+import Swal from 'sweetalert2';
+import { queryClient } from '../../index.tsx';
+import {
+  delProfileEdu,
+  getProfileEdu,
+  saveProfileEdu,
+} from '../../util/api.ts';
 
-interface IEducation {
+export interface IEducation {
   eduPeriod: string;
   eduContent: string;
   eduCategory: string;
@@ -17,43 +26,69 @@ interface IEducation {
 
 function AdminProfileEdu() {
   const [educations, setEducations] = useState<IEducation[]>([]);
-  // const { data, isLoading } = useQuery({
-  //   queryKey: ['profileEdu'],
-  //   queryFn: getProfileEdu,
-  // });
-  //
-  // useEffect(() => {
-  //   if (!isLoading && data) {
-  //     setEducations(data);
-  //   }
-  // }, [data, isLoading]);
-  //
-  // const { mutate } = useMutation({
-  //   mutationFn: saveProfileEdu,
-  //   onSuccess: () => {
-  //     Swal.fire({
-  //       title: '✅',
-  //       text: '저장에 성공했습니다.',
-  //     });
-  //     queryClient.invalidateQueries({ queryKey: ['profileEdu'] });
-  //   },
-  //   onError: () => {
-  //     Swal.fire({
-  //       title: '❗',
-  //       text: '저장에 실패했습니다.',
-  //     });
-  //   },
-  // });
+  const { data, isLoading } = useQuery({
+    queryKey: ['profileEdu'],
+    queryFn: getProfileEdu,
+  });
+
+  useEffect(() => {
+    if (!isLoading && data) {
+      setEducations(data);
+    }
+  }, [data, isLoading]);
+
+  const { mutate } = useMutation({
+    mutationFn: saveProfileEdu,
+    onSuccess: () => {
+      Swal.fire({
+        title: '✅',
+        text: '저장에 성공했습니다.',
+      });
+      queryClient.invalidateQueries({ queryKey: ['profileEdu'] });
+    },
+    onError: () => {
+      Swal.fire({
+        title: '❗',
+        text: '저장에 실패했습니다.',
+      });
+    },
+  });
+
+  const { mutate: delMutate } = useMutation({
+    mutationFn: delProfileEdu,
+    onSuccess: () => {
+      Swal.fire({
+        title: '✅',
+        text: '삭제에 성공했습니다.',
+      });
+      queryClient.invalidateQueries({ queryKey: ['profileEdu'] });
+    },
+    onError: () => {
+      Swal.fire({
+        title: '❗',
+        text: '삭제에 실패했습니다.',
+      });
+    },
+  });
 
   const addRow = () => {
     setEducations([
       ...educations,
-      { eduPeriod: '', eduContent: '', eduCategory: '', eduOrder: 1 },
+      { eduPeriod: '', eduContent: '', eduCategory: '', eduOrder: -1 },
     ]);
   };
 
   const removeRow = (index: number) => {
-    setEducations(educations.filter((_, i) => i !== index));
+    if (!window.confirm('정말 삭제하시겠습니까?')) {
+      return;
+    }
+    setEducations(
+      educations.filter((education) => education.eduOrder !== index),
+    );
+
+    if (index > 0) {
+      delMutate(index);
+    }
   };
 
   const onChange = (index: number, label: string, value: string | number) => {
@@ -66,7 +101,7 @@ function AdminProfileEdu() {
     setEducations(updatedEducations);
   };
 
-  const onCertSave = () => {
+  const onEduSave = () => {
     mutate(educations);
   };
 
@@ -120,13 +155,17 @@ function AdminProfileEdu() {
                 />
               </td>
               <td>
-                <TableButton onClick={() => removeRow(index)}>-</TableButton>
+                <TableButton onClick={() => removeRow(education.eduOrder)}>
+                  -
+                </TableButton>
               </td>
             </tr>
           ))}
         </tbody>
       </Table>
-      <Save>{/*<Button onClick={onEduSave}>저장</Button>*/}</Save>
+      <Save>
+        <Button onClick={onEduSave}>저장</Button>
+      </Save>
     </Profile>
   );
 }
