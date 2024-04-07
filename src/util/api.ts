@@ -2,6 +2,7 @@ import axios from 'axios';
 import { ICertification } from '../components/admin/AdminProfileCert.tsx';
 import { IEducation } from '../components/admin/AdminProfileEdu.tsx';
 import { ICareer } from '../components/admin/AdminProfileCareer.tsx';
+import { ICareerProject } from '../components/admin/AdminProfileCareerProject.tsx';
 
 const apiUrl = import.meta.env.VITE_API_URL;
 
@@ -78,6 +79,28 @@ export async function saveProfileCareer(careers: ICareer[]) {
 export async function delProfileCareer(index: number) {
   const { data } = await axios.delete(`${apiUrl}/profile/career`, {
     params: { careerOrder: index },
+  });
+  return data;
+}
+
+export async function getProfileCareerProject() {
+  const { data } = await axios.get(`${apiUrl}/profile/career-project`);
+  return data.result;
+}
+
+export async function saveProfileCareerProject(
+  careerProjects: ICareerProject[],
+) {
+  const { data } = await axios.post(
+    `${apiUrl}/profile/career-project`,
+    careerProjects,
+  );
+  return data;
+}
+
+export async function delProfileCareerProject(index: number) {
+  const { data } = await axios.delete(`${apiUrl}/profile/career-project`, {
+    params: { careerProjectOrder: index },
   });
   return data;
 }

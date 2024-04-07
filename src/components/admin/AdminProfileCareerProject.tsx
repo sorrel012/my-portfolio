@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import {
   Button,
   MainTitle,
@@ -8,8 +8,16 @@ import {
   TableButton,
   Th,
 } from '../../pages/admin/AdminProfile.tsx';
+import { useMutation, useQuery } from '@tanstack/react-query';
+import Swal from 'sweetalert2';
+import { queryClient } from '../../index.tsx';
+import {
+  delProfileCareerProject,
+  getProfileCareerProject,
+  saveProfileCareerProject,
+} from '../../util/api.ts';
 
-interface ICareerProject {
+export interface ICareerProject {
   careerCompany: string;
   careerProjectName: string;
   careerProjectOrder: number;
@@ -17,6 +25,51 @@ interface ICareerProject {
 
 function AdminProfileCareerProject() {
   const [careerProject, setCareerProject] = useState<ICareerProject[]>([]);
+
+  const { data, isLoading } = useQuery({
+    queryKey: ['profileCareerProject'],
+    queryFn: getProfileCareerProject,
+  });
+
+  useEffect(() => {
+    if (!isLoading && data) {
+      setCareerProject(data);
+    }
+  }, [data, isLoading]);
+
+  const { mutate } = useMutation({
+    mutationFn: saveProfileCareerProject,
+    onSuccess: () => {
+      Swal.fire({
+        title: '✅',
+        text: '저장에 성공했습니다.',
+      });
+      queryClient.invalidateQueries({ queryKey: ['profileCareerProject'] });
+    },
+    onError: () => {
+      Swal.fire({
+        title: '❗',
+        text: '저장에 실패했습니다.',
+      });
+    },
+  });
+
+  const { mutate: delMutate } = useMutation({
+    mutationFn: delProfileCareerProject,
+    onSuccess: () => {
+      Swal.fire({
+        title: '✅',
+        text: '삭제에 성공했습니다.',
+      });
+      queryClient.invalidateQueries({ queryKey: ['profileCareerProject'] });
+    },
+    onError: () => {
+      Swal.fire({
+        title: '❗',
+        text: '삭제에 실패했습니다.',
+      });
+    },
+  });
 
   const addRow = () => {
     setCareerProject([
@@ -26,7 +79,17 @@ function AdminProfileCareerProject() {
   };
 
   const removeRow = (index: number) => {
-    setCareerProject(careerProject.filter((_, i) => i !== index));
+    if (!window.confirm('정말 삭제하시겠습니까?')) {
+      return;
+    }
+
+    setCareerProject(
+      careerProject.filter((project) => project.careerProjectOrder !== index),
+    );
+
+    if (index > 0) {
+      delMutate(index);
+    }
   };
 
   const onChange = (index: number, label: string, value: string | number) => {
@@ -37,6 +100,10 @@ function AdminProfileCareerProject() {
       return project;
     });
     setCareerProject(updatedCareerProject);
+  };
+
+  const onCareerProjectSave = () => {
+    mutate(careerProject);
   };
 
   return (
@@ -83,14 +150,18 @@ function AdminProfileCareerProject() {
                 />
               </td>
               <td>
-                <TableButton onClick={() => removeRow(index)}>-</TableButton>
+                <TableButton
+                  onClick={() => removeRow(project.careerProjectOrder)}
+                >
+                  -
+                </TableButton>
               </td>
             </tr>
           ))}
         </tbody>
       </Table>
       <Save>
-        <Button>저장</Button>
+        <Button onClick={onCareerProjectSave}>저장</Button>
       </Save>
     </Profile>
   );
