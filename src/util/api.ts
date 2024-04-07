@@ -13,7 +13,17 @@ export interface IProfileInfo {
   address: string | undefined;
 }
 
+export async function getProfileInfo() {
+  const { data } = await axios.get(`${apiUrl}/profile/info`);
+  return data.result;
+}
+
 export async function saveProfileInfo(profileInfo: IProfileInfo) {
   const { data } = await axios.post(`${apiUrl}/profile/info`, profileInfo);
+  return data;
+}
+
+export async function editProfileInfo(profileInfo: IProfileInfo) {
+  const { data } = await axios.put(`${apiUrl}/profile/info`, profileInfo);
   return data;
 }
