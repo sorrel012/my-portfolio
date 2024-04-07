@@ -1,8 +1,6 @@
 import styled from 'styled-components';
 import { NavLink } from 'react-router-dom';
 
-import userImg from '../../assets/images/home/mushroom.png';
-
 const Wrapper = styled.nav`
   background-color: ${(props) => props.theme.admin.navBgColor};
   height: 100vh;
@@ -61,12 +59,17 @@ const Logout = styled.button`
   padding: 1.5% 4%;
 `;
 
-function SideBar() {
+interface IAdmin {
+  name: string;
+  pic: string;
+}
+
+function SideBar({ name, pic }: IAdmin) {
   return (
     <Wrapper>
       <LoginUser>
-        <UserImg src={userImg} alt="profile-pic" />
-        <UserName>Hana</UserName>
+        <UserImg src={pic} alt="profile-pic" />
+        <UserName>{name}</UserName>
       </LoginUser>
       <Categories>
         <NavLink

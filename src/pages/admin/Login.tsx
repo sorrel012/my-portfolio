@@ -18,8 +18,8 @@ import { useNavigate } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
 import Swal from 'sweetalert2';
 import axios from 'axios';
-import { useSelector } from 'react-redux';
-import { RootState } from '../../store/store.ts';
+import { useDispatch, useSelector } from 'react-redux';
+import { adminActions, RootState } from '../../store/store.ts';
 
 const Wrapper = styled.main`
   height: 100vh;
@@ -81,21 +81,28 @@ interface ILogin {
 
 function Login() {
   const navigate = useNavigate();
+  const dispatch = useDispatch();
   const { register, handleSubmit } = useForm<ILogin>();
   const apiUrl = useSelector((state: RootState) => state.apiUrl.url);
 
   const onLoginSubmit = (data: ILogin) => {
     if (data.id.trim().length > 0 && data.pw.trim().length > 0) {
-      // 아이디
       const params = { id: data.id, pw: data.pw };
       axios
         .post(`${apiUrl}/login`, params)
         .then((response) => {
+          sessionStorage.setItem('isLogin', 'Y');
           Swal.fire({
             title: '✅',
             text: '로그인에 성공했습니다.',
           });
-          navigate('/admin', { state: response.data.result });
+          dispatch(
+            adminActions.login({
+              name: response.data.result.name,
+              pic: response.data.result.pic,
+            }),
+          );
+          navigate('/admin');
         })
         .catch(() => {
           Swal.fire({
