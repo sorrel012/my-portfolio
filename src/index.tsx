@@ -9,14 +9,14 @@ import './assets/css/common.css';
 import store from './store/store.ts';
 import { Provider } from 'react-redux';
 
-const client = new QueryClient();
+export const queryClient = new QueryClient();
 
 const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement,
 );
 root.render(
   <React.StrictMode>
-    <QueryClientProvider client={client}>
+    <QueryClientProvider client={queryClient}>
       <ThemeProvider theme={theme}>
         <Provider store={store}>
           <RouterProvider router={router} />

@@ -1,5 +1,9 @@
 import styled from 'styled-components';
-import { useState } from 'react';
+import { FormEvent, useRef, useState } from 'react';
+import { IProfileInfo, saveProfileInfo } from '../../util/api.ts';
+import { useMutation } from '@tanstack/react-query';
+import { queryClient } from '../../index.tsx';
+import Swal from 'sweetalert2';
 
 const Wrapper = styled.main`
   background-color: ${(props) => props.theme.admin.bgColor};
@@ -35,6 +39,7 @@ export const InputRow = styled.div`
 
 export const TextAreaRow = styled.div`
   display: flex;
+  margin-bottom: 1%;
 `;
 
 const Label = styled.label`
@@ -57,27 +62,6 @@ const Input = styled.input<{ flex: string }>`
   outline: none;
   font-family: 'SUITE-Regular', sans-serif;
   margin-bottom: 1%;
-`;
-
-const Buttons = styled.span`
-  flex: 1;
-  @media (max-width: 1000px) {
-    flex: 1.1;
-  }
-`;
-
-const DnButton = styled.button`
-  background-color: ${(props) => props.theme.admin.bgColor};
-  border: 1px solid ${(props) => props.theme.admin.wrapperBorderColor};
-  border-radius: 5px;
-  color: ${(props) => props.theme.admin.textColor};
-  font-family: 'SUITE-Regular', sans-serif;
-  font-size: 1.8vw;
-  padding: 0.5% 2%;
-  margin-left: 2%;
-  width: 2.5vw;
-  height: 2.5vw;
-  cursor: pointer;
 `;
 
 const TextArea = styled.textarea`
@@ -182,6 +166,35 @@ function AdminProfile() {
   const [career, setCareer] = useState<ICareer[]>([]);
   const [careerProject, setCareerProject] = useState<ICareerProject[]>([]);
   const [careerWork, setCareerWork] = useState<ICareerWork[]>([]);
+  const introPicRef = useRef<HTMLInputElement>(null);
+  const introTitleRef = useRef<HTMLInputElement>(null);
+  const introCnRef = useRef<HTMLTextAreaElement>(null);
+  const subPicRef = useRef<HTMLInputElement>(null);
+  const birthRef = useRef<HTMLInputElement>(null);
+  const nameRef = useRef<HTMLInputElement>(null);
+  const emailRef = useRef<HTMLInputElement>(null);
+  const addressRef = useRef<HTMLInputElement>(null);
+
+  const {
+    mutate: profileInfoMutate,
+    isError: profileInfoIsError,
+    error: profileInfoError,
+  } = useMutation({
+    mutationFn: saveProfileInfo,
+    onSuccess: () => {
+      Swal.fire({
+        title: '✅',
+        text: '저장에 성공했습니다.',
+      });
+      queryClient.invalidateQueries({ queryKey: ['profileInfo'] });
+    },
+    onError: () => {
+      Swal.fire({
+        title: '❗',
+        text: '저장에 실패했습니다.',
+      });
+    },
+  });
 
   const addRow = (type: string) => {
     switch (type) {
@@ -293,61 +306,60 @@ function AdminProfile() {
     }
   };
 
+  const onSaveIntro = (e: FormEvent) => {
+    e.preventDefault();
+    const params: IProfileInfo = {
+      mainPic: introPicRef?.current?.value,
+      title: introTitleRef?.current?.value,
+      content: introCnRef?.current?.value,
+      subPic: subPicRef?.current?.value,
+      name: nameRef?.current?.value,
+      birth: birthRef?.current?.value,
+      email: emailRef?.current?.value,
+      address: addressRef?.current?.value,
+    };
+    profileInfoMutate(params);
+  };
+
   return (
     <Wrapper>
-      <Profile>
-        <MainTitle>자기소개</MainTitle>
-        <Form>
-          <InputRow>
-            <Label>사진</Label>
-            <Input flex="9" />
-            <Buttons>
-              <DnButton>+</DnButton>
-              <DnButton>-</DnButton>
-            </Buttons>
-          </InputRow>
-          <InputRow>
-            <Label>제목</Label>
-            <Input flex="10" />
-          </InputRow>
-          <TextAreaRow>
-            <Label>내용</Label>
-            <TextArea />
-          </TextAreaRow>
-          <Save>
-            <Button>저장</Button>
-          </Save>
-        </Form>
-      </Profile>
       <Profile>
         <MainTitle>개인정보</MainTitle>
         <Form>
           <InputRow>
-            <Label>사진</Label>
-            <Input flex="9" />
-            <Buttons>
-              <DnButton>+</DnButton>
-              <DnButton>-</DnButton>
-            </Buttons>
+            <Label>메인사진</Label>
+            <Input ref={introPicRef} flex="10" />
+          </InputRow>
+          <InputRow>
+            <Label>제목</Label>
+            <Input ref={introTitleRef} flex="10" />
+          </InputRow>
+          <TextAreaRow>
+            <Label>내용</Label>
+            <TextArea ref={introCnRef} />
+          </TextAreaRow>
+          <InputRow>
+            <Label>작은사진</Label>
+            <Input ref={subPicRef} flex="10" />
           </InputRow>
           <InputRow>
             <Label>이름</Label>
-            <Input flex="10" />
+            <Input ref={nameRef} flex="10" />
           </InputRow>
           <InputRow>
             <Label>생년월일</Label>
-            <Input flex="10" />
+            <Input ref={birthRef} flex="10" />
           </InputRow>
           <InputRow>
             <Label>이메일</Label>
-            <Input flex="10" />
+            <Input ref={emailRef} flex="10" />
           </InputRow>
           <InputRow>
             <Label>주소</Label>
-            <Input flex="10" />
+            <Input ref={addressRef} flex="10" />
           </InputRow>
           <Save>
-            <Button>저장</Button>
+            <Button onClick={onSaveIntro}>저장</Button>
           </Save>
         </Form>
       </Profile>
