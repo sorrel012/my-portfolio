@@ -17,7 +17,7 @@ import {
 import Swal from 'sweetalert2';
 import { queryClient } from '../../index.tsx';
 
-interface ICertification {
+export interface ICertification {
   certName: string;
   certDate: string;
   certScore: string;
