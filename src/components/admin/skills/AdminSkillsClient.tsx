@@ -6,17 +6,78 @@ import {
   Th,
 } from '../../../pages/admin/AdminProfile.tsx';
 import { ISkills, Skills, Table } from '../../../pages/admin/AdminSkills.tsx';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
+import { useMutation, useQuery } from '@tanstack/react-query';
+import Swal from 'sweetalert2';
+import { queryClient } from '../../../index.tsx';
+import {
+  delClientSkills,
+  getClientSkills,
+  saveClientSkills,
+} from '../../../util/api.ts';
 
 function AdminSkillsClient() {
   const [clientSkills, setClientSkills] = useState<ISkills[]>([]);
 
+  const { data, isLoading } = useQuery({
+    queryKey: ['clientSkills'],
+    queryFn: getClientSkills,
+  });
+
+  useEffect(() => {
+    if (!isLoading && data) {
+      setClientSkills(data);
+    }
+  }, [data, isLoading]);
+
+  const { mutate } = useMutation({
+    mutationFn: saveClientSkills,
+    onSuccess: () => {
+      Swal.fire({
+        title: '✅',
+        text: '저장에 성공했습니다.',
+      });
+      queryClient.invalidateQueries({ queryKey: ['clientSkills'] });
+    },
+    onError: () => {
+      Swal.fire({
+        title: '❗',
+        text: '저장에 실패했습니다.',
+      });
+    },
+  });
+
+  const { mutate: delMutate } = useMutation({
+    mutationFn: delClientSkills,
+    onSuccess: () => {
+      Swal.fire({
+        title: '✅',
+        text: '삭제에 성공했습니다.',
+      });
+      queryClient.invalidateQueries({ queryKey: ['clientSkills'] });
+    },
+    onError: () => {
+      Swal.fire({
+        title: '❗',
+        text: '삭제에 실패했습니다.',
+      });
+    },
+  });
+
   const addRow = () => {
-    setClientSkills([...clientSkills, { fileName: '', fileOrder: 1 }]);
+    setClientSkills([...clientSkills, { fileName: '', fileOrder: -1 }]);
   };
 
   const removeRow = (index: number) => {
-    setClientSkills(clientSkills.filter((_, i) => i !== index));
+    if (!window.confirm('정말 삭제하시겠습니까?')) {
+      return;
+    }
+
+    setClientSkills(clientSkills.filter((skill) => skill.fileOrder !== index));
+
+    if (index > 0) {
+      delMutate(index);
+    }
   };
 
   const onChange = (index: number, label: string, value: string | number) => {
@@ -27,6 +88,10 @@ function AdminSkillsClient() {
       return skill;
     });
     setClientSkills(updatedClientSkills);
+  };
+
+  const onSkillsClientSave = () => {
+    mutate(clientSkills);
   };
 
   return (
@@ -68,7 +133,7 @@ function AdminSkillsClient() {
         </tbody>
       </Table>
       <Save>
-        <Button>저장</Button>
+        <Button onClick={onSkillsClientSave}>저장</Button>
       </Save>
     </Skills>
   );

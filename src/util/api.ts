@@ -4,6 +4,7 @@ import { IEducation } from '../components/admin/profile/AdminProfileEdu.tsx';
 import { ICareer } from '../components/admin/profile/AdminProfileCareer.tsx';
 import { ICareerProject } from '../components/admin/profile/AdminProfileCareerProject.tsx';
 import { ICareerWork } from '../components/admin/profile/AdminProfileCareerWork.tsx';
+import { ISkills } from '../pages/admin/AdminSkills.tsx';
 
 const apiUrl = import.meta.env.VITE_API_URL;
 
@@ -122,6 +123,57 @@ export async function saveProfileCareerWork(careerWorks: ICareerWork[]) {
 export async function delProfileCareerWork(index: number) {
   const { data } = await axios.delete(`${apiUrl}/profile/career-work`, {
     params: { careerWorkOrder: index },
+  });
+  return data;
+}
+
+export async function getClientSkills() {
+  const { data } = await axios.get(`${apiUrl}/skills/client`);
+  return data.result;
+}
+
+export async function saveClientSkills(clientSkills: ISkills[]) {
+  const { data } = await axios.post(`${apiUrl}/skills/client`, clientSkills);
+  return data;
+}
+
+export async function delClientSkills(index: number) {
+  const { data } = await axios.delete(`${apiUrl}/skills/client`, {
+    params: { fileOrder: index },
+  });
+  return data;
+}
+
+export async function getServerSkills() {
+  const { data } = await axios.get(`${apiUrl}/skills/server`);
+  return data.result;
+}
+
+export async function saveServerSkills(serverSkills: ISkills[]) {
+  const { data } = await axios.post(`${apiUrl}/skills/server`, serverSkills);
+  return data;
+}
+
+export async function delServerSkills(index: number) {
+  const { data } = await axios.delete(`${apiUrl}/skills/server`, {
+    params: { fileOrder: index },
+  });
+  return data;
+}
+
+export async function getToolSkills() {
+  const { data } = await axios.get(`${apiUrl}/skills/tool`);
+  return data.result;
+}
+
+export async function saveToolSkills(tools: ISkills[]) {
+  const { data } = await axios.post(`${apiUrl}/skills/tool`, tools);
+  return data;
+}
+
+export async function delToolSkills(index: number) {
+  const { data } = await axios.delete(`${apiUrl}/skills/tool`, {
+    params: { fileOrder: index },
   });
   return data;
 }
