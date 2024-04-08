@@ -1,9 +1,9 @@
 import axios from 'axios';
-import { ICertification } from '../components/admin/AdminProfileCert.tsx';
-import { IEducation } from '../components/admin/AdminProfileEdu.tsx';
-import { ICareer } from '../components/admin/AdminProfileCareer.tsx';
-import { ICareerProject } from '../components/admin/AdminProfileCareerProject.tsx';
-import { ICareerWork } from '../components/admin/AdminProfileCareerWork.tsx';
+import { ICertification } from '../components/admin/profile/AdminProfileCert.tsx';
+import { IEducation } from '../components/admin/profile/AdminProfileEdu.tsx';
+import { ICareer } from '../components/admin/profile/AdminProfileCareer.tsx';
+import { ICareerProject } from '../components/admin/profile/AdminProfileCareerProject.tsx';
+import { ICareerWork } from '../components/admin/profile/AdminProfileCareerWork.tsx';
 
 const apiUrl = import.meta.env.VITE_API_URL;
 

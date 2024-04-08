@@ -8,11 +8,11 @@ import {
 import { useMutation, useQuery } from '@tanstack/react-query';
 import { queryClient } from '../../index.tsx';
 import Swal from 'sweetalert2';
-import AdminProfileCert from '../../components/admin/AdminProfileCert.tsx';
-import AdminProfileEdu from '../../components/admin/AdminProfileEdu.tsx';
-import AdminProfileCareer from '../../components/admin/AdminProfileCareer.tsx';
-import AdminProfileCareerProject from '../../components/admin/AdminProfileCareerProject.tsx';
-import AdminProfileCareerWork from '../../components/admin/AdminProfileCareerWork.tsx';
+import AdminProfileCert from '../../components/admin/profile/AdminProfileCert.tsx';
+import AdminProfileEdu from '../../components/admin/profile/AdminProfileEdu.tsx';
+import AdminProfileCareer from '../../components/admin/profile/AdminProfileCareer.tsx';
+import AdminProfileCareerProject from '../../components/admin/profile/AdminProfileCareerProject.tsx';
+import AdminProfileCareerWork from '../../components/admin/profile/AdminProfileCareerWork.tsx';
 
 const Wrapper = styled.main`
   background-color: ${(props) => props.theme.admin.bgColor};

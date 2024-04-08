@@ -6,16 +6,16 @@ import {
   Table,
   TableButton,
   Th,
-} from '../../pages/admin/AdminProfile.tsx';
+} from '../../../pages/admin/AdminProfile.tsx';
 import { useEffect, useState } from 'react';
 import { useMutation, useQuery } from '@tanstack/react-query';
 import {
   delProfileCert,
   getProfileCert,
   saveProfileCert,
-} from '../../util/api.ts';
+} from '../../../util/api.ts';
 import Swal from 'sweetalert2';
-import { queryClient } from '../../index.tsx';
+import { queryClient } from '../../../index.tsx';
 
 export interface ICertification {
   certName: string;

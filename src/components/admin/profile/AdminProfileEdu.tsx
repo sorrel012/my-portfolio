@@ -1,4 +1,3 @@
-import { useEffect, useState } from 'react';
 import {
   Button,
   MainTitle,
@@ -7,44 +6,45 @@ import {
   Table,
   TableButton,
   Th,
-} from '../../pages/admin/AdminProfile.tsx';
+} from '../../../pages/admin/AdminProfile.tsx';
+import { useEffect, useState } from 'react';
 import { useMutation, useQuery } from '@tanstack/react-query';
 import Swal from 'sweetalert2';
-import { queryClient } from '../../index.tsx';
+import { queryClient } from '../../../index.tsx';
 import {
-  delProfileCareer,
-  getProfileCareer,
-  saveProfileCareer,
-} from '../../util/api.ts';
+  delProfileEdu,
+  getProfileEdu,
+  saveProfileEdu,
+} from '../../../util/api.ts';
 
-export interface ICareer {
-  careerCompany: string;
-  careerPeriod: string;
-  careerOrder: number;
+export interface IEducation {
+  eduPeriod: string;
+  eduContent: string;
+  eduCategory: string;
+  eduOrder: number;
 }
 
-function AdminProfileCareer() {
-  const [career, setCareer] = useState<ICareer[]>([]);
-
+function AdminProfileEdu() {
+  const [educations, setEducations] = useState<IEducation[]>([]);
   const { data, isLoading } = useQuery({
-    queryKey: ['profileCareer'],
-    queryFn: getProfileCareer,
+    queryKey: ['profileEdu'],
+    queryFn: getProfileEdu,
   });
 
   useEffect(() => {
     if (!isLoading && data) {
-      setCareer(data);
+      setEducations(data);
     }
   }, [data, isLoading]);
 
   const { mutate } = useMutation({
-    mutationFn: saveProfileCareer,
+    mutationFn: saveProfileEdu,
     onSuccess: () => {
       Swal.fire({
         title: '✅',
         text: '저장에 성공했습니다.',
       });
-      queryClient.invalidateQueries({ queryKey: ['profileCareer'] });
+      queryClient.invalidateQueries({ queryKey: ['profileEdu'] });
     },
     onError: () => {
       Swal.fire({
@@ -55,13 +55,13 @@ function AdminProfileCareer() {
   });
 
   const { mutate: delMutate } = useMutation({
-    mutationFn: delProfileCareer,
+    mutationFn: delProfileEdu,
     onSuccess: () => {
       Swal.fire({
         title: '✅',
         text: '삭제에 성공했습니다.',
       });
-      queryClient.invalidateQueries({ queryKey: ['profileCareer'] });
+      queryClient.invalidateQueries({ queryKey: ['profileEdu'] });
     },
     onError: () => {
       Swal.fire({
@@ -72,17 +72,19 @@ function AdminProfileCareer() {
   });
 
   const addRow = () => {
-    setCareer([
-      ...career,
-      { careerCompany: '', careerPeriod: '', careerOrder: 1 },
+    setEducations([
+      ...educations,
+      { eduPeriod: '', eduContent: '', eduCategory: '', eduOrder: -1 },
     ]);
   };
+
   const removeRow = (index: number) => {
     if (!window.confirm('정말 삭제하시겠습니까?')) {
       return;
     }
-
-    setCareer(career.filter((career) => career.careerOrder !== index));
+    setEducations(
+      educations.filter((education) => education.eduOrder !== index),
+    );
 
     if (index > 0) {
       delMutate(index);
@@ -90,64 +92,70 @@ function AdminProfileCareer() {
   };
 
   const onChange = (index: number, label: string, value: string | number) => {
-    const updatedCareer = career.map((career, i) => {
+    const updatedEducations = educations.map((education, i) => {
       if (i === index) {
-        return { ...career, [label]: value };
+        return { ...education, [label]: value };
       }
-      return career;
+      return education;
     });
-    setCareer(updatedCareer);
+    setEducations(updatedEducations);
   };
 
-  const onCareerSave = () => {
-    mutate(career);
+  const onEduSave = () => {
+    mutate(educations);
   };
 
   return (
     <Profile>
-      <MainTitle>경력</MainTitle>
+      <MainTitle>교육</MainTitle>
       <TableButton onClick={addRow}>+</TableButton>
       <Table>
         <thead>
           <tr>
-            <Th>회사명</Th>
             <Th>기간</Th>
+            <Th>내용</Th>
+            <Th>카테고리</Th>
             <Th>정렬</Th>
             <Th>🗑</Th>
           </tr>
         </thead>
         <tbody>
-          {career.map((career, index) => (
+          {educations.map((education, index) => (
             <tr key={index}>
               <td>
                 <input
                   type="text"
-                  value={career.careerCompany}
+                  value={education.eduPeriod}
+                  onChange={(e) => onChange(index, 'eduPeriod', e.target.value)}
+                />
+              </td>
+              <td>
+                <input
+                  type="text"
+                  value={education.eduContent}
                   onChange={(e) =>
-                    onChange(index, 'careerCompany', e.target.value)
+                    onChange(index, 'eduContent', e.target.value)
                   }
                 />
               </td>
               <td>
                 <input
                   type="text"
-                  value={career.careerPeriod}
+                  value={education.eduCategory}
                   onChange={(e) =>
-                    onChange(index, 'careerPeriod', e.target.value)
+                    onChange(index, 'eduCategory', e.target.value)
                   }
                 />
               </td>
               <td>
                 <input
                   type="number"
-                  value={career.careerOrder}
-                  onChange={(e) =>
-                    onChange(index, 'careerOrder', e.target.value)
-                  }
+                  value={education.eduOrder}
+                  onChange={(e) => onChange(index, 'eduOrder', e.target.value)}
                 />
               </td>
               <td>
-                <TableButton onClick={() => removeRow(career.careerOrder)}>
+                <TableButton onClick={() => removeRow(education.eduOrder)}>
                   -
                 </TableButton>
               </td>
@@ -156,10 +164,10 @@ function AdminProfileCareer() {
         </tbody>
       </Table>
       <Save>
-        <Button onClick={onCareerSave}>저장</Button>
+        <Button onClick={onEduSave}>저장</Button>
       </Save>
     </Profile>
   );
 }
 
-export default AdminProfileCareer;
+export default AdminProfileEdu;

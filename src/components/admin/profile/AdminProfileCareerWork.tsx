@@ -7,44 +7,44 @@ import {
   Table,
   TableButton,
   Th,
-} from '../../pages/admin/AdminProfile.tsx';
+} from '../../../pages/admin/AdminProfile.tsx';
 import { useMutation, useQuery } from '@tanstack/react-query';
 import Swal from 'sweetalert2';
-import { queryClient } from '../../index.tsx';
+import { queryClient } from '../../../index.tsx';
 import {
-  delProfileCareerProject,
-  getProfileCareerProject,
-  saveProfileCareerProject,
-} from '../../util/api.ts';
+  delProfileCareerWork,
+  getProfileCareerWork,
+  saveProfileCareerWork,
+} from '../../../util/api.ts';
 
-export interface ICareerProject {
-  careerCompany: string;
+export interface ICareerWork {
   careerProjectName: string;
-  careerProjectOrder: number;
+  careerWorkContent: string;
+  careerWorkOrder: number;
 }
 
-function AdminProfileCareerProject() {
-  const [careerProject, setCareerProject] = useState<ICareerProject[]>([]);
+function AdminProfileCareerWork() {
+  const [careerWork, setCareerWork] = useState<ICareerWork[]>([]);
 
   const { data, isLoading } = useQuery({
-    queryKey: ['profileCareerProject'],
-    queryFn: getProfileCareerProject,
+    queryKey: ['profileCareerWork'],
+    queryFn: getProfileCareerWork,
   });
 
   useEffect(() => {
     if (!isLoading && data) {
-      setCareerProject(data);
+      setCareerWork(data);
     }
   }, [data, isLoading]);
 
   const { mutate } = useMutation({
-    mutationFn: saveProfileCareerProject,
+    mutationFn: saveProfileCareerWork,
     onSuccess: () => {
       Swal.fire({
         title: '✅',
         text: '저장에 성공했습니다.',
       });
-      queryClient.invalidateQueries({ queryKey: ['profileCareerProject'] });
+      queryClient.invalidateQueries({ queryKey: ['profileCareerWork'] });
     },
     onError: () => {
       Swal.fire({
@@ -55,13 +55,13 @@ function AdminProfileCareerProject() {
   });
 
   const { mutate: delMutate } = useMutation({
-    mutationFn: delProfileCareerProject,
+    mutationFn: delProfileCareerWork,
     onSuccess: () => {
       Swal.fire({
         title: '✅',
         text: '삭제에 성공했습니다.',
       });
-      queryClient.invalidateQueries({ queryKey: ['profileCareerProject'] });
+      queryClient.invalidateQueries({ queryKey: ['profileCareerWork'] });
     },
     onError: () => {
       Swal.fire({
@@ -72,9 +72,9 @@ function AdminProfileCareerProject() {
   });
 
   const addRow = () => {
-    setCareerProject([
-      ...careerProject,
-      { careerCompany: '', careerProjectName: '', careerProjectOrder: 1 },
+    setCareerWork([
+      ...careerWork,
+      { careerProjectName: '', careerWorkContent: '', careerWorkOrder: -1 },
     ]);
   };
 
@@ -83,9 +83,7 @@ function AdminProfileCareerProject() {
       return;
     }
 
-    setCareerProject(
-      careerProject.filter((project) => project.careerProjectOrder !== index),
-    );
+    setCareerWork(careerWork.filter((work) => work.careerWorkOrder !== index));
 
     if (index > 0) {
       delMutate(index);
@@ -93,48 +91,39 @@ function AdminProfileCareerProject() {
   };
 
   const onChange = (index: number, label: string, value: string | number) => {
-    const updatedCareerProject = careerProject.map((project, i) => {
+    const updatedCareerWork = careerWork.map((work, i) => {
       if (i === index) {
-        return { ...project, [label]: value };
+        return { ...work, [label]: value };
       }
-      return project;
+      return work;
     });
-    setCareerProject(updatedCareerProject);
+    setCareerWork(updatedCareerWork);
   };
 
-  const onCareerProjectSave = () => {
-    mutate(careerProject);
+  const onCareerWorkSave = () => {
+    mutate(careerWork);
   };
 
   return (
     <Profile>
-      <MainTitle>회사 프로젝트</MainTitle>
+      <MainTitle>업무</MainTitle>
       <TableButton onClick={addRow}>+</TableButton>
       <Table>
         <thead>
           <tr>
-            <Th>회사명</Th>
             <Th>프로젝트명</Th>
+            <Th>업무내용</Th>
             <Th>정렬</Th>
             <Th>🗑</Th>
           </tr>
         </thead>
         <tbody>
-          {careerProject.map((project, index) => (
+          {careerWork.map((work, index) => (
             <tr key={index}>
               <td>
                 <input
                   type="text"
-                  value={project.careerCompany}
-                  onChange={(e) =>
-                    onChange(index, 'careerCompany', e.target.value)
-                  }
-                />
-              </td>
-              <td>
-                <input
-                  type="text"
-                  value={project.careerProjectName}
+                  value={work.careerProjectName}
                   onChange={(e) =>
                     onChange(index, 'careerProjectName', e.target.value)
                   }
@@ -142,17 +131,24 @@ function AdminProfileCareerProject() {
               </td>
               <td>
                 <input
-                  type="number"
-                  value={project.careerProjectOrder}
+                  type="text"
+                  value={work.careerWorkContent}
                   onChange={(e) =>
-                    onChange(index, 'careerProjectOrder', e.target.value)
+                    onChange(index, 'careerWorkContent', e.target.value)
                   }
                 />
               </td>
               <td>
-                <TableButton
-                  onClick={() => removeRow(project.careerProjectOrder)}
-                >
+                <input
+                  type="number"
+                  value={work.careerWorkOrder}
+                  onChange={(e) =>
+                    onChange(index, 'careerWorkOrder', e.target.value)
+                  }
+                />
+              </td>
+              <td>
+                <TableButton onClick={() => removeRow(work.careerWorkOrder)}>
                   -
                 </TableButton>
               </td>
@@ -161,10 +157,10 @@ function AdminProfileCareerProject() {
         </tbody>
       </Table>
       <Save>
-        <Button onClick={onCareerProjectSave}>저장</Button>
+        <Button onClick={onCareerWorkSave}>저장</Button>
       </Save>
     </Profile>
   );
 }
 
-export default AdminProfileCareerProject;
+export default AdminProfileCareerWork;
