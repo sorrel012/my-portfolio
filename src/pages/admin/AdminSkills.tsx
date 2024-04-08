@@ -1,6 +1,7 @@
 import styled from 'styled-components';
-import { Button, MainTitle, Save, TableButton, Th } from './AdminProfile.tsx';
-import { useState } from 'react';
+import AdminSkillsClient from '../../components/admin/skills/AdminSkillsClient.tsx';
+import AdminSkillsTool from '../../components/admin/skills/AdminSkillsTool.tsx';
+import AdminSkillsServer from '../../components/admin/skills/AdminSkillsServer.tsx';
 
 const Wrapper = styled.main`
   background-color: ${(props) => props.theme.admin.bgColor};
@@ -10,7 +11,7 @@ const Wrapper = styled.main`
   overflow-y: auto;
 `;
 
-const Skills = styled.section`
+export const Skills = styled.section`
   background-color: ${(props) => props.theme.admin.wrapperBgColor};
   border: 1px solid ${(props) => props.theme.admin.wrapperBorderColor};
   border-radius: 5px;
@@ -19,7 +20,7 @@ const Skills = styled.section`
   margin-bottom: 3%;
 `;
 
-const Table = styled.table`
+export const Table = styled.table`
   width: 100%;
   text-align: center;
 
@@ -36,260 +37,17 @@ const Table = styled.table`
   }
 `;
 
-enum Categories {
-  CLIENT = 'client',
-  SERVER = 'server',
-  TOOL = 'tool',
-}
-
-interface ISkills {
+export interface ISkills {
   fileName: string;
   fileOrder: number;
 }
 
 function AdminSkills() {
-  const [clientSkills, setClientSkills] = useState<ISkills[]>([]);
-  const [serverSkills, setServerSkills] = useState<ISkills[]>([]);
-  const [tools, setTools] = useState<ISkills[]>([]);
-
-  const addRow = (type: string) => {
-    switch (type) {
-      case Categories.CLIENT:
-        setClientSkills([...clientSkills, { fileName: '', fileOrder: 1 }]);
-        break;
-      case Categories.SERVER:
-        setServerSkills([...serverSkills, { fileName: '', fileOrder: 1 }]);
-        break;
-      case Categories.TOOL:
-        setTools([...tools, { fileName: '', fileOrder: 1 }]);
-        break;
-    }
-  };
-
-  const removeRow = (type: string, index: number) => {
-    switch (type) {
-      case Categories.CLIENT:
-        setClientSkills(clientSkills.filter((_, i) => i !== index));
-        break;
-      case Categories.SERVER:
-        setServerSkills(serverSkills.filter((_, i) => i !== index));
-        break;
-      case Categories.TOOL:
-        setTools(tools.filter((_, i) => i !== index));
-        break;
-    }
-  };
-
-  const onChange = (
-    type: string,
-    index: number,
-    label: string,
-    value: string | number,
-  ) => {
-    switch (type) {
-      case Categories.CLIENT:
-        const updatedClientSkills = clientSkills.map((skill, i) => {
-          if (i === index) {
-            return { ...skill, [label]: value };
-          }
-          return skill;
-        });
-        setClientSkills(updatedClientSkills);
-        break;
-      case Categories.SERVER:
-        const updatedServerSkills = serverSkills.map((skill, i) => {
-          if (i === index) {
-            return { ...skill, [label]: value };
-          }
-          return skill;
-        });
-        setServerSkills(updatedServerSkills);
-        break;
-      case Categories.TOOL:
-        const updatedTools = tools.map((tool, i) => {
-          if (i === index) {
-            return { ...tool, [label]: value };
-          }
-          return tool;
-        });
-        setTools(updatedTools);
-        break;
-    }
-  };
-
   return (
     <Wrapper>
-      <Skills>
-        <MainTitle>CLIENT</MainTitle>
-        <TableButton onClick={() => addRow(Categories.CLIENT)}>+</TableButton>
-        <Table>
-          <thead>
-            <tr>
-              <Th>파일명</Th>
-              <Th>정렬</Th>
-              <Th>🗑</Th>
-            </tr>
-          </thead>
-          <tbody>
-            {clientSkills.map((client, index) => (
-              <tr key={index}>
-                <td>
-                  <input
-                    type="text"
-                    value={client.fileName}
-                    onChange={(e) =>
-                      onChange(
-                        Categories.CLIENT,
-                        index,
-                        'fileName',
-                        e.target.value,
-                      )
-                    }
-                  />
-                </td>
-                <td>
-                  <input
-                    type="number"
-                    value={client.fileOrder}
-                    onChange={(e) =>
-                      onChange(
-                        Categories.CLIENT,
-                        index,
-                        'fileOrder',
-                        e.target.value,
-                      )
-                    }
-                  />
-                </td>
-                <td>
-                  <TableButton
-                    onClick={() => removeRow(Categories.CLIENT, index)}
-                  >
-                    -
-                  </TableButton>
-                </td>
-              </tr>
-            ))}
-          </tbody>
-        </Table>
-        <Save>
-          <Button>저장</Button>
-        </Save>
-      </Skills>
-      <Skills>
-        <MainTitle>SERVER</MainTitle>
-        <TableButton onClick={() => addRow(Categories.SERVER)}>+</TableButton>
-        <Table>
-          <thead>
-            <tr>
-              <Th>파일명</Th>
-              <Th>정렬</Th>
-              <Th>🗑</Th>
-            </tr>
-          </thead>
-          <tbody>
-            {serverSkills.map((server, index) => (
-              <tr key={index}>
-                <td>
-                  <input
-                    type="text"
-                    value={server.fileName}
-                    onChange={(e) =>
-                      onChange(
-                        Categories.SERVER,
-                        index,
-                        'fileName',
-                        e.target.value,
-                      )
-                    }
-                  />
-                </td>
-                <td>
-                  <input
-                    type="number"
-                    value={server.fileOrder}
-                    onChange={(e) =>
-                      onChange(
-                        Categories.SERVER,
-                        index,
-                        'fileOrder',
-                        e.target.value,
-                      )
-                    }
-                  />
-                </td>
-                <td>
-                  <TableButton
-                    onClick={() => removeRow(Categories.SERVER, index)}
-                  >
-                    -
-                  </TableButton>
-                </td>
-              </tr>
-            ))}
-          </tbody>
-        </Table>
-        <Save>
-          <Button>저장</Button>
-        </Save>
-      </Skills>
-      <Skills>
-        <MainTitle>TOOL</MainTitle>
-        <TableButton onClick={() => addRow(Categories.TOOL)}>+</TableButton>
-        <Table>
-          <thead>
-            <tr>
-              <Th>파일명</Th>
-              <Th>정렬</Th>
-              <Th>🗑</Th>
-            </tr>
-          </thead>
-          <tbody>
-            {tools.map((tool, index) => (
-              <tr key={index}>
-                <td>
-                  <input
-                    type="text"
-                    value={tool.fileName}
-                    onChange={(e) =>
-                      onChange(
-                        Categories.TOOL,
-                        index,
-                        'fileName',
-                        e.target.value,
-                      )
-                    }
-                  />
-                </td>
-                <td>
-                  <input
-                    type="number"
-                    value={tool.fileOrder}
-                    onChange={(e) =>
-                      onChange(
-                        Categories.TOOL,
-                        index,
-                        'fileOrder',
-                        e.target.value,
-                      )
-                    }
-                  />
-                </td>
-                <td>
-                  <TableButton
-                    onClick={() => removeRow(Categories.TOOL, index)}
-                  >
-                    -
-                  </TableButton>
-                </td>
-              </tr>
-            ))}
-          </tbody>
-        </Table>
-        <Save>
-          <Button>저장</Button>
-        </Save>
-      </Skills>
+      <AdminSkillsClient />
+      <AdminSkillsServer />
+      <AdminSkillsTool />
     </Wrapper>
   );
 }
