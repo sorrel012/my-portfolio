@@ -173,7 +173,7 @@ export async function saveToolSkills(tools: ISkills[]) {
 
 export async function delToolSkills(index: number) {
   const { data } = await axios.delete(`${apiUrl}/skills/tool`, {
-    params: { fileOrder: index },
+    params: { skillsOrder: index },
   });
   return data;
 }

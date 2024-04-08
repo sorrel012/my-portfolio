@@ -38,8 +38,8 @@ export const Table = styled.table`
 `;
 
 export interface ISkills {
-  fileName: string;
-  fileOrder: number;
+  skillsLogo: string;
+  skillsOrder: number;
 }
 
 function AdminSkills() {

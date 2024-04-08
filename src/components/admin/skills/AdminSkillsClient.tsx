@@ -65,7 +65,7 @@ function AdminSkillsClient() {
   });
 
   const addRow = () => {
-    setClientSkills([...clientSkills, { fileName: '', fileOrder: -1 }]);
+    setClientSkills([...clientSkills, { skillsLogo: '', skillsOrder: -1 }]);
   };
 
   const removeRow = (index: number) => {
@@ -73,7 +73,9 @@ function AdminSkillsClient() {
       return;
     }
 
-    setClientSkills(clientSkills.filter((skill) => skill.fileOrder !== index));
+    setClientSkills(
+      clientSkills.filter((skill) => skill.skillsOrder !== index),
+    );
 
     if (index > 0) {
       delMutate(index);
@@ -112,19 +114,23 @@ function AdminSkillsClient() {
               <td>
                 <input
                   type="text"
-                  value={client.fileName}
-                  onChange={(e) => onChange(index, 'fileName', e.target.value)}
+                  value={client.skillsLogo}
+                  onChange={(e) =>
+                    onChange(index, 'skillsLogo', e.target.value)
+                  }
                 />
               </td>
               <td>
                 <input
                   type="number"
-                  value={client.fileOrder}
-                  onChange={(e) => onChange(index, 'fileOrder', e.target.value)}
+                  value={client.skillsOrder}
+                  onChange={(e) =>
+                    onChange(index, 'skillsOrder', e.target.value)
+                  }
                 />
               </td>
               <td>
-                <TableButton onClick={() => removeRow(client.fileOrder)}>
+                <TableButton onClick={() => removeRow(client.skillsOrder)}>
                   -
                 </TableButton>
               </td>
