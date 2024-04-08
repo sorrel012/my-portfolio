@@ -6,17 +6,80 @@ import {
   Th,
 } from '../../../pages/admin/AdminProfile.tsx';
 import { ISkills, Skills, Table } from '../../../pages/admin/AdminSkills.tsx';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
+import { useMutation, useQuery } from '@tanstack/react-query';
+import Swal from 'sweetalert2';
+import { queryClient } from '../../../index.tsx';
+import {
+  delServerSkills,
+  getServerSkills,
+  saveServerSkills,
+} from '../../../util/api.ts';
 
 function AdminSkillsServer() {
   const [serverSkills, setServerSkills] = useState<ISkills[]>([]);
 
+  const { data, isLoading } = useQuery({
+    queryKey: ['serverSkills'],
+    queryFn: getServerSkills,
+  });
+
+  useEffect(() => {
+    if (!isLoading && data) {
+      setServerSkills(data);
+    }
+  }, [data, isLoading]);
+
+  const { mutate } = useMutation({
+    mutationFn: saveServerSkills,
+    onSuccess: () => {
+      Swal.fire({
+        title: '✅',
+        text: '저장에 성공했습니다.',
+      });
+      queryClient.invalidateQueries({ queryKey: ['serverSkills'] });
+    },
+    onError: () => {
+      Swal.fire({
+        title: '❗',
+        text: '저장에 실패했습니다.',
+      });
+    },
+  });
+
+  const { mutate: delMutate } = useMutation({
+    mutationFn: delServerSkills,
+    onSuccess: () => {
+      Swal.fire({
+        title: '✅',
+        text: '삭제에 성공했습니다.',
+      });
+      queryClient.invalidateQueries({ queryKey: ['serverSkills'] });
+    },
+    onError: () => {
+      Swal.fire({
+        title: '❗',
+        text: '삭제에 실패했습니다.',
+      });
+    },
+  });
+
   const addRow = () => {
-    setServerSkills([...serverSkills, { fileName: '', fileOrder: 1 }]);
+    setServerSkills([...serverSkills, { skillsLogo: '', skillsOrder: -1 }]);
   };
 
   const removeRow = (index: number) => {
-    setServerSkills(serverSkills.filter((_, i) => i !== index));
+    if (!window.confirm('정말 삭제하시겠습니까?')) {
+      return;
+    }
+
+    setServerSkills(
+      serverSkills.filter((skill) => skill.skillsOrder !== index),
+    );
+
+    if (index > 0) {
+      delMutate(index);
+    }
   };
 
   const onChange = (index: number, label: string, value: string | number) => {
@@ -27,6 +90,10 @@ function AdminSkillsServer() {
       return skill;
     });
     setServerSkills(updatedServerSkills);
+  };
+
+  const onSkillsServerSave = () => {
+    mutate(serverSkills);
   };
 
   return (
@@ -47,19 +114,23 @@ function AdminSkillsServer() {
               <td>
                 <input
                   type="text"
-                  value={server.fileName}
-                  onChange={(e) => onChange(index, 'fileName', e.target.value)}
+                  value={server.skillsLogo}
+                  onChange={(e) =>
+                    onChange(index, 'skillsLogo', e.target.value)
+                  }
                 />
               </td>
               <td>
                 <input
                   type="number"
-                  value={server.fileOrder}
-                  onChange={(e) => onChange(index, 'fileOrder', e.target.value)}
+                  value={server.skillsOrder}
+                  onChange={(e) =>
+                    onChange(index, 'skillsOrder', e.target.value)
+                  }
                 />
               </td>
               <td>
-                <TableButton onClick={() => removeRow(server.fileOrder)}>
+                <TableButton onClick={() => removeRow(server.skillsOrder)}>
                   -
                 </TableButton>
               </td>
@@ -68,7 +139,7 @@ function AdminSkillsServer() {
         </tbody>
       </Table>
       <Save>
-        <Button>저장</Button>
+        <Button onClick={onSkillsServerSave}>저장</Button>
       </Save>
     </Skills>
   );
