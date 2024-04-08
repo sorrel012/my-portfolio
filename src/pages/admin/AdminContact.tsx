@@ -1,6 +1,8 @@
 import styled from 'styled-components';
-import ContactItem from '../../components/admin/ContactItem.tsx';
 import { MainTitle } from './AdminProfile.tsx';
+import { useQuery } from '@tanstack/react-query';
+import { getContact } from '../../util/api.ts';
+import ContactItem, { IContact } from '../../components/admin/ContactItem.tsx';
 
 const Wrapper = styled.main`
   background-color: ${(props) => props.theme.admin.bgColor};
@@ -12,10 +14,20 @@ const Wrapper = styled.main`
 `;
 
 function AdminContact() {
+  const { data, isLoading } = useQuery({
+    queryKey: ['contact'],
+    queryFn: getContact,
+  });
+
   return (
     <Wrapper>
       <MainTitle>Contact</MainTitle>
-      <ContactItem />
+      {!isLoading &&
+        data !== null &&
+        data.map((contact: IContact) => (
+          <ContactItem key={contact.contactContent} {...contact} />
+        ))}
+      {!isLoading && data === null && <div>Contact가 없습니다.</div>}
     </Wrapper>
   );
 }

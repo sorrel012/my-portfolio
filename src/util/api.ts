@@ -236,3 +236,8 @@ export async function delProjectTbShooting(index: number) {
   });
   return data;
 }
+
+export async function getContact() {
+  const { data } = await axios.get(`${apiUrl}/contact`);
+  return data.result;
+}

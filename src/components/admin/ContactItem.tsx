@@ -29,11 +29,36 @@ const Text = styled.div`
   font-size: 1.8vw;
 `;
 
-function ContactItem() {
+export interface IContact {
+  contactName: string;
+  contactEmail: string;
+  contactTitle: string;
+  contactContent: string;
+  contactDate: Date;
+}
+
+function ContactItem({
+  contactName,
+  contactEmail,
+  contactTitle,
+  contactContent,
+  contactDate,
+}: IContact) {
   const [openDetail, setOpenDetail] = useState(false);
 
   const onOpen = () => {
     setOpenDetail((prev) => !prev);
+  };
+
+  const dateFormatter = (date: Date) => {
+    const newDate = new Date(date);
+    const year = newDate.getFullYear();
+    const month = (newDate.getMonth() + 1).toString().padStart(2, '0');
+    const day = newDate.getDate().toString().padStart(2, '0');
+    const hour = newDate.getHours().toString().padStart(2, '0');
+    const minute = newDate.getMinutes().toString().padStart(2, '0');
+
+    return `${year}-${month}-${day} ${hour}:${minute}`;
   };
 
   return (
@@ -42,25 +67,25 @@ function ContactItem() {
         <Label style={{ cursor: 'pointer' }} onClick={onOpen}>
           날짜
         </Label>
-        <Text>2024-04-01 15:15</Text>
+        <Text>{dateFormatter(contactDate)}</Text>
       </Content>
       {openDetail && (
         <>
           <Content>
             <Label>이름</Label>
-            <Text>한효원</Text>
+            <Text>{contactName}</Text>
           </Content>
           <Content>
             <Label>이메일</Label>
-            <Text>sorrel012@gmail.com</Text>
+            <Text>{contactEmail}</Text>
           </Content>
           <Content>
             <Label>제목</Label>
-            <Text>연락 부탁드립니다.</Text>
+            <Text>{contactTitle}</Text>
           </Content>
           <Content>
             <Label>내용</Label>
-            <Text>~~~~~~로 연락주세용</Text>
+            <Text>{contactContent}</Text>
           </Content>
         </>
       )}
