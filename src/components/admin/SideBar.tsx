@@ -2,6 +2,7 @@ import styled from 'styled-components';
 import { NavLink, useNavigate } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import { adminActions } from '../../store/store.ts';
+import { AWS_URL } from '../../util/constant.ts';
 
 const Wrapper = styled.nav`
   background-color: ${(props) => props.theme.admin.navBgColor};
@@ -86,10 +87,7 @@ function SideBar({ name, pic }: IAdmin) {
   return (
     <Wrapper>
       <LoginUser>
-        <UserImg
-          src={`https://portfolio117.s3.ap-northeast-2.amazonaws.com/${pic}`}
-          alt="profile-pic"
-        />
+        <UserImg src={`${AWS_URL}/${pic}`} alt="profile-pic" />
         <UserName>{name}</UserName>
       </LoginUser>
       <Categories>
