@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import {
   Button,
   MainTitle,
@@ -8,6 +8,14 @@ import {
   Th,
 } from '../../../pages/admin/AdminProfile.tsx';
 import { Projects } from '../../../pages/admin/AdminProjects.tsx';
+import { useMutation, useQuery } from '@tanstack/react-query';
+import Swal from 'sweetalert2';
+import { queryClient } from '../../../index.tsx';
+import {
+  delProjectFn,
+  getProjectFn,
+  saveProjectFn,
+} from '../../../util/api.ts';
 
 export interface IProjectFn {
   projectName: string;
@@ -19,6 +27,51 @@ export interface IProjectFn {
 function AdminProjectFn() {
   const [projectFns, setProjectFns] = useState<IProjectFn[]>([]);
 
+  const { data, isLoading } = useQuery({
+    queryKey: ['projectFn'],
+    queryFn: getProjectFn,
+  });
+
+  useEffect(() => {
+    if (!isLoading && data) {
+      setProjectFns(data);
+    }
+  }, [data, isLoading]);
+
+  const { mutate } = useMutation({
+    mutationFn: saveProjectFn,
+    onSuccess: () => {
+      Swal.fire({
+        title: '✅',
+        text: '저장에 성공했습니다.',
+      });
+      queryClient.invalidateQueries({ queryKey: ['projectFn'] });
+    },
+    onError: () => {
+      Swal.fire({
+        title: '❗',
+        text: '저장에 실패했습니다.',
+      });
+    },
+  });
+
+  const { mutate: delMutate } = useMutation({
+    mutationFn: delProjectFn,
+    onSuccess: () => {
+      Swal.fire({
+        title: '✅',
+        text: '삭제에 성공했습니다.',
+      });
+      queryClient.invalidateQueries({ queryKey: ['projectFn'] });
+    },
+    onError: () => {
+      Swal.fire({
+        title: '❗',
+        text: '삭제에 실패했습니다.',
+      });
+    },
+  });
+
   const addRow = () => {
     setProjectFns([
       ...projectFns,
@@ -26,13 +79,20 @@ function AdminProjectFn() {
         projectName: '',
         projectFnContent: '',
         projectFnTitle: '',
-        projectFnOrder: 1,
+        projectFnOrder: -1,
       },
     ]);
   };
 
   const removeRow = (index: number) => {
-    setProjectFns(projectFns.filter((_, i) => i !== index));
+    if (!window.confirm('정말 삭제하시겠습니까?')) {
+      return;
+    }
+    setProjectFns(projectFns.filter((fn) => fn.projectFnOrder !== index));
+
+    if (index > 0) {
+      delMutate(index);
+    }
   };
 
   const onChange = (index: number, label: string, value: string | number) => {
@@ -45,12 +105,14 @@ function AdminProjectFn() {
     setProjectFns(updatedProjectFns);
   };
 
+  const onProjectFnSave = () => {
+    mutate(projectFns);
+  };
+
   return (
     <Projects>
       <MainTitle>프로젝트 기능</MainTitle>
-      <TableButton onClick={() => addRow(Categories.PROJECT_FUNCTION)}>
-        +
-      </TableButton>
+      <TableButton onClick={addRow}>+</TableButton>
       <Table>
         <thead>
           <tr>
@@ -69,12 +131,7 @@ function AdminProjectFn() {
                   type="text"
                   value={fn.projectName}
                   onChange={(e) =>
-                    onChange(
-                      Categories.PROJECT_FUNCTION,
-                      index,
-                      'projectName',
-                      e.target.value,
-                    )
+                    onChange(index, 'projectName', e.target.value)
                   }
                 />
               </td>
@@ -83,12 +140,7 @@ function AdminProjectFn() {
                   type="text"
                   value={fn.projectFnTitle}
                   onChange={(e) =>
-                    onChange(
-                      Categories.PROJECT_FUNCTION,
-                      index,
-                      'projectFnTitle',
-                      e.target.value,
-                    )
+                    onChange(index, 'projectFnTitle', e.target.value)
                   }
                 />
               </td>
@@ -97,12 +149,7 @@ function AdminProjectFn() {
                   type="text"
                   value={fn.projectFnContent}
                   onChange={(e) =>
-                    onChange(
-                      Categories.PROJECT_FUNCTION,
-                      index,
-                      'projectFnContent',
-                      e.target.value,
-                    )
+                    onChange(index, 'projectFnContent', e.target.value)
                   }
                 />
               </td>
@@ -111,19 +158,12 @@ function AdminProjectFn() {
                   type="number"
                   value={fn.projectFnOrder}
                   onChange={(e) =>
-                    onChange(
-                      Categories.PROJECT_FUNCTION,
-                      index,
-                      'projectFnOrder',
-                      e.target.value,
-                    )
+                    onChange(index, 'projectFnOrder', e.target.value)
                   }
                 />
               </td>
               <td>
-                <TableButton
-                  onClick={() => removeRow(Categories.PROJECT_FUNCTION, index)}
-                >
+                <TableButton onClick={() => removeRow(fn.projectFnOrder)}>
                   -
                 </TableButton>
               </td>
@@ -132,7 +172,7 @@ function AdminProjectFn() {
         </tbody>
       </Table>
       <Save>
-        <Button>저장</Button>
+        <Button onClick={onProjectFnSave}>저장</Button>
       </Save>
     </Projects>
   );
