@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import {
   Button,
   MainTitle,
@@ -8,6 +8,14 @@ import {
   Th,
 } from '../../../pages/admin/AdminProfile.tsx';
 import { Projects } from '../../../pages/admin/AdminProjects.tsx';
+import { useMutation, useQuery } from '@tanstack/react-query';
+import Swal from 'sweetalert2';
+import { queryClient } from '../../../index.tsx';
+import {
+  delProjectTbShooting,
+  getProjectTbShooting,
+  saveProjectTbShooting,
+} from '../../../util/api.ts';
 
 export interface IProjectTbShooting {
   projectName: string;
@@ -21,6 +29,51 @@ function AdminProjectTbShooting() {
     IProjectTbShooting[]
   >([]);
 
+  const { data, isLoading } = useQuery({
+    queryKey: ['projectTbShooting'],
+    queryFn: getProjectTbShooting,
+  });
+
+  useEffect(() => {
+    if (!isLoading && data) {
+      setProjectTbShootings(data);
+    }
+  }, [data, isLoading]);
+
+  const { mutate } = useMutation({
+    mutationFn: saveProjectTbShooting,
+    onSuccess: () => {
+      Swal.fire({
+        title: '✅',
+        text: '저장에 성공했습니다.',
+      });
+      queryClient.invalidateQueries({ queryKey: ['projectTbShooting'] });
+    },
+    onError: () => {
+      Swal.fire({
+        title: '❗',
+        text: '저장에 실패했습니다.',
+      });
+    },
+  });
+
+  const { mutate: delMutate } = useMutation({
+    mutationFn: delProjectTbShooting,
+    onSuccess: () => {
+      Swal.fire({
+        title: '✅',
+        text: '삭제에 성공했습니다.',
+      });
+      queryClient.invalidateQueries({ queryKey: ['projectTbShooting'] });
+    },
+    onError: () => {
+      Swal.fire({
+        title: '❗',
+        text: '삭제에 실패했습니다.',
+      });
+    },
+  });
+
   const addRow = () => {
     setProjectTbShootings([
       ...projectTbShootings,
@@ -28,13 +81,24 @@ function AdminProjectTbShooting() {
         projectName: '',
         projectError: '',
         projectSolution: '',
-        projectTbOrder: 1,
+        projectTbOrder: -1,
       },
     ]);
   };
 
   const removeRow = (index: number) => {
-    setProjectTbShootings(projectTbShootings.filter((_, i) => i !== index));
+    if (!window.confirm('정말 삭제하시겠습니까?')) {
+      return;
+    }
+    setProjectTbShootings(
+      projectTbShootings.filter(
+        (tbShooting) => tbShooting.projectTbOrder !== index,
+      ),
+    );
+
+    if (index > 0) {
+      delMutate(index);
+    }
   };
 
   const onChange = (index: number, label: string, value: string | number) => {
@@ -49,12 +113,14 @@ function AdminProjectTbShooting() {
     setProjectTbShootings(updatedProjectTbShootings);
   };
 
+  const onProjectTbShootingSave = () => {
+    mutate(projectTbShootings);
+  };
+
   return (
     <Projects>
       <MainTitle>프로젝트 트러블 슈팅</MainTitle>
-      <TableButton onClick={() => addRow(Categories.PROJECT_TROUBLE_SHOOTING)}>
-        +
-      </TableButton>
+      <TableButton onClick={addRow}>+</TableButton>
       <Table>
         <thead>
           <tr>
@@ -73,12 +139,7 @@ function AdminProjectTbShooting() {
                   type="text"
                   value={tbShooting.projectName}
                   onChange={(e) =>
-                    onChange(
-                      Categories.PROJECT_TROUBLE_SHOOTING,
-                      index,
-                      'projectName',
-                      e.target.value,
-                    )
+                    onChange(index, 'projectName', e.target.value)
                   }
                 />
               </td>
@@ -87,12 +148,7 @@ function AdminProjectTbShooting() {
                   type="text"
                   value={tbShooting.projectError}
                   onChange={(e) =>
-                    onChange(
-                      Categories.PROJECT_TROUBLE_SHOOTING,
-                      index,
-                      'projectError',
-                      e.target.value,
-                    )
+                    onChange(index, 'projectError', e.target.value)
                   }
                 />
               </td>
@@ -101,12 +157,7 @@ function AdminProjectTbShooting() {
                   type="text"
                   value={tbShooting.projectSolution}
                   onChange={(e) =>
-                    onChange(
-                      Categories.PROJECT_TROUBLE_SHOOTING,
-                      index,
-                      'projectSolution',
-                      e.target.value,
-                    )
+                    onChange(index, 'projectSolution', e.target.value)
                   }
                 />
               </td>
@@ -115,20 +166,13 @@ function AdminProjectTbShooting() {
                   type="number"
                   value={tbShooting.projectTbOrder}
                   onChange={(e) =>
-                    onChange(
-                      Categories.PROJECT_TROUBLE_SHOOTING,
-                      index,
-                      'projectTbOrder',
-                      e.target.value,
-                    )
+                    onChange(index, 'projectTbOrder', e.target.value)
                   }
                 />
               </td>
               <td>
                 <TableButton
-                  onClick={() =>
-                    removeRow(Categories.PROJECT_TROUBLE_SHOOTING, index)
-                  }
+                  onClick={() => removeRow(tbShooting.projectTbOrder)}
                 >
                   -
                 </TableButton>
@@ -138,7 +182,7 @@ function AdminProjectTbShooting() {
         </tbody>
       </Table>
       <Save>
-        <Button>저장</Button>
+        <Button onClick={onProjectTbShootingSave}>저장</Button>
       </Save>
     </Projects>
   );
