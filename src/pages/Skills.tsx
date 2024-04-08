@@ -8,7 +8,7 @@ import peach from '../assets/images/skills/peach.png';
 import orange from '../assets/images/skills/orange.png';
 import java from '../assets/images/tmp/back/java.png';
 import spring from '../assets/images/tmp/back/spring.png';
-import springboot from '../assets/images/tmp/back/spring boot.png';
+import springboot from '../assets/images/tmp/back/springboot.png';
 import oracle from '../assets/images/tmp/back/oracle.png';
 import postgresql from '../assets/images/tmp/back/postgre.png';
 import html from '../assets/images/tmp/front/html.png';
