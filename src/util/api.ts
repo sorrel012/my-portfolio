@@ -5,6 +5,7 @@ import { ICareer } from '../components/admin/profile/AdminProfileCareer.tsx';
 import { ICareerProject } from '../components/admin/profile/AdminProfileCareerProject.tsx';
 import { ICareerWork } from '../components/admin/profile/AdminProfileCareerWork.tsx';
 import { ISkills } from '../pages/admin/AdminSkills.tsx';
+import { IProject } from '../components/admin/projects/AdminProject.tsx';
 
 const apiUrl = import.meta.env.VITE_API_URL;
 
@@ -173,6 +174,23 @@ export async function saveToolSkills(tools: ISkills[]) {
 
 export async function delToolSkills(index: number) {
   const { data } = await axios.delete(`${apiUrl}/skills/tool`, {
+    params: { skillsOrder: index },
+  });
+  return data;
+}
+
+export async function getProjects() {
+  const { data } = await axios.get(`${apiUrl}/projects/project`);
+  return data.result;
+}
+
+export async function saveProjects(projects: IProject[]) {
+  const { data } = await axios.post(`${apiUrl}/projects/project`, projects);
+  return data;
+}
+
+export async function delProjects(index: number) {
+  const { data } = await axios.delete(`${apiUrl}/projects/project`, {
     params: { skillsOrder: index },
   });
   return data;

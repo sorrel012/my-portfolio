@@ -7,7 +7,11 @@ import {
   Th,
 } from '../../../pages/admin/AdminProfile.tsx';
 import { Projects } from '../../../pages/admin/AdminProjects.tsx';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
+import { useMutation, useQuery } from '@tanstack/react-query';
+import Swal from 'sweetalert2';
+import { queryClient } from '../../../index.tsx';
+import { delProjects, getProjects, saveProjects } from '../../../util/api.ts';
 
 export interface IProject {
   projectName: string;
@@ -21,6 +25,51 @@ export interface IProject {
 function AdminProject() {
   const [projects, setProjects] = useState<IProject[]>([]);
 
+  const { data, isLoading } = useQuery({
+    queryKey: ['projects'],
+    queryFn: getProjects,
+  });
+
+  useEffect(() => {
+    if (!isLoading && data) {
+      setProjects(data);
+    }
+  }, [data, isLoading]);
+
+  const { mutate } = useMutation({
+    mutationFn: saveProjects,
+    onSuccess: () => {
+      Swal.fire({
+        title: '✅',
+        text: '저장에 성공했습니다.',
+      });
+      queryClient.invalidateQueries({ queryKey: ['projects'] });
+    },
+    onError: () => {
+      Swal.fire({
+        title: '❗',
+        text: '저장에 실패했습니다.',
+      });
+    },
+  });
+
+  const { mutate: delMutate } = useMutation({
+    mutationFn: delProjects,
+    onSuccess: () => {
+      Swal.fire({
+        title: '✅',
+        text: '삭제에 성공했습니다.',
+      });
+      queryClient.invalidateQueries({ queryKey: ['projects'] });
+    },
+    onError: () => {
+      Swal.fire({
+        title: '❗',
+        text: '삭제에 실패했습니다.',
+      });
+    },
+  });
+
   const addRow = () => {
     setProjects([
       ...projects,
@@ -30,13 +79,21 @@ function AdminProject() {
         projectFrontSkills: '',
         projectBackSkills: '',
         projectPic: '',
-        projectOrder: 1,
+        projectOrder: -1,
       },
     ]);
   };
 
   const removeRow = (index: number) => {
-    setProjects(projects.filter((_, i) => i !== index));
+    if (!window.confirm('정말 삭제하시겠습니까?')) {
+      return;
+    }
+
+    setProjects(projects.filter((project) => project.projectOrder !== index));
+
+    if (index > 0) {
+      delMutate(index);
+    }
   };
 
   const onChange = (index: number, label: string, value: string | number) => {
@@ -49,10 +106,14 @@ function AdminProject() {
     setProjects(updatedProjects);
   };
 
+  const onProjectsSave = () => {
+    mutate(projects);
+  };
+
   return (
     <Projects>
       <MainTitle>프로젝트</MainTitle>
-      <TableButton onClick={() => addRow(Categories.PROJECT)}>+</TableButton>
+      <TableButton onClick={addRow}>+</TableButton>
       <Table>
         <thead>
           <tr>
@@ -73,12 +134,7 @@ function AdminProject() {
                   type="text"
                   value={project.projectName}
                   onChange={(e) =>
-                    onChange(
-                      Categories.PROJECT,
-                      index,
-                      'projectName',
-                      e.target.value,
-                    )
+                    onChange(index, 'projectName', e.target.value)
                   }
                 />
               </td>
@@ -87,12 +143,7 @@ function AdminProject() {
                   type="text"
                   value={project.projectPeriodCnt}
                   onChange={(e) =>
-                    onChange(
-                      Categories.PROJECT,
-                      index,
-                      'projectPeriodCnt',
-                      e.target.value,
-                    )
+                    onChange(index, 'projectPeriodCnt', e.target.value)
                   }
                 />
               </td>
@@ -101,12 +152,7 @@ function AdminProject() {
                   type="text"
                   value={project.projectFrontSkills}
                   onChange={(e) =>
-                    onChange(
-                      Categories.PROJECT,
-                      index,
-                      'projectFrontSkills',
-                      e.target.value,
-                    )
+                    onChange(index, 'projectFrontSkills', e.target.value)
                   }
                 />
               </td>
@@ -115,12 +161,7 @@ function AdminProject() {
                   type="text"
                   value={project.projectBackSkills}
                   onChange={(e) =>
-                    onChange(
-                      Categories.PROJECT,
-                      index,
-                      'projectBackSkills',
-                      e.target.value,
-                    )
+                    onChange(index, 'projectBackSkills', e.target.value)
                   }
                 />
               </td>
@@ -129,12 +170,7 @@ function AdminProject() {
                   type="text"
                   value={project.projectPic}
                   onChange={(e) =>
-                    onChange(
-                      Categories.PROJECT,
-                      index,
-                      'projectPic',
-                      e.target.value,
-                    )
+                    onChange(index, 'projectPic', e.target.value)
                   }
                 />
               </td>
@@ -143,19 +179,12 @@ function AdminProject() {
                   type="number"
                   value={project.projectOrder}
                   onChange={(e) =>
-                    onChange(
-                      Categories.PROJECT,
-                      index,
-                      'projectOrder',
-                      e.target.value,
-                    )
+                    onChange(index, 'projectOrder', e.target.value)
                   }
                 />
               </td>
               <td>
-                <TableButton
-                  onClick={() => removeRow(Categories.PROJECT, index)}
-                >
+                <TableButton onClick={() => removeRow(project.projectOrder)}>
                   -
                 </TableButton>
               </td>
@@ -164,7 +193,7 @@ function AdminProject() {
         </tbody>
       </Table>
       <Save>
-        <Button>저장</Button>
+        <Button onClick={onProjectsSave}>저장</Button>
       </Save>
     </Projects>
   );
