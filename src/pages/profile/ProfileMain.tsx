@@ -4,6 +4,12 @@ import seashell from '../../assets/images/profile/seashell.png';
 import seashell2 from '../../assets/images/profile/seashell2.png';
 import Bubbles from '../../components/profile/Bubbles.tsx';
 import Seaweeds from '../../components/profile/Seaweeds.tsx';
+import { IMainProps } from './Profile.tsx';
+import { useQuery } from '@tanstack/react-query';
+import { getProfileCert } from '../../util/api.ts';
+import { ICertification } from '../../components/admin/profile/AdminProfileCert.tsx';
+import { useEffect, useState } from 'react';
+import { IEducation } from '../../components/admin/profile/AdminProfileEdu.tsx';
 
 const Wrapper = styled.main`
   background: ${(props) => props.theme.profile.bgColor};
@@ -123,7 +129,19 @@ const School = styled.span`
   margin-bottom: 10px;
 `;
 
-function ProfileMain() {
+function ProfileMain({ name, birth, email, address, educations }: IMainProps) {
+  const [certifications, setCertifications] = useState<ICertification[]>([]);
+  const { data, isLoading } = useQuery({
+    queryKey: ['profileCert'],
+    queryFn: getProfileCert,
+  });
+
+  useEffect(() => {
+    if (!isLoading && data) {
+      setCertifications(data);
+    }
+  }, [data, isLoading]);
+
   return (
     <Wrapper>
       <Box>
@@ -149,10 +167,10 @@ function ProfileMain() {
               </Label>
             </LabelWrapper>
             <Information>
-              <Text custom="black">한효원</Text>
-              <Text custom="black">1998.01.17</Text>
-              <Text custom="black">sorrel012@gmail.com</Text>
-              <Text custom="black">서울특별시 송파구</Text>
+              <Text custom="black">{name}</Text>
+              <Text custom="black">{birth}</Text>
+              <Text custom="black">{email}</Text>
+              <Text custom="black">{address}</Text>
             </Information>
           </Info>
         </PersonalInfo>
@@ -164,9 +182,14 @@ function ProfileMain() {
             </Label>
           </Row>
           <CertContent>
-            <Content>◾ TOEIC(2022.06) - 880</Content>
-            <Content>◾ 정보처리기사(2023.06)</Content>
-            <Content>◾ SQLD(2023.07)</Content>
+            {!isLoading &&
+              certifications.map((cert: ICertification) => (
+                <Content key={cert.certName}>
+                  ◾ {cert.certName}({cert.certDate})
+                  {cert.certScore ? ' - ' : ''}
+                  {cert.certScore ? cert.certScore : ''}
+                </Content>
+              ))}
           </CertContent>
         </Certificate>
         <Education>
@@ -178,12 +201,14 @@ function ProfileMain() {
           </Row>
           <EduContent>
             <PeriodWrapper>
-              <Period>◾ 2017.02-2021-02</Period>
-              <Period>◾ 2022.09-2024.08(예정)</Period>
+              {educations.map((edu: IEducation) => (
+                <Period key={edu.eduPeriod}>◾ {edu.eduPeriod}</Period>
+              ))}
             </PeriodWrapper>
             <SchoolWrapper>
-              <School>청주교육대학교 / 초등교육과 (심화: 영어교육)</School>
-              <School>한국방송통신대학교 / 컴퓨터과학과 </School>
+              {educations.map((edu: IEducation) => (
+                <School key={edu.eduContent}>◾ {edu.eduContent}</School>
+              ))}
             </SchoolWrapper>
           </EduContent>
         </Education>
