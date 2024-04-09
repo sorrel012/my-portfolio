@@ -1,4 +1,7 @@
 import styled from 'styled-components';
+import { useQuery } from '@tanstack/react-query';
+import { getProfileCareerWorkItem } from '../../util/api.ts';
+import { ICareerWork } from '../admin/profile/AdminProfileCareerWork.tsx';
 
 const ProjectContent = styled.li`
   padding-left: 2%;
@@ -8,20 +11,24 @@ const ProjectContent = styled.li`
   font-weight: bold;
 `;
 
-function CareerWorkItem() {
+interface IWorkItemProps {
+  careerProjectName: string;
+}
+
+function CareerWorkItem({ careerProjectName }: IWorkItemProps) {
+  const { data, isLoading } = useQuery({
+    queryKey: ['profileCareerWork', { careerProjectName }],
+    queryFn: ({ signal }) =>
+      getProfileCareerWorkItem({ signal, careerProjectName }),
+  });
+
   return (
     <ul>
-      <ProjectContent>
-        - 신세계포인트 앱 다국어 버전 Admin 화면 이관
-      </ProjectContent>
-      <ProjectContent>- 관계사 이벤트 배너 표시 추가</ProjectContent>
-      <ProjectContent>- 비밀번호 변경 주기 적용</ProjectContent>
-      <ProjectContent>
-        - 포인트 비밀번호 변경 본인인증 및 비회원 기능 추가
-      </ProjectContent>
-      <ProjectContent>
-        - 차량정보 수집 필수 동의 및 혜택 제공 동의 분리
-      </ProjectContent>
+      {!isLoading &&
+        data &&
+        data.map((work: ICareerWork) => (
+          <ProjectContent>- {work.careerWorkContent}</ProjectContent>
+        ))}
     </ul>
   );
 }

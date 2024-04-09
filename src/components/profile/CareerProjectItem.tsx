@@ -2,6 +2,7 @@ import styled from 'styled-components';
 import { getProfileCareerProjectItem } from '../../util/api.ts';
 import { useQuery } from '@tanstack/react-query';
 import { ICareerProject } from '../admin/profile/AdminProfileCareerProject.tsx';
+import CareerWorkItem from './CareerWorkItem.tsx';
 
 const ProjectName = styled.h2`
   font-size: 1.5vw;
@@ -19,14 +20,17 @@ function CareerProjectItem({ company }: IProjectItemProps) {
     queryFn: ({ signal }) => getProfileCareerProjectItem({ signal, company }),
   });
 
-  console.log(data);
-
   return (
     <>
       {!isLoading &&
         data &&
         data.map((project: ICareerProject) => (
-          <ProjectName>◽ {project.careerProjectName}</ProjectName>
+          <>
+            <ProjectName>◽ {project.careerProjectName}</ProjectName>
+            <CareerWorkItem
+              {...{ careerProjectName: project.careerProjectName }}
+            />
+          </>
         ))}
     </>
   );

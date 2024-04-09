@@ -150,6 +150,26 @@ export async function delProfileCareerWork(index: number) {
   return data;
 }
 
+interface ICareerWorkRqst {
+  signal: AbortSignal;
+  careerProjectName: string;
+}
+
+export async function getProfileCareerWorkItem({
+  signal,
+  careerProjectName,
+}: ICareerWorkRqst) {
+  const config = {
+    signal,
+  };
+
+  const { data } = await axios.get(
+    `${apiUrl}/profile/career-work/${careerProjectName}`,
+    config,
+  );
+  return data.result;
+}
+
 export async function getClientSkills() {
   const { data } = await axios.get(`${apiUrl}/skills/client`);
   return data.result;
