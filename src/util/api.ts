@@ -110,6 +110,26 @@ export async function delProfileCareerProject(index: number) {
   return data;
 }
 
+interface ICareerProjectRqst {
+  signal: AbortSignal;
+  company: string;
+}
+
+export async function getProfileCareerProjectItem({
+  signal,
+  company,
+}: ICareerProjectRqst) {
+  const config = {
+    signal,
+  };
+
+  const { data } = await axios.get(
+    `${apiUrl}/profile/career-project/${company}`,
+    config,
+  );
+  return data.result;
+}
+
 export async function getProfileCareerWork() {
   const { data } = await axios.get(`${apiUrl}/profile/career-work`);
   return data.result;
