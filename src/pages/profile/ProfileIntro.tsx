@@ -1,5 +1,6 @@
 import styled from 'styled-components';
-import mushroom from '../../assets/images/home/mushroom.png';
+import { IIntroProps } from './Profile.tsx';
+import { AWS_URL } from '../../util/constant.ts';
 
 const Wrapper = styled.main`
   background: ${(props) => props.theme.profile.bgColor};
@@ -14,20 +15,23 @@ const Introduction = styled.section`
   height: 50vh;
   padding: 0 5%;
   display: flex;
+  justify-content: center;
+  align-items: center;
   color: ${(props) => props.theme.profile.titleColor};
   z-index: 99;
 `;
 
 const Picture = styled.img`
-  width: 30%;
-  aspect-ratio: 2 / 2.5;
+  flex: 3;
+  width: 1.5vw;
+  margin-right: 2%;
 `;
 
 const Overview = styled.section`
+  flex: 9;
   padding-left: 20px;
   display: flex;
   flex-direction: column;
-  justify-content: space-evenly;
 `;
 
 const Title = styled.h2`
@@ -38,6 +42,7 @@ const Title = styled.h2`
 const Content = styled.h3`
   font-size: 2.5vw;
   line-height: 1.5;
+  margin-top: 5%;
 `;
 
 const WaveBox = styled.div`
@@ -88,21 +93,18 @@ const Wave = styled.div`
   }
 `;
 
-function ProfileIntro() {
+function ProfileIntro({ mainPic, title, content }: IIntroProps) {
+  const titleArr = title.split('.');
+
   return (
     <Wrapper>
       <Introduction>
-        <Picture src={mushroom} />
+        <Picture src={`${AWS_URL}/${mainPic}`} />
         <Overview>
-          <Title>
-            안녕하세요,
-            <br /> 프론트엔드 개발자 한효원입니다.
-          </Title>
-          <Content>
-            풀스택 개발자로 일하다 시각적 피드백에 매력을 느껴 프론트엔드 개발의
-            세계로 뛰어들었습니다. 코드 한 줄 한 줄에 사용자의 편의를 더하기
-            위해 노력하고 있습니다.
-          </Content>
+          {titleArr.map((text) => (
+            <Title>{text}</Title>
+          ))}
+          <Content>{content}</Content>
         </Overview>
       </Introduction>
       <WaveBox>
