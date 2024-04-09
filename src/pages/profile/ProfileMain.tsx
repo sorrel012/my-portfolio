@@ -1,5 +1,4 @@
 import styled from 'styled-components';
-import mushroom from '../../assets/images/home/mushroom.png';
 import seashell from '../../assets/images/profile/seashell.png';
 import seashell2 from '../../assets/images/profile/seashell2.png';
 import Bubbles from '../../components/profile/Bubbles.tsx';
@@ -9,7 +8,7 @@ import { useQuery } from '@tanstack/react-query';
 import { getProfileCert } from '../../util/api.ts';
 import { ICertification } from '../../components/admin/profile/AdminProfileCert.tsx';
 import { useEffect, useState } from 'react';
-import { IEducation } from '../../components/admin/profile/AdminProfileEdu.tsx';
+import { AWS_URL } from '../../util/constant.ts';
 
 const Wrapper = styled.main`
   background: ${(props) => props.theme.profile.bgColor};
@@ -31,11 +30,11 @@ const Box = styled.section`
 
 const PersonalInfo = styled.section`
   display: flex;
+  margin-bottom: 5%;
 `;
 
 const Img = styled.img`
-  width: 30%;
-  aspect-ratio: 2 / 2;
+  width: 20%;
 `;
 
 const Info = styled.div`
@@ -78,7 +77,7 @@ export const Text = styled.div<{ custom: string }>`
 `;
 
 export const Row = styled.div`
-  margin-bottom: 10px;
+  margin-bottom: 2%;
 `;
 
 const Certificate = styled.section`
@@ -98,38 +97,7 @@ const Content = styled.div`
   font-size: 1.8vw;
 `;
 
-const Education = styled.section`
-  margin-top: 30px;
-`;
-
-export const EduContent = styled.div`
-  padding-left: 5%;
-  font-weight: bold;
-  font-size: 1.8vw;
-  display: flex;
-  justify-content: space-between;
-`;
-
-export const PeriodWrapper = styled.div`
-  display: flex;
-  flex-direction: column;
-  margin-right: 4vw;
-`;
-
-const SchoolWrapper = styled.div`
-  display: flex;
-  flex-direction: column;
-`;
-
-export const Period = styled.time`
-  margin-bottom: 10px;
-`;
-
-const School = styled.span`
-  margin-bottom: 10px;
-`;
-
-function ProfileMain({ name, birth, email, address, educations }: IMainProps) {
+function ProfileMain({ subPic, name, birth, email, address }: IMainProps) {
   const [certifications, setCertifications] = useState<ICertification[]>([]);
   const { data, isLoading } = useQuery({
     queryKey: ['profileCert'],
@@ -146,7 +114,7 @@ function ProfileMain({ name, birth, email, address, educations }: IMainProps) {
     <Wrapper>
       <Box>
         <PersonalInfo>
-          <Img src={mushroom} />
+          <Img src={`${AWS_URL}/${subPic}`} />
           <Info>
             <LabelWrapper>
               <Label>
@@ -192,26 +160,6 @@ function ProfileMain({ name, birth, email, address, educations }: IMainProps) {
               ))}
           </CertContent>
         </Certificate>
-        <Education>
-          <Row>
-            <Label>
-              <Logo src={seashell2} alt="seashell" />
-              <Text custom="red">학력</Text>
-            </Label>
-          </Row>
-          <EduContent>
-            <PeriodWrapper>
-              {educations.map((edu: IEducation) => (
-                <Period key={edu.eduPeriod}>◾ {edu.eduPeriod}</Period>
-              ))}
-            </PeriodWrapper>
-            <SchoolWrapper>
-              {educations.map((edu: IEducation) => (
-                <School key={edu.eduContent}>◾ {edu.eduContent}</School>
-              ))}
-            </SchoolWrapper>
-          </EduContent>
-        </Education>
       </Box>
       <Bubbles />
       <Seaweeds />
