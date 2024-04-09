@@ -102,7 +102,7 @@ function ProfileIntro({ mainPic, title, content }: IIntroProps) {
         <Picture src={`${AWS_URL}/${mainPic}`} />
         <Overview>
           {titleArr.map((text) => (
-            <Title>{text}</Title>
+            <Title key={text}>{text}</Title>
           ))}
           <Content>{content}</Content>
         </Overview>
