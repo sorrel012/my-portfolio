@@ -255,6 +255,26 @@ export async function delProjectFn(index: number) {
   return data;
 }
 
+interface IProjectFnItem {
+  signal: AbortSignal;
+  projectName: string;
+}
+
+export async function getProjectFnItem({
+  signal,
+  projectName,
+}: IProjectFnItem) {
+  const config = {
+    signal,
+  };
+
+  const { data } = await axios.get(
+    `${apiUrl}/projects/fn/${projectName}`,
+    config,
+  );
+  return data.result;
+}
+
 export async function getProjectTbShooting() {
   const { data } = await axios.get(`${apiUrl}/projects/tb-shooting`);
   return data.result;
