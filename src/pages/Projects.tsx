@@ -13,6 +13,7 @@ const Wrapper = styled.main`
   width: 100vw;
   background: ${(props) => props.theme.projects.bgColor};
   overflow-y: scroll;
+  overflow-x: hidden;
   padding-top: 10%;
   position: relative;
 `;
