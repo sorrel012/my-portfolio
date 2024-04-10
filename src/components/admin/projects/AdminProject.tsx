@@ -19,6 +19,8 @@ export interface IProject {
   projectFrontSkills: string;
   projectBackSkills: string;
   projectPic: string;
+  projectGithubPath: string;
+  projectDeployPath: string;
   projectOrder: number;
 }
 
@@ -79,6 +81,8 @@ function AdminProject() {
         projectFrontSkills: '',
         projectBackSkills: '',
         projectPic: '',
+        projectGithubPath: '',
+        projectDeployPath: '',
         projectOrder: -1,
       },
     ]);
@@ -122,6 +126,8 @@ function AdminProject() {
             <Th>프론트</Th>
             <Th>백</Th>
             <Th>사진</Th>
+            <Th>git</Th>
+            <Th>배포</Th>
             <Th>정렬</Th>
             <Th>🗑</Th>
           </tr>
@@ -171,6 +177,24 @@ function AdminProject() {
                   value={project.projectPic}
                   onChange={(e) =>
                     onChange(index, 'projectPic', e.target.value)
+                  }
+                />
+              </td>
+              <td>
+                <input
+                  type="text"
+                  value={project.projectGithubPath}
+                  onChange={(e) =>
+                    onChange(index, 'projectGithubPath', e.target.value)
+                  }
+                />
+              </td>
+              <td>
+                <input
+                  type="text"
+                  value={project.projectDeployPath}
+                  onChange={(e) =>
+                    onChange(index, 'projectDeployPath', e.target.value)
                   }
                 />
               </td>
