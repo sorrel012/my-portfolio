@@ -255,15 +255,12 @@ export async function delProjectFn(index: number) {
   return data;
 }
 
-interface IProjectFnItem {
+interface IProjectItem {
   signal: AbortSignal;
   projectName: string;
 }
 
-export async function getProjectFnItem({
-  signal,
-  projectName,
-}: IProjectFnItem) {
+export async function getProjectFnItem({ signal, projectName }: IProjectItem) {
   const config = {
     signal,
   };
@@ -295,6 +292,21 @@ export async function delProjectTbShooting(index: number) {
     params: { projectTbOrder: index },
   });
   return data;
+}
+
+export async function getProjectTbStItem({
+  signal,
+  projectName,
+}: IProjectItem) {
+  const config = {
+    signal,
+  };
+
+  const { data } = await axios.get(
+    `${apiUrl}/projects/tb-shooting/${projectName}`,
+    config,
+  );
+  return data.result;
 }
 
 export async function getContact() {
