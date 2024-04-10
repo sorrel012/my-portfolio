@@ -3,7 +3,7 @@ import { useQuery } from '@tanstack/react-query';
 import { getProjectFnItem } from '../../util/api.ts';
 import { IProjectFn } from '../admin/projects/AdminProjectFn.tsx';
 
-interface IProjectProps {
+export interface IProjectProps {
   projectName: string;
 }
 
