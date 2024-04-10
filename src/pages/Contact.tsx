@@ -5,6 +5,11 @@ import wing2 from '../assets/images/contact/wing2.png';
 import star from '../assets/images/contact/star.png';
 import { motion } from 'framer-motion';
 import Header from '../components/Header.tsx';
+import { FormEvent, useState } from 'react';
+import Swal from 'sweetalert2';
+import { useMutation } from '@tanstack/react-query';
+import { queryClient } from '../index.tsx';
+import { saveContact } from '../util/api.ts';
 
 const Wrapper = styled.main`
   height: 100vh;
@@ -109,6 +114,18 @@ const Title = styled.div``;
 
 const Content = styled.div``;
 
+const Button = styled.button`
+  background-color: ${(props) => props.theme.contact.headerColor};
+  color: ${(props) => props.theme.contact.textColor};
+  border: none;
+  border-radius: 5px;
+  font-family: 'SUITE-Regular', sans-serif;
+  font-size: 1.8vw;
+  padding: 0.5% 2%;
+  margin-top: 3.5%;
+  cursor: pointer;
+`;
+
 const Bottom = styled.div`
   height: 15%;
   position: relative;
@@ -164,7 +181,85 @@ const starVariants = {
   },
 };
 
+export interface IContactProps {
+  contactName: string;
+  contactEmail: string;
+  contactTitle: string;
+  contactContent: string;
+}
+
 function Contact() {
+  const [contactName, setContactName] = useState('');
+  const [contactEmail, setContactEmail] = useState('');
+  const [contactTitle, setContactTitle] = useState('');
+  const [contactContent, setContactContent] = useState('');
+
+  const { mutate } = useMutation({
+    mutationFn: saveContact,
+    onSuccess: () => {
+      Swal.fire({
+        title: '✅',
+        text: '저장에 성공했습니다.',
+      });
+      setContactName('');
+      setContactEmail('');
+      setContactTitle('');
+      setContactContent('');
+      queryClient.invalidateQueries({ queryKey: ['contact'] });
+    },
+    onError: () => {
+      Swal.fire({
+        title: '❗',
+        text: '저장에 실패했습니다.',
+      });
+    },
+  });
+
+  const onContactClick = (e: FormEvent) => {
+    e.preventDefault();
+
+    const contactParams: IContactProps = {
+      contactName,
+      contactEmail,
+      contactTitle,
+      contactContent,
+    };
+
+    if (contactParams.contactName.trim().length === 0) {
+      Swal.fire({
+        title: '❗',
+        text: '이름을 입력해주세요.',
+      });
+      return;
+    }
+
+    if (contactParams.contactEmail.trim().length === 0) {
+      Swal.fire({
+        title: '❗',
+        text: '이메일을 입력해주세요.',
+      });
+      return;
+    }
+
+    if (contactParams.contactTitle.trim().length === 0) {
+      Swal.fire({
+        title: '❗',
+        text: '제목을 입력해주세요.',
+      });
+      return;
+    }
+
+    if (contactParams.contactContent.trim().length === 0) {
+      Swal.fire({
+        title: '❗',
+        text: '내용을 입력해주세요.',
+      });
+      return;
+    }
+
+    mutate(contactParams);
+  };
+
   return (
     <Wrapper>
       <Header category="contact" />
@@ -178,14 +273,23 @@ function Contact() {
                 <Logo src={star} alt="star" custom="first" />
                 <Text>이름</Text>
               </Label>
-              <Input />
+              <Input
+                required
+                value={contactName}
+                onChange={(e) => setContactName(e.target.value)}
+              />
             </Name>
             <Email>
               <Label>
                 <Logo src={star} alt="star" custom="sec" />
                 <Text>이메일</Text>
               </Label>
-              <Input />
+              <Input
+                value={contactEmail}
+                required
+                type="email"
+                onChange={(e) => setContactEmail(e.target.value)}
+              />
             </Email>
           </Row>
           <Title>
@@ -193,15 +297,27 @@ function Contact() {
               <Logo src={star} alt="star" custom="" />
               <Text>제목</Text>
             </Label>
-            <Input />
+            <Input
+              value={contactTitle}
+              required
+              onChange={(e) => setContactTitle(e.target.value)}
+            />
           </Title>
           <Content>
             <Label>
               <Logo src={star} alt="star" custom="" />
               <Text>내용</Text>
             </Label>
-            <TextArea className="h-30" />
+            <TextArea
+              value={contactContent}
+              className="h-30"
+              required
+              onChange={(e) => setContactContent(e.target.value)}
+            />
           </Content>
+          <div className="align-right">
+            <Button onClick={onContactClick}>남기기</Button>
+          </div>
         </Box>
         <Wing src={wing2} alt="wing" />
         {centerStars.map((star, i) => (

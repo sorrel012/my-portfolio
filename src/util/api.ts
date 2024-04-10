@@ -8,6 +8,7 @@ import { ISkills } from '../pages/admin/AdminSkills.tsx';
 import { IProject } from '../components/admin/projects/AdminProject.tsx';
 import { IProjectFn } from '../components/admin/projects/AdminProjectFn.tsx';
 import { IProjectTbShooting } from '../components/admin/projects/AdminProjectTbShooting.tsx';
+import { IContactProps } from '../pages/Contact.tsx';
 
 const apiUrl = import.meta.env.VITE_API_URL;
 
@@ -312,4 +313,9 @@ export async function getProjectTbStItem({
 export async function getContact() {
   const { data } = await axios.get(`${apiUrl}/contact`);
   return data.result;
+}
+
+export async function saveContact(contact: IContactProps) {
+  const { data } = await axios.post(`${apiUrl}/contact`, contact);
+  return data;
 }
