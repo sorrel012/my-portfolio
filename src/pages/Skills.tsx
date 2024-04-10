@@ -6,24 +6,16 @@ import tree from '../assets/images/skills/tree.png';
 import apple from '../assets/images/skills/apple.png';
 import peach from '../assets/images/skills/peach.png';
 import orange from '../assets/images/skills/orange.png';
-import java from '../assets/images/tmp/back/java.png';
-import spring from '../assets/images/tmp/back/spring.png';
-import springboot from '../assets/images/tmp/back/springboot.png';
-import oracle from '../assets/images/tmp/back/oracle.png';
-import postgresql from '../assets/images/tmp/back/postgre.png';
-import html from '../assets/images/tmp/front/html.png';
-import css from '../assets/images/tmp/front/css.png';
-import javascript from '../assets/images/tmp/front/js.png';
-import typescript from '../assets/images/tmp/front/ts.png';
-import vue from '../assets/images/tmp/front/vue.png';
-import react from '../assets/images/tmp/front/react.png';
-import next from '../assets/images/tmp/front/next.png';
-import webstorm from '../assets/images/tmp/tool/webstorm.png';
-import intellij from '../assets/images/tmp/tool/intellij.png';
-import git from '../assets/images/tmp/tool/git.png';
-import figma from '../assets/images/tmp/tool/figma.png';
 import { useEffect, useRef, useState } from 'react';
 import Header from '../components/Header.tsx';
+import { ISkills } from './admin/AdminSkills.tsx';
+import { useQuery } from '@tanstack/react-query';
+import {
+  getClientSkills,
+  getServerSkills,
+  getToolSkills,
+} from '../util/api.ts';
+import { AWS_URL } from '../util/constant.ts';
 
 const Wrapper = styled.main`
   height: 100vh;
@@ -137,7 +129,7 @@ const OrangeOpen = styled(motion.section)`
 `;
 
 const ToolLogo = styled.img`
-  width: 35%;
+  width: 40%;
   padding: 0 10px;
 `;
 
@@ -162,6 +154,19 @@ const Skills = function Skills() {
   const appleRef = useRef<HTMLDivElement>(null);
   const peachRef = useRef<HTMLDivElement>(null);
   const orangeRef = useRef<HTMLDivElement>(null);
+
+  const { data: clientData, isLoading: clientIsLoading } = useQuery({
+    queryKey: ['clientSkills'],
+    queryFn: getClientSkills,
+  });
+  const { data: serverData, isLoading: serverIsLoading } = useQuery({
+    queryKey: ['serverSkills'],
+    queryFn: getServerSkills,
+  });
+  const { data: toolData, isLoading: toolIsLoading } = useQuery({
+    queryKey: ['toolSkills'],
+    queryFn: getToolSkills,
+  });
 
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
@@ -249,30 +254,38 @@ const Skills = function Skills() {
         </TreeWrapper>
         {isAppleClicked && (
           <AppleOpen layoutId="apple" ref={appleRef}>
-            <BackLogo src={java} alt="java" />
-            <BackLogo src={spring} alt="spring" />
-            <BackLogo src={springboot} alt="spring-boot" />
-            <BackLogo src={oracle} alt="oracle" />
-            <BackLogo src={postgresql} alt="postgresql" />
+            {!serverIsLoading &&
+              serverData &&
+              serverData.map((server: ISkills) => (
+                <BackLogo
+                  src={`${AWS_URL}/${server.skillsLogo}`}
+                  alt={server.skillsLogo}
+                />
+              ))}
           </AppleOpen>
         )}
         {isPeachClicked && (
           <PeachOpen layoutId="peach" ref={peachRef}>
-            <FrontLogo src={html} alt="html" />
-            <FrontLogo src={css} alt="css" />
-            <FrontLogo src={javascript} alt="javascript" />
-            <FrontLogo src={typescript} alt="typescript" />
-            <FrontLogo src={vue} alt="vue" />
-            <FrontLogo src={react} alt="react" />
-            <FrontLogo src={next} alt="next" />
+            {!clientIsLoading &&
+              clientData &&
+              clientData.map((client: ISkills) => (
+                <FrontLogo
+                  src={`${AWS_URL}/${client.skillsLogo}`}
+                  alt={client.skillsLogo}
+                />
+              ))}
           </PeachOpen>
         )}
         {isOrangeClicked && (
           <OrangeOpen layoutId="orange" ref={orangeRef}>
-            <ToolLogo src={webstorm} alt="webstorm" />
-            <ToolLogo src={intellij} alt="intellij" />
-            <ToolLogo src={git} alt="git" />
-            <ToolLogo src={figma} alt="figma" />
+            {!toolIsLoading &&
+              toolData &&
+              toolData.map((tool: ISkills) => (
+                <ToolLogo
+                  src={`${AWS_URL}/${tool.skillsLogo}`}
+                  alt={tool.skillsLogo}
+                />
+              ))}
           </OrangeOpen>
         )}
       </AnimatePresence>
