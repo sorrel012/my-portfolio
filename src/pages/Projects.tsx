@@ -50,22 +50,31 @@ function Projects() {
   const scrollRef = useRef<HTMLElement>(null);
   const projectRef = useRef<HTMLDivElement>(null);
   const turtleRef = useRef<HTMLDivElement>(null);
-  const [moveRange, setMoveRange] = useState<number>(0); // 거북이가 이동할 범위
+  const [moveRange, setMoveRange] = useState<number>(0);
 
   useEffect(() => {
-    const updateMoveRange = () => {
-      if (projectRef.current && turtleRef.current) {
-        const projectHeight = projectRef.current.offsetHeight;
-        const turtleHeight = turtleRef.current.offsetHeight;
-        setMoveRange(projectHeight - turtleHeight);
+    const observer = new ResizeObserver(() => {
+      updateMoveRange();
+    });
+
+    if (projectRef.current) {
+      observer.observe(projectRef.current);
+    }
+
+    return () => {
+      if (projectRef.current) {
+        observer.unobserve(projectRef.current);
       }
     };
-
-    window.addEventListener('resize', updateMoveRange);
-    updateMoveRange();
-
-    return () => window.removeEventListener('resize', updateMoveRange);
   }, []);
+
+  const updateMoveRange = () => {
+    if (projectRef.current && turtleRef.current) {
+      const projectHeight = projectRef.current.offsetHeight;
+      const turtleHeight = turtleRef.current.offsetHeight;
+      setMoveRange(projectHeight - turtleHeight);
+    }
+  };
 
   const turtleVariants = {
     scroll: {
