@@ -258,6 +258,7 @@ const Skills = function Skills() {
               serverData &&
               serverData.map((server: ISkills) => (
                 <BackLogo
+                  key={server.skillsLogo}
                   src={`${AWS_URL}/${server.skillsLogo}`}
                   alt={server.skillsLogo}
                 />
@@ -270,6 +271,7 @@ const Skills = function Skills() {
               clientData &&
               clientData.map((client: ISkills) => (
                 <FrontLogo
+                  key={client.skillsLogo}
                   src={`${AWS_URL}/${client.skillsLogo}`}
                   alt={client.skillsLogo}
                 />
@@ -282,6 +284,7 @@ const Skills = function Skills() {
               toolData &&
               toolData.map((tool: ISkills) => (
                 <ToolLogo
+                  key={tool.skillsLogo}
                   src={`${AWS_URL}/${tool.skillsLogo}`}
                   alt={tool.skillsLogo}
                 />
