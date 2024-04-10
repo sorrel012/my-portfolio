@@ -18,7 +18,7 @@ function ProjectFnItem({ projectName }: IProjectProps) {
       {!isLoading &&
         data &&
         data.map((projectFn: IProjectFn) => (
-          <Text>
+          <Text key={projectFn.projectFnTitle}>
             <div className="font-bold mg-b-5">{`<${projectFn.projectFnContent}>`}</div>
             {projectFn.projectFnTitle}
           </Text>
