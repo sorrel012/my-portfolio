@@ -30,7 +30,7 @@ function Bubbles() {
 
   return (
     <>
-      {/* cjt 번째 */}
+      {/* 첫 번째 */}
       {[0, 1, 2, 3, 4].map((i) => (
         <Bubble
           key={i}
