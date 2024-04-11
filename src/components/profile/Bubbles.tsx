@@ -26,7 +26,7 @@ const bubbleVariants = (lineDelay: number) => ({
 });
 
 function Bubbles() {
-  const BUBBLE = '/src/assets/images/profile/bubble.png';
+  const BUBBLE = '/images/profile/bubble.png';
 
   return (
     <>
