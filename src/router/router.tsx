@@ -63,9 +63,6 @@ export const router = createBrowserRouter(
     },
   ],
   {
-    basename:
-      import.meta.env.VITE_PROFILE === 'LOCAL'
-        ? '/'
-        : import.meta.env.PUBLIC_URL,
+    basename: import.meta.env.VITE_PROFILE === 'LOCAL' ? '/' : '/my-portfolio/',
   },
 );
