@@ -99,11 +99,11 @@ function ProjectItem() {
   });
 
   return (
-    <Wrapper>
+    <>
       {!isLoading &&
         data &&
         data.map((project: IProject) => (
-          <div key={project.projectName}>
+          <Wrapper key={project.projectName}>
             <Title>{project.projectName}</Title>
             <ImageContainer>
               <Image
@@ -155,9 +155,9 @@ function ProjectItem() {
                 <LogoImg src={site} alt="deploy" />
               </Deployment>
             </Links>
-          </div>
+          </Wrapper>
         ))}
-    </Wrapper>
+    </>
   );
 }
 
