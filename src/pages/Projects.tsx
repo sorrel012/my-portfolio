@@ -85,7 +85,7 @@ function Projects() {
 
   const rabbitVariants = {
     scroll: {
-      y: [100, moveRange / 1.3],
+      y: [100, moveRange / 1.35],
       transition: { duration: 15 },
     },
   };
