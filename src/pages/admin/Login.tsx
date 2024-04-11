@@ -71,8 +71,8 @@ const LoginButton = styled.button<{ src: string }>`
   cursor: pointer;
 `;
 
-const BOOK = '/src/assets/images/admin/login-book.png';
-const RABBIT = '/src/assets/images/admin/login-rabbit.png';
+const BOOK = '/images/admin/login-book.png';
+const RABBIT = '/images/admin/login-rabbit.png';
 
 interface ILogin {
   id: string;
