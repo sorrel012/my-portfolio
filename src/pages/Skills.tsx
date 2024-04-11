@@ -45,12 +45,13 @@ const Tree = styled.img`
 
 const Apple = styled(motion.div)`
   position: absolute;
+  width: 50%;
   top: 32%;
   left: 2%;
 `;
 
 const AppleImg = styled(motion.img)`
-  width: 30%;
+  width: 65%;
   transform: rotate(-20deg);
   cursor: pointer;
 `;
