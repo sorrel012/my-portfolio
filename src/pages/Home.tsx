@@ -11,9 +11,9 @@ import { useState } from 'react';
 import { motion } from 'framer-motion';
 import { useNavigate } from 'react-router-dom';
 
-export const GRASS = '/src/assets/images/home/grass.png';
-const BUTTERFLY_RIGHT = '/src/assets/images/home/butterfly1.png';
-const BUTTERFLY_LEFT = '/src/assets/images/home/butterfly2.png';
+export const GRASS = '/images/home/grass.png';
+const BUTTERFLY_RIGHT = '/images/home/butterfly1.png';
+const BUTTERFLY_LEFT = '/images/home/butterfly2.png';
 
 const Wrapper = styled.div`
   height: 100vh;
