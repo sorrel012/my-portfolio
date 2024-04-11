@@ -19,8 +19,8 @@ function ProjectFnItem({ projectName }: IProjectProps) {
         data &&
         data.map((projectFn: IProjectFn) => (
           <Text key={projectFn.projectFnTitle}>
-            <div className="font-bold mg-b-5">{`<${projectFn.projectFnContent}>`}</div>
-            {projectFn.projectFnTitle}
+            <div className="font-bold mg-b-5">{`<${projectFn.projectFnTitle}>`}</div>
+            {projectFn.projectFnContent}
           </Text>
         ))}
     </ul>

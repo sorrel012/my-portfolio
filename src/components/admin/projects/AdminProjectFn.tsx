@@ -19,8 +19,8 @@ import {
 
 export interface IProjectFn {
   projectName: string;
-  projectFnContent: string;
   projectFnTitle: string;
+  projectFnContent: string;
   projectFnOrder: number;
 }
 
@@ -77,8 +77,8 @@ function AdminProjectFn() {
       ...projectFns,
       {
         projectName: '',
-        projectFnContent: '',
         projectFnTitle: '',
+        projectFnContent: '',
         projectFnOrder: -1,
       },
     ]);
@@ -118,8 +118,8 @@ function AdminProjectFn() {
         <thead>
           <tr>
             <Th>프로젝트명</Th>
-            <Th>기능</Th>
             <Th>부제</Th>
+            <Th>기능</Th>
             <Th>정렬</Th>
             <Th>🗑</Th>
           </tr>
