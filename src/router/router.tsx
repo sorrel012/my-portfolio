@@ -14,55 +14,50 @@ import AdminProjects from '../pages/admin/AdminProjects.tsx';
 import AdminContact from '../pages/admin/AdminContact.tsx';
 import AdminPrivate from '../pages/admin/AdminPrivate.tsx';
 
-export const router = createBrowserRouter(
-  [
-    {
-      path: '/',
-      element: <App />,
-      children: [
-        {
-          index: true,
-          element: <Home />,
-        },
-        {
-          path: 'profile',
-          element: <Profile />,
-        },
-        {
-          path: 'skills',
-          element: <Skills />,
-        },
-        {
-          path: 'projects',
-          element: <Projects />,
-        },
-        {
-          path: 'contact',
-          element: <Contact />,
-        },
-        {
-          path: 'login',
-          element: <Login />,
-        },
-        {
-          path: 'admin',
-          element: (
-            <AdminPrivate>
-              <Admin />
-            </AdminPrivate>
-          ),
-          children: [
-            { index: true, element: <AdminHome /> },
-            { path: 'profile', element: <AdminProfile /> },
-            { path: 'skills', element: <AdminSkills /> },
-            { path: 'projects', element: <AdminProjects /> },
-            { path: 'contact', element: <AdminContact /> },
-          ],
-        },
-      ],
-    },
-  ],
+export const router = createBrowserRouter([
   {
-    basename: import.meta.env.VITE_PROFILE === 'LOCAL' ? '/' : '/my-portfolio/',
+    path: '/',
+    element: <App />,
+    children: [
+      {
+        index: true,
+        element: <Home />,
+      },
+      {
+        path: 'profile',
+        element: <Profile />,
+      },
+      {
+        path: 'skills',
+        element: <Skills />,
+      },
+      {
+        path: 'projects',
+        element: <Projects />,
+      },
+      {
+        path: 'contact',
+        element: <Contact />,
+      },
+      {
+        path: 'login',
+        element: <Login />,
+      },
+      {
+        path: 'admin',
+        element: (
+          <AdminPrivate>
+            <Admin />
+          </AdminPrivate>
+        ),
+        children: [
+          { index: true, element: <AdminHome /> },
+          { path: 'profile', element: <AdminProfile /> },
+          { path: 'skills', element: <AdminSkills /> },
+          { path: 'projects', element: <AdminProjects /> },
+          { path: 'contact', element: <AdminContact /> },
+        ],
+      },
+    ],
   },
-);
+]);
