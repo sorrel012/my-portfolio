@@ -24,7 +24,7 @@ export const Row = styled.div`
 `;
 
 const Education = styled.section`
-  width: 70%;
+  width: 80%;
   background-color: ${(props) => props.theme.profile.boxColor};
   border-radius: 20px;
   padding: 30px 40px 20px 30px;
@@ -46,11 +46,6 @@ export const PeriodWrapper = styled.div`
   margin-right: 4vw;
 `;
 
-const SchoolWrapper = styled.div`
-  display: flex;
-  flex-direction: column;
-`;
-
 export const Period = styled.time`
   margin-bottom: 10px;
 `;
@@ -60,7 +55,7 @@ const School = styled.span`
 `;
 
 const Experience = styled.section`
-  width: 70%;
+  width: 80%;
   background-color: ${(props) => props.theme.profile.boxColor};
   border-radius: 20px;
   padding: 30px 40px 20px 30px;
@@ -109,11 +104,11 @@ function ProfileEdu() {
               <Period key={edu.eduPeriod}>◾ {edu.eduPeriod}</Period>
             ))}
           </PeriodWrapper>
-          <SchoolWrapper>
+          <ContentWrapper>
             {sEducations.map((edu: IEducation) => (
               <School key={edu.eduContent}>◾ {edu.eduContent}</School>
             ))}
-          </SchoolWrapper>
+          </ContentWrapper>
         </EduContent>
       </Education>
       <Experience>
