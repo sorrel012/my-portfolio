@@ -118,8 +118,8 @@ const FrontLogo = styled.img`
 
 const OrangeOpen = styled(motion.section)`
   position: absolute;
-  width: 20%;
-  top: 15%;
+  width: 25%;
+  bottom: 50%;
   right: 10%;
   background-color: rgba(254, 182, 66, 0.4);
   border: none;
@@ -130,7 +130,7 @@ const OrangeOpen = styled(motion.section)`
 `;
 
 const ToolLogo = styled.img`
-  width: 40%;
+  width: 35%;
   padding: 0 10px;
 `;
 
