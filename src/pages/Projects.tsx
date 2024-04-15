@@ -22,6 +22,7 @@ const Turtle = styled(motion.div)`
   width: 10%;
   position: absolute;
   left: 5%;
+  opacity: 0;
 `;
 
 const TurtleImg = styled.img`
@@ -34,6 +35,7 @@ const Rabbit = styled(motion.div)`
   right: 5%;
   top: 0;
   z-index: 99;
+  opacity: 0;
 `;
 
 const RabbitImg = styled.img`
@@ -79,14 +81,16 @@ function Projects() {
   const turtleVariants = {
     scroll: {
       y: [0, moveRange],
-      transition: { duration: 30 },
+      opacity: 1,
+      transition: { y: { duration: 30, delay: 1 }, opacity: { duration: 1 } },
     },
   };
 
   const rabbitVariants = {
     scroll: {
       y: [100, moveRange / 1.35],
-      transition: { duration: 15 },
+      opacity: 1,
+      transition: { y: { duration: 15, delay: 1 }, opacity: { duration: 1 } },
     },
   };
 
